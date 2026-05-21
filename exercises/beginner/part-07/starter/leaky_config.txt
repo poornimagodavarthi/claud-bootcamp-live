@@ -1,0 +1,11 @@
+# Deliberately leaky sample config — three planted placeholders.
+# None of these are real values. Do not replace with anything real.
+
+DATABASE_URL=postgres://admin:hunter2@prod-db.example.com:5432/customers
+ADMIN_EMAIL=alice.smith@acme-internal.example.com
+FEATURE_FLAG=ProjectChimera_launch_2026Q1
+
+# Other settings (already safe — do not redact these)
+LOG_LEVEL=info
+PORT=8080
+TIMEOUT_SECONDS=30

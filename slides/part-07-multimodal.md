@@ -2,189 +2,151 @@
 marp: true
 theme: default
 paginate: true
-header: "Claude Code Extended — Part 7"
-footer: "Luca Berton · Multimodal Prompting: From Screenshot to UI"
+size: 16:9
+title: "Module 7 — Multimodal: Screenshot to UI"
+description: "Hand Claude a wireframe image and produce a working single-page Dashboard UI. Match the wireframe pixel-for-pixel-ish."
 ---
 
-# Part 7
-## Multimodal Prompting: Screenshot to UI
+<!-- duration: 30 min -->
 
-**Duration:** 30 min · **Format:** Visual prompt demo + hands-on build
-**Deliverable:** A working **Dashboard UI** built from a wireframe
+## Module 7 — Multimodal: Screenshot to UI
 
----
-
-## Why Multimodal?
-
-A picture is worth ~1,000 prompt tokens.
-
-Sketches and screenshots convey:
-- **Layout** — spatial intent
-- **Hierarchy** — what's primary vs secondary
-- **State** — empty, loading, error
-- **Interaction** — what's clickable
+Claude Code Bootcamp · Day 1 · Block 7 of 10
 
 ---
 
-## Inputs You Can Use
+## Promise
 
-- Hand-drawn sketches (phone photo)
-- Figma / wireframe screenshots
-- Existing app screenshots ("clone this layout")
-- Annotated images with arrows + notes
+In 30 minutes you will:
 
----
-
-## Pasting Screenshots — Use **Ctrl+V**
-
-In Claude Code's terminal UI:
-
-- **Ctrl+V** → paste a screenshot from clipboard
-- ⚠️ On macOS, **Cmd+V pastes the file path**, not the image
-
-Workflow: capture → Ctrl+V → annotate intent in text.
+1. Hand Claude a **wireframe image** as input.
+2. Generate a single-page **Dashboard UI** matching the layout.
+3. Compare your render to the wireframe side-by-side and iterate one round.
 
 ---
 
-## The Visual-to-Code Prompt
+## Why this matters
 
-> *"Here is a wireframe of a dashboard. Build it as React + Tailwind. Infer spacing and hierarchy. List your assumptions before coding. Produce: components, routes, mock data, and a state diagram for empty/loading/error."*
-
-Notice: ask for **assumptions** + **states** explicitly.
+- Most product work starts as a sketch. Until now, you had to translate the sketch to text prompts. That step *was* the bottleneck.
+- Multimodal Claude reads the image directly. The translation cost goes to zero.
+- This is also where AI confidently invents details. Visual diffing keeps it honest.
 
 ---
 
-## Iterative Refinement
+## Concepts
 
+- **Two wireframe sources** ship with the exercise: `wireframe.png` (canonical, generated from `wireframe.mmd` Mermaid source) and `wireframe-sketch.png` (rough-hand variant from `wireframe-sketch.svg`).
+- **Layout-first prompting**: describe what you cannot see in the image — interactivity, data source, framework — and let Claude read the layout.
+- **Visual diff loop**: render → screenshot → ask Claude to diff → patch.
+- **Scope discipline**: ship the layout. Theming and animations are stretch.
+
+---
+
+## Live demo flow
+
+1. Instructor opens `exercises/part-07/wireframe-sketch.png` in Claude Code.
+2. Pastes the prompt with the framework constraint (Python: Flask + Jinja or Streamlit).
+3. Saves output, runs locally on `localhost:5000` or similar.
+4. Takes a screenshot, attaches it next to the wireframe, asks Claude: *"What's missing or wrong?"*
+5. Applies one round of fixes. Demo ends with a side-by-side comparison projected.
+
+---
+
+## Mini project
+
+**Dashboard UI** matching `exercises/part-07/wireframe.png`:
+
+- Header bar with title + a primary action button.
+- Left sidebar with 3–5 nav links.
+- Main area: 3 KPI cards across the top, then a table of 5 sample rows.
+- Footer with a small "version" string.
+- Static data is fine. Hardcode it.
+
+---
+
+## Step-by-step lab
+
+1. Open `exercises/part-07/`. Read `README.md` end to end.
+2. Decide which wireframe to use: `wireframe.png` (canonical) or `wireframe-sketch.png` (rough sketch — extra challenge).
+3. Run the multimodal prompt with the chosen image attached.
+4. Save the generated app to `module-07/`.
+5. Run it locally. Take a screenshot at 1280×720. Save as `module-07/render.png`.
+6. **Visual-diff loop**: paste both images into Claude. Ask for the gap list. Apply at most three fixes.
+7. Re-screenshot as `module-07/render-final.png`.
+
+---
+
+## Suggested Claude Code prompts
+
+```text
+INITIAL GENERATION
+Below is a wireframe image. Build a working single-page web app matching the layout.
+
+Constraints:
+- Python 3.11. Track A: Flask + Jinja templates. Track B: Streamlit. Pick one and state the choice in the README.
+- Static hardcoded sample data. No database. No auth.
+- Single command to run: `python app.py` (Flask) or `streamlit run app.py`.
+- Plain CSS, no Tailwind, no component libraries.
+- Render at 1280x720 should look unmistakably like the wireframe.
 ```
-v0: Generate first pass
-v1: Show running result → annotate screenshot → re-prompt
-v2: Refine spacing, copy, states
-v3: Polish — loading, empty, error
+
+```text
+VISUAL DIFF
+Image 1: the wireframe.
+Image 2: my current render.
+
+List the gaps in priority order. For each gap:
+- One-sentence description.
+- Smallest patch that closes it.
+
+Stop after 5 items.
 ```
 
-Each iteration: **update the prompt**, not the code by hand.
+---
+
+## Deliverable checklist
+
+- [ ] `module-07/` contains a runnable app.
+- [ ] `module-07/render-final.png` exists at 1280×720.
+- [ ] Header, sidebar, 3 KPI cards, table of 5 rows, footer all present.
+- [ ] Visual-diff loop ran at least once with the patches recorded in `module-07/diff-notes.md`.
 
 ---
 
-## When to Update the Prompt vs Edit Code
+## Definition of done
 
-| Update prompt | Edit code |
-|---|---|
-| Layout-wide changes | One-off tweaks |
-| Pattern repeats (theme, spacing) | Local fix |
-| Re-architect | Rename a variable |
-| Adding states | Typo fix |
-
-If you'd want it next time → prompt it.
+✅ App runs with one command · ✅ Render is unmistakably the wireframe · ✅ One visual-diff iteration applied.
 
 ---
 
-## Common Pitfalls
+## Review checkpoint
 
-- Skipping the assumptions list → wrong layout, fast
-- Not specifying the stack → random framework
-- Forgetting empty/error states
-- Pixel-perfect demands without enough source material
+Pair (60 s each):
 
----
-
-## Planning Mode — `Shift+Tab` ×2
-
-For broad changes, toggle **Planning Mode**:
-
-- Press **Shift+Tab twice** (once if already auto-accepting edits)
-- Claude reads more files, drafts a plan, **waits for approval**
-- You review and redirect *before* any code is written
-
-Best for: multi-file refactors, new features, codebase-wide changes.
+1. Open partner's render and the wireframe side by side. Score 0–3 on layout fidelity.
+2. Pick one gap they missed.
 
 ---
 
-## Thinking Modes
+## Common mistakes
 
-Trigger more reasoning tokens by phrasing:
-
-| Phrase | Reasoning budget |
-|---|---|
-| `think` | basic |
-| `think more` | extended |
-| `think a lot` | comprehensive |
-| `think longer` | extended time |
-| `ultrathink` | maximum |
-
-Best for: hard logic, debugging, algorithm design.
-**Planning ≠ Thinking** — combine for breadth + depth (costs tokens).
+- "Looks close enough" — the whole point of multimodal is precision. Diff again.
+- Pulling in Tailwind / shadcn / a component library because it's faster. Constraint exists for a reason.
+- Forgetting to attach the image. Claude can't read what isn't attached.
+- Iterating five rounds. Cap at three; ship the layout.
 
 ---
 
-## Steering the Conversation
+## Instructor notes
 
-| Action | Shortcut / Cmd |
-|---|---|
-| Stop Claude mid-response | **Esc** |
-| Rewind to an earlier message | **Esc Esc** |
-| Add a memory while stopped | `#` |
-| Summarize history, keep insights | `/compact` |
-| Wipe history, fresh start | `/clear` |
-
-`/compact` after deep learning · `/clear` when switching tasks.
+- 5 / 5 / 17 / 3 split.
+- Demo with the **sketch** variant; lab default is the canonical wireframe.
+- Have a fallback render of your own ready in case Chromium / image attachment misbehaves.
+- If short, drop the visual-diff loop; ship initial render only.
 
 ---
 
-## Mini Project 7 — Dashboard from Wireframe
+## Transition to next module
 
-**Source:** provided sketch (or your own).
-
-Required regions:
-- Top nav with user
-- KPI cards row (4 cards)
-- Chart panel
-- Recent activity list
-
-States: loading, empty, populated, error.
-
----
-
-## Skills Practiced
-
-- Multimodal prompting
-- UI generation
-- Component structure
-- Iterative design refinement
-
----
-
-## Deliverable Checklist ✅
-
-- [ ] `03-dashboard/` runnable frontend
-- [ ] All 4 regions present
-- [ ] All 4 UI states implemented
-- [ ] Componentized (not one big file)
-- [ ] `prompts/` folder with **iteration history** (v0 → vN)
-- [ ] Screenshot of final UI in repo
-
----
-
-## Definition of Done
-
-- `npm run dev` (or stack equiv.) boots
-- Resizing the window doesn't break layout
-- Loading/empty/error states are reachable
-- Prompt history shows real iteration, not one-shot
-
----
-
-## Review Checkpoint 🔎
-
-Pair-demo:
-- Show your wireframe **and** final UI
-- Walk through your prompt iterations
-- Each suggests **one** state or component you missed.
-
----
-
-## Next Up
-
-**Part 8 — Refactoring & Documentation at Scale**
-You'll clean up the dashboard and document it for handoff.
+We have a UI. Real codebases also have *legacy* — modules nobody wants to touch. Next we refactor a messy module under hard constraints and document the result.
+**Next: Module 8 — Refactoring & Documentation at Scale.**

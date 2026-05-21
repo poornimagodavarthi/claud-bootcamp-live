@@ -2,141 +2,151 @@
 marp: true
 theme: default
 paginate: true
-header: "Claude Code Extended — Part 5"
-footer: "Luca Berton · Testing, Debugging & Self-Review"
+size: 16:9
+title: "Module 5 — Testing, Debugging & Self-Review"
+description: "Write a real test suite for the module 4 API, plant and fix two bugs, and ship your personal Code Review Rubric."
 ---
 
-# Part 5
-## Testing, Debugging & Self-Review
+<!-- duration: 28 min -->
 
-**Duration:** 35 min · **Format:** Guided lab + code review checkpoint
-**Deliverable:** Tests + bug fixes + a **review rubric**
+## Module 5 — Testing, Debugging & Self-Review
 
----
-
-## Testing Mindset with AI
-
-AI writes code fast. **Tests are the brake pedal.**
-
-Without tests, AI velocity = AI risk velocity.
+Claude Code Bootcamp · Day 1 · Block 5 of 10
 
 ---
 
-## Getting Meaningful Tests
+## Promise
 
-Bad: *"Write tests."*
-Good:
+In 28 minutes you will:
 
-> *"For each endpoint, write tests for: happy path, missing fields, oversized body, non-existent ID, malformed JSON, and concurrent updates. Use AAA format and table-driven where it helps."*
-
-Specify **categories**, not counts.
-
----
-
-## Asking Claude to Find Its Own Bugs
-
-> *"Review the code you just wrote. List 5 likely bugs, ranked by severity. Prove or disprove each with a test."*
-
-This works because Claude is a better **critic** than **author** in a fresh context.
+1. Generate a real **pytest** (or **vitest**) suite against your module-4 Notes API.
+2. Find and fix **two seeded bugs** using Claude's self-review.
+3. Author your own **Code Review Rubric** at `exercises/part-05/code-review-rubric.md`.
 
 ---
 
-## Review Rubrics
+## Why this matters
 
-A rubric forces consistent reviews. Example:
-
-1. Correctness — does it satisfy acceptance criteria?
-2. Edge cases — empty, max, malformed, concurrent
-3. Error handling — fail loudly, fail safely
-4. Security — input validation, secrets, authz
-5. Tests — coverage on **behavior**, not lines
-6. Readability — names, structure, comments
+- AI generates plausible code. Plausible ≠ correct. Tests are the only durable contract.
+- Self-review by Claude catches a surprising fraction of its own mistakes — *if you ask correctly*.
+- Your **Code Review Rubric** becomes the discriminator for "done" for the rest of the day. It outlasts the workshop.
 
 ---
 
-## Debugging Loop with Claude
+## Concepts
 
+- **Test pyramid for AI code**: lots of cheap unit tests + a few integration tests covering the happy path + error paths.
+- **Self-review prompt**: ask Claude to enumerate bugs *as if* it were reviewing a stranger's PR. The framing matters.
+- **Off-by-one and boundary bugs**: Claude's blind spot. Always test boundaries.
+- **Your rubric ≠ instructor rubric**. The student deliverable here is `code-review-rubric.md`. The instructor's grading rubric lives at `assessments/rubric.md`. Two distinct artifacts.
+
+---
+
+## Live demo flow
+
+1. Instructor opens the module-4 winner.
+2. Asks Claude to generate a test suite (Python: pytest + httpx; Node: vitest + supertest-like fetch).
+3. Runs tests — green.
+4. Plants **one** off-by-one bug live (e.g., pagination boundary).
+5. Self-review prompt → Claude finds the bug.
+6. Class repeats with a second seeded bug from `BUGS.md` in the reference solution.
+
+---
+
+## Mini project
+
+Three deliverables under `module-05/`:
+
+1. `tests/` — full suite for the module-4 API.
+2. `bug-fix-notes.md` — for each of two bugs: symptom, suspected cause, Claude's diagnosis, your fix.
+3. `code-review-rubric.md` — your personal rubric for reviewing AI code.
+
+---
+
+## Step-by-step lab
+
+1. `cd` into your module-4 winner folder.
+2. Run the prompt for the test suite. Save under `tests/`.
+3. Run the suite. Fix any genuine failures.
+4. Open `BUGS.md` from the reference solution (instructor will publish it) and inject the two seeded bugs into your code.
+5. Run tests — they should fail.
+6. Use the self-review prompt to fix each. Document in `bug-fix-notes.md`.
+7. Author `code-review-rubric.md` (≤ 1 page, 5–8 checks).
+8. Copy all three deliverables into `module-05/` for submission.
+
+---
+
+## Suggested Claude Code prompts
+
+```text
+GENERATE TESTS
+Read the Notes API in this folder. Write a pytest suite (or vitest if Node)
+covering: create, list, search, get-one, update, delete, 404, 422.
+Use httpx (or fetch) and a temp SQLite DB per test. No network. No mocks
+of HTTP — start the app in-process.
 ```
-1. Reproduce — minimal failing case
-2. Show — paste error + relevant code
-3. Hypothesize — ask Claude for top 3 causes
-4. Test — verify each hypothesis
-5. Fix — smallest possible change
-6. Regression test — lock the bug out
+
+```text
+SELF-REVIEW
+You are reviewing a stranger's PR. The diff is below.
+Enumerate every potential bug (off-by-one, null handling, race, error path,
+type coercion). Rank by severity. Propose the smallest possible fix per item.
+Do not write code yet — just the list.
+```
+
+```text
+RUBRIC
+Draft a one-page code review rubric for AI-generated code.
+5–8 checks. Each check is a yes/no question that takes ≤ 30 seconds to answer.
+Optimize for catching the kinds of bugs Claude tends to miss
+(boundaries, error paths, hidden assumptions about types).
 ```
 
 ---
 
-## When NOT to Trust AI Code
+## Deliverable checklist
 
-- Auth, crypto, payments → human review mandatory
-- Migrations, deletes, irreversible ops
-- Code touching production secrets
-- "Confident" code with **no tests**
-- Anything you don't understand line-by-line
-
----
-
-## Human Checkpoints
-
-Always insert human review at:
-- **Plan approval** — before any code
-- **Diff review** — before commit
-- **Pre-merge** — before main
-- **Pre-deploy** — before prod
+- [ ] `module-05/tests/` exists; full suite runs green on the fixed code.
+- [ ] `module-05/bug-fix-notes.md` documents two bugs end-to-end.
+- [ ] `module-05/code-review-rubric.md` is one page or less and is a checklist, not prose.
+- [ ] You can name one rubric item that is *not* in `skills/code-review/SKILL.md` — it is **yours**.
 
 ---
 
-## Mini Project 5 — Test & Debug the Notes API
+## Definition of done
 
-1. Generate test suite (unit + integration)
-2. Ask Claude to self-review against your rubric
-3. Triage findings → fix top 3 bugs
-4. Add regression tests for each
-5. Commit `test(notes-api): harden CRUD with edge cases`
+✅ Test suite green · ✅ Two bugs found and fixed with notes · ✅ Personal rubric authored and committed.
 
 ---
 
-## Skills Practiced
+## Review checkpoint
 
-- Unit testing
-- Debugging
-- Test coverage
-- AI-assisted code review
-- Rubric-based evaluation
+Pair (60 s each):
 
----
-
-## Deliverable Checklist ✅
-
-- [ ] Test suite in `02-notes-api/tests/`
-- [ ] ≥ 1 test per category (happy, missing, oversized, 404, malformed)
-- [ ] At least **3 documented bugs** with fixes
-- [ ] Regression test per bug
-- [ ] `REVIEW_RUBRIC.md` committed
-- [ ] All tests passing on `main`
+1. Run the partner's tests against your module-4 winner. Green or red?
+2. Read each other's `code-review-rubric.md`. Pick one item to *steal* and one to challenge.
 
 ---
 
-## Definition of Done
+## Common mistakes
 
-- `pytest` (or equiv.) green
-- Coverage on every endpoint
-- Rubric reusable on later projects
-- Each bug has: *symptom → cause → fix → test*
-
----
-
-## Review Checkpoint 🔎
-
-Swap rubrics with a peer:
-- Apply their rubric to your code
-- Apply yours to theirs
-- Each finds **one issue** the other missed.
+- Letting Claude generate tests that mock the SUT itself — useless.
+- Self-review without the "stranger's PR" framing — you get sycophantic output.
+- Copying the skill rubric verbatim. Your rubric must reflect *your* blind spots.
+- Mixing up the student rubric with the instructor's grading rubric. They are different files.
 
 ---
 
-## Next Up
+## Instructor notes
 
-**Part 6 — Git Workflows for Safe AI Development**
-Branches, diffs, and worktrees as your safety net.
+- 6 / 6 / 13 / 3 split.
+- Plant the off-by-one live; the *aha* lands hardest in real time.
+- Have `BUGS.md` from the reference solution ready to publish at lab start.
+- Reinforce the two-rubrics distinction every time it comes up.
+
+---
+
+## Transition to next module
+
+We have a tested, debugged, reviewed module. Now we ship it through Git the way a senior engineer would — branch, commit message, PR description.
+**Next: Module 6 — Git Workflows for Safe AI Dev.**

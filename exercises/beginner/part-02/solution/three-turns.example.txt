@@ -1,0 +1,11 @@
+> How does HTTPS work in one paragraph?
+
+HTTPS is HTTP transported over a TLS-encrypted connection. When your browser connects to a server, the two sides perform a TLS handshake: the server proves its identity with a certificate signed by a trusted authority, they agree on a shared session key, and from then on every HTTP request and response is encrypted with that key, so eavesdroppers see only ciphertext.
+
+> shorter
+
+HTTPS is HTTP wrapped in a TLS-encrypted, authenticated channel.
+
+> summarise that in one sentence
+
+HTTPS keeps web traffic private by running normal HTTP through an encrypted, authenticated TLS tunnel.

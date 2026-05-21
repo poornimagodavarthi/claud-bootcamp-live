@@ -2,206 +2,141 @@
 marp: true
 theme: default
 paginate: true
-header: "Claude Code Extended — Part 3"
-footer: "Luca Berton · Project Context with CLAUDE.md"
+size: 16:9
+title: "Module 3 — Project Context with CLAUDE.md"
+description: "Author a project-level CLAUDE.md that makes Claude Code follow your repo conventions automatically."
 ---
 
-# Part 3
-## Project Context with CLAUDE.md
+<!-- duration: 22 min -->
 
-**Duration:** 25 min · **Format:** Instructor explanation + guided lab
-**Deliverable:** A reusable **CLAUDE.md** for the task manager
+## Module 3 — Project Context with `CLAUDE.md`
 
----
-
-## Why Claude Code Needs Project Context
-
-Without context, Claude Code:
-- Re-discovers conventions every session
-- Picks inconsistent patterns
-- Touches files it shouldn't
-- Wastes tokens on rediscovery
-
-`CLAUDE.md` = **the project brain** loaded with every prompt.
+Claude Code Bootcamp · Day 1 · Block 3 of 10
 
 ---
 
-## Bootstrap with `/init`
+## Promise
 
-In a new project, run:
+In 22 minutes you will:
 
-```
-/init
-```
-
-Claude Code will:
-- Analyze the codebase (purpose, architecture, key files)
-- Detect commands, conventions, structure
-- Write a first-pass `CLAUDE.md` for you
-
-> Tip: press **Shift+Tab** to let Claude write files freely
-> instead of approving each one.
+1. Understand what `CLAUDE.md` is and why it sits at repo root.
+2. Author a `CLAUDE.md` for **a real repository of your choice**.
+3. Watch Claude follow your conventions on the very next prompt.
 
 ---
 
-## The Three CLAUDE.md Locations
+## Why this matters
 
-| Path | Scope | Commit? |
-|---|---|---|
-| `./CLAUDE.md` | Project, shared with team | ✅ yes |
-| `./CLAUDE.local.md` | Project, **personal** overrides | ❌ no (gitignore) |
-| `~/.claude/CLAUDE.md` | All projects on your machine | n/a |
-
-Specific overrides general — local beats project, project beats global.
+- Without a `CLAUDE.md`, you re-explain your stack, conventions, and "do nots" in every prompt. That is wasted typing and inconsistent output.
+- A good `CLAUDE.md` is the difference between *"please use Python 3.11 with type hints"* repeated 30 times and *"add the endpoint"*.
+- It is the single most leveraged file in an AI-paired codebase.
 
 ---
 
-## What Goes Inside CLAUDE.md
+## Concepts
 
-- **Architecture notes** — what lives where
-- **Coding conventions** — style, naming, formatting
-- **Testing commands** — how to run tests
-- **Security rules** — secrets, boundaries
-- **"Do not touch" areas** — generated files, vendored code
-- **Workflow** — branch naming, commit style
+- **`CLAUDE.md`**: a project-level instruction file Claude Code reads automatically on every prompt.
+- **Behavior file, not a doc**: every line should change Claude's output. If a line is just nice-to-know, it belongs in `README.md`.
+- **Sections that pay rent**: Stack · Conventions · Commands · Do-not list · Glossary.
+- **The trim test**: delete each section in turn; if Claude still behaves the same, that section was bloat.
 
 ---
 
-## CLAUDE.md Skeleton
+## Live demo flow
 
-```md
-# Project: CLI Task Manager
+1. Instructor opens the repo from module 2's lab — no `CLAUDE.md` yet.
+2. Asks Claude: *"Add an `--export csv` flag."* Observe the output.
+3. Adds a 12-line `CLAUDE.md`. Asks the same prompt in a fresh chat.
+4. Class sees the diff: same intent, on-convention output.
+5. Run the trim test live — delete one section, re-prompt, observe drift.
 
-## Stack
-Python 3.11, stdlib only, pytest
+---
 
-## Commands
-- Run tests: `pytest -q`
-- Lint: `ruff check .`
-- Run CLI: `python -m taskmgr`
+## Mini project
 
-## Conventions
-- Type hints everywhere
-- Functions ≤ 30 lines
-- snake_case modules
+**`CLAUDE.md` for a real repo.**
 
-## Security
-- Never log task titles in errors
-- No network calls
+- Pick the repo from module 2 (or any personal repo you trust to commit to).
+- Author `CLAUDE.md` covering Stack · Conventions · Commands · Do-not.
+- Keep it under 80 lines — every line earns its place.
+- Commit it.
 
-## Do Not Touch
-- /vendor, /generated, tasks.json
+---
+
+## Step-by-step lab
+
+1. `cd` into the repo from module 2 (or your repo of choice).
+2. Open `skills/claude-md-template/SKILL.md` for a worked example.
+3. Run the prompt below; let Claude draft a candidate.
+4. Edit ruthlessly. Delete anything that doesn't change behavior.
+5. Save as `CLAUDE.md` at repo root and commit.
+6. Open a fresh Claude Code chat and ask one new prompt about the repo. Verify on-convention output.
+7. Copy the final file into your submission as `module-03/CLAUDE.md` plus a screenshot of Claude obeying it (`module-03/proof.png`).
+
+---
+
+## Suggested Claude Code prompts
+
+```text
+You are drafting CLAUDE.md for the repo at the current working directory.
+Read the repo first. Then propose a CLAUDE.md with these sections:
+
+# Stack       — languages, package managers, runtime versions
+# Conventions — naming, file layout, lint/format rules
+# Commands    — exact commands for build, test, run, lint
+# Do-not      — things you must never do (e.g., add deps without asking)
+# Glossary    — domain terms only this team uses
+
+Each line must change your behavior on a future prompt. If a line is just
+documentation, omit it. Keep the whole file under 80 lines.
 ```
 
 ---
 
-## Keeping It Concise
+## Deliverable checklist
 
-- Token budget matters → trim ruthlessly
-- One source of truth — link to docs, don't duplicate
-- Refresh when conventions change
-- Keep examples **short** but **canonical**
-
-Target: **< 200 lines** for most projects.
+- [ ] `module-03/CLAUDE.md` exists and is < 80 lines.
+- [ ] The file has all five sections — `Stack`, `Conventions`, `Commands`, `Do-not`, `Glossary`.
+- [ ] `module-03/proof.png` shows Claude following one convention from the file.
+- [ ] You can name one line you deleted during the trim test, and why.
 
 ---
 
-## Memory Mode — the `#` Shortcut
+## Definition of done
 
-Type `#` at the start of a message to enter **memory mode**:
-
-```
-# Use comments sparingly. Only comment complex code.
-```
-
-Claude will **merge** that instruction into the right `CLAUDE.md`
-(project, local, or global — your choice) automatically.
-
-Use it the moment you catch a repeated mistake.
+✅ `CLAUDE.md` committed to the underlying repo · ✅ Trim test performed at least once · ✅ Submission folder populated.
 
 ---
 
-## File Mentions with `@`
+## Review checkpoint
 
-Pull file contents into the request inline:
+Pair (60 s each):
 
-```
-How does the auth system work? @src/auth
-```
-
-Claude resolves `@` to file paths and includes their contents.
-
-You can also pin files **inside** `CLAUDE.md`:
-
-```md
-The DB schema is in @prisma/schema.prisma — reference it
-whenever you need data structure.
-```
-
-→ Schema is auto-included on every prompt. No re-reading.
+1. Read the partner's `CLAUDE.md`.
+2. Find one line that does *not* change Claude's behavior. Defend or delete.
+3. Confirm the proof screenshot actually demonstrates obedience.
 
 ---
 
-## Layered Context
+## Common mistakes
 
-```
-~/.claude/CLAUDE.md        ← personal defaults
-repo/CLAUDE.md             ← project rules
-repo/feature/CLAUDE.md     ← optional, scoped
-```
-
-Specific overrides general.
+- Treating `CLAUDE.md` as an `ABOUT.md`. It is not — it is a behavior file.
+- Stuffing 200 lines in. Long files dilute attention; keep ≤ 80.
+- Forgetting the **Do-not** section. This is where you encode hard-won lessons.
+- Not committing it. If it isn't in version control, it isn't real.
 
 ---
 
-## Mini Project 3 — Project Brain
+## Instructor notes
 
-**Goal:** Author a `CLAUDE.md` for your CLI Task Manager.
-
-**Steps**
-1. Draft the skeleton in repo root
-2. Fill each section from your real project
-3. Run a test prompt: *"Add a `task search <query>` command."*
-4. Compare results **with vs without** CLAUDE.md
-5. Iterate the file based on what was missed
+- 5 / 5 / 10 / 2 split.
+- Open `skills/claude-md-template/SKILL.md` live — students copy from it.
+- For students with no personal repo, point them at `module-02/`.
+- If short, drop the proof screenshot but keep the file.
 
 ---
 
-## Deliverable Checklist ✅
+## Transition to next module
 
-- [ ] `CLAUDE.md` committed at project root
-- [ ] Sections: Stack, Commands, Conventions, Security, Do Not Touch
-- [ ] At least one *workflow* example
-- [ ] Side-by-side note: "Before vs After CLAUDE.md"
-- [ ] File is ≤ 200 lines
-
----
-
-## Definition of Done
-
-- New Claude Code session uses your conventions automatically
-- Claude follows the **Do Not Touch** rules
-- Test commands in CLAUDE.md actually work
-- A peer can onboard from CLAUDE.md alone
-
----
-
-## Review Checkpoint 🔎
-
-Swap CLAUDE.md with a peer:
-- Can they understand the project in 2 minutes?
-- Is anything missing? Anything redundant?
-- Each provides 2 concrete edits.
-
----
-
-## Break 1 — 10 minutes ☕
-
-Stretch, hydrate, and skim your CLAUDE.md once more.
-
----
-
-## Next Up
-
-**Part 4 — Build Real Apps Faster with Best-of-N**
-You will generate **multiple designs** for a Notes API and pick the best.
+We have *one* prompt working well, and it is now context-aware. Next we generate **multiple candidates** and pick the winner — turning Claude from a single proposer into a small team.
+**Next: Module 4 — Build Faster with Best-of-N.**
