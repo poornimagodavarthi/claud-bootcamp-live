@@ -1,0 +1,125 @@
+
+=== Slide decks ===
+  [32mok[0m   slides/part-01-setup-mindset.md
+  [32mok[0m   slides/part-02-prompting.md
+  [32mok[0m   slides/part-03-claude-md.md
+  [32mok[0m   slides/part-04-best-of-n.md
+  [32mok[0m   slides/part-05-testing-debugging.md
+  [32mok[0m   slides/part-06-git-workflows.md
+  [32mok[0m   slides/part-07-multimodal.md
+  [32mok[0m   slides/part-08-refactor-docs.md
+  [32mok[0m   slides/part-09-skills-workflows.md
+  [32mok[0m   slides/part-10-production-readiness.md
+  [32mok[0m   deck duration markers sum to 240 min
+
+=== Exercises ===
+  [32mok[0m   exercises/part-01/README.md
+  [32mok[0m   exercises/part-02/README.md
+  [32mok[0m   exercises/part-03/README.md
+  [32mok[0m   exercises/part-04/README.md
+  [32mok[0m   exercises/part-05/README.md
+  [32mok[0m   exercises/part-06/README.md
+  [32mok[0m   exercises/part-07/README.md
+  [32mok[0m   exercises/part-08/README.md
+  [32mok[0m   exercises/part-09/README.md
+  [32mok[0m   exercises/part-10/README.md
+  [32mok[0m   exercises/part-05/code-review-rubric.md (student rubric)
+
+=== Skills ===
+  [32mok[0m   skills/claude-md-template/SKILL.md
+  [32mok[0m   skills/code-review/SKILL.md
+  [32mok[0m   skills/test-generation/SKILL.md
+  [32mok[0m   skills/best-of-n/SKILL.md
+  [32mok[0m   skills/refactor/SKILL.md
+  [32mok[0m   skills/release-notes/SKILL.md
+  [32mok[0m   skills/security-checklist/SKILL.md
+  [32mok[0m   skills/git-workflow/SKILL.md
+  [32mok[0m   skills/documentation-generation/SKILL.md
+  [32mok[0m   skills/production-readiness-review/SKILL.md
+
+=== Cross-consistency ===
+  [32mok[0m   slides/README.md references all 10 modules
+  [32mok[0m   README.md references assessments/rubric.md, skills/, and student rubric
+
+=== Forbidden tokens (FR-027b) ===
+  [32mok[0m   no forbidden tokens found across 62 files
+
+=== Beginner course (V1..V13) ===
+  [32mok[0m   slides/beginner/part-01-meet-claude-code.md: duration marker = 20 min
+  [32mok[0m   slides/beginner/part-01-meet-claude-code.md: deck sections (9/9 in order)
+scripts/validate.sh: line 373: ((: 9
+9: syntax error in expression (error token is "9")
+  [32mok[0m   slides/beginner/part-01-meet-claude-code.md: content-slide count = 9
+9 (≤ 12)
+  [32mok[0m   slides/beginner/part-01-meet-claude-code.md: "Show me" slide has runnable code or screenshot
+  [32mok[0m   slides/beginner/part-02-first-conversation.md: duration marker = 25 min
+  [32mok[0m   slides/beginner/part-02-first-conversation.md: deck sections (9/9 in order)
+scripts/validate.sh: line 373: ((: 9
+9: syntax error in expression (error token is "9")
+  [32mok[0m   slides/beginner/part-02-first-conversation.md: content-slide count = 9
+9 (≤ 12)
+  [32mok[0m   slides/beginner/part-02-first-conversation.md: "Show me" slide has runnable code or screenshot
+  [32mok[0m   slides/beginner/part-03-asking-for-what-you-want.md: duration marker = 30 min
+  [32mok[0m   slides/beginner/part-03-asking-for-what-you-want.md: deck sections (9/9 in order)
+scripts/validate.sh: line 373: ((: 9
+9: syntax error in expression (error token is "9")
+  [32mok[0m   slides/beginner/part-03-asking-for-what-you-want.md: content-slide count = 9
+9 (≤ 12)
+  [32mok[0m   slides/beginner/part-03-asking-for-what-you-want.md: "Show me" slide has runnable code or screenshot
+  [32mok[0m   slides/beginner/part-04-reading-code-together.md: duration marker = 25 min
+  [32mok[0m   slides/beginner/part-04-reading-code-together.md: deck sections (9/9 in order)
+scripts/validate.sh: line 373: ((: 9
+9: syntax error in expression (error token is "9")
+  [32mok[0m   slides/beginner/part-04-reading-code-together.md: content-slide count = 9
+9 (≤ 12)
+  [32mok[0m   slides/beginner/part-04-reading-code-together.md: "Show me" slide has runnable code or screenshot
+  [32mok[0m   slides/beginner/part-05-editing-one-file-safely.md: duration marker = 30 min
+  [32mok[0m   slides/beginner/part-05-editing-one-file-safely.md: deck sections (9/9 in order)
+scripts/validate.sh: line 373: ((: 9
+9: syntax error in expression (error token is "9")
+  [32mok[0m   slides/beginner/part-05-editing-one-file-safely.md: content-slide count = 9
+9 (≤ 12)
+  [32mok[0m   slides/beginner/part-05-editing-one-file-safely.md: "Show me" slide has runnable code or screenshot
+  [32mok[0m   slides/beginner/part-06-claude-md-cheat-sheet.md: duration marker = 25 min
+  [32mok[0m   slides/beginner/part-06-claude-md-cheat-sheet.md: deck sections (9/9 in order)
+scripts/validate.sh: line 373: ((: 9
+9: syntax error in expression (error token is "9")
+  [32mok[0m   slides/beginner/part-06-claude-md-cheat-sheet.md: content-slide count = 9
+9 (≤ 12)
+  [32mok[0m   slides/beginner/part-06-claude-md-cheat-sheet.md: "Show me" slide has runnable code or screenshot
+  [32mok[0m   slides/beginner/part-07-safer-and-smarter.md: duration marker = 25 min
+  [32mok[0m   slides/beginner/part-07-safer-and-smarter.md: deck sections (9/9 in order)
+scripts/validate.sh: line 373: ((: 9
+9: syntax error in expression (error token is "9")
+  [32mok[0m   slides/beginner/part-07-safer-and-smarter.md: content-slide count = 9
+9 (≤ 12)
+  [32mok[0m   slides/beginner/part-07-safer-and-smarter.md: "Show me" slide has runnable code or screenshot
+  [32mok[0m   slides/beginner/part-08-putting-it-together.md: duration marker = 30 min
+  [32mok[0m   slides/beginner/part-08-putting-it-together.md: deck sections (9/9 in order)
+scripts/validate.sh: line 373: ((: 9
+9: syntax error in expression (error token is "9")
+  [32mok[0m   slides/beginner/part-08-putting-it-together.md: content-slide count = 9
+9 (≤ 12)
+  [32mok[0m   slides/beginner/part-08-putting-it-together.md: "Show me" slide has runnable code or screenshot
+  [32mok[0m   beginner module duration sum = 210 (range 200..240)
+  [32mok[0m   exercises/beginner/module-00-setup/README.md: exercise sections (7/7 in order)
+  [32mok[0m   exercises/beginner/part-01/README.md: exercise sections (7/7 in order)
+  [32mok[0m   exercises/beginner/part-02/README.md: exercise sections (7/7 in order)
+  [32mok[0m   exercises/beginner/part-03/README.md: exercise sections (7/7 in order)
+  [32mok[0m   exercises/beginner/part-04/README.md: exercise sections (7/7 in order)
+  [32mok[0m   exercises/beginner/part-05/README.md: exercise sections (7/7 in order)
+  [32mok[0m   exercises/beginner/part-06/README.md: exercise sections (7/7 in order)
+  [32mok[0m   exercises/beginner/part-07/README.md: exercise sections (7/7 in order)
+  [32mok[0m   exercises/beginner/part-08/README.md: exercise sections (7/7 in order)
+  [32mok[0m   GLOSSARY.md: 21 terms, 0 orphans, 0 drift, all unique
+  [32mok[0m   assessments/beginner/quiz.md: 16/16 questions, 2 per module, all with A-D options
+  [32mok[0m   assessments/beginner/answer-key.md: all questions answered (A-D letter present)
+  [32mok[0m   README.md: all required cross-references present
+  [32mok[0m   beginner-student-guide.md: all required cross-references present
+  [32mok[0m   beginner-instructor-guide.md: all required cross-references present
+  [32mok[0m   skills/beginner (optional, none authored)
+  [32mok[0m   beginner-certificate-template.md: all 5 required placeholders present
+
+============================================================
+  Validator summary: 85 ok, 0 fail
+============================================================

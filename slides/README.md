@@ -1,53 +1,56 @@
-# Claude Code Extended — Workshop Slide Decks
+# Slide Decks — Claude Code Bootcamp
 
-**Instructor:** Luca Berton
-**Duration:** 5 hours (4h instruction + 1h breaks/Q&A)
-**Format:** Marp-flavored Markdown — render to HTML, PDF, or PPTX.
+Marp-flavored Markdown sources for all 10 module decks. Build outputs go to `slides/dist/` (gitignored).
 
-## Decks (one per Part)
+## Decks
 
-| # | Part | Time | Deliverable |
-|---|------|------|-------------|
-| 1 | [Welcome, Setup & AI-First Mindset](part-01-setup-mindset.md) | 20 min | AI Coding Workspace |
-| 2 | [Prompting Claude Code Like a Tech Lead](part-02-prompting.md) | 30 min | CLI Task Manager |
-| 3 | [Project Context with CLAUDE.md](part-03-claude-md.md) | 25 min | Project Brain (CLAUDE.md) |
-| 4 | [Build Real Apps Faster with Best-of-N](part-04-best-of-n.md) | 35 min | Notes App API |
-| 5 | [Testing, Debugging & Self-Review](part-05-testing-debugging.md) | 35 min | Tests + Bug Fixes + Rubric |
-| 6 | [Git Workflows for Safe AI Development](part-06-git-workflows.md) | 30 min | Feature Branch + Clean History |
-| 7 | [Multimodal Prompting: Screenshot to UI](part-07-multimodal.md) | 30 min | Dashboard UI from Wireframe |
-| 8 | [Refactoring & Documentation at Scale](part-08-refactor-docs.md) | 25 min | Refactor + Dev Handoff Docs |
-| 9 | [Automation: Commands, Hooks, Workflows](part-09-automation.md) | 30 min | Personal Command Library |
-| 10 | [Production Readiness: Security, CI, Deployment](part-10-production.md) | 30 min | Production Readiness Report |
+| # | File | Module | Minutes |
+|---|---|---|---:|
+| 1 | [`part-01-setup-mindset.md`](part-01-setup-mindset.md) | Welcome, Setup & AI-First Mindset | 20 |
+| 2 | [`part-02-prompting.md`](part-02-prompting.md) | Prompting Like a Tech Lead | 24 |
+| 3 | [`part-03-claude-md.md`](part-03-claude-md.md) | Project Context with CLAUDE.md | 22 |
+| 4 | [`part-04-best-of-n.md`](part-04-best-of-n.md) | Build Faster with Best-of-N | 30 |
+| 5 | [`part-05-testing-debugging.md`](part-05-testing-debugging.md) | Testing, Debugging & Self-Review | 28 |
+| 6 | [`part-06-git-workflows.md`](part-06-git-workflows.md) | Git Workflows for Safe AI Dev | 22 |
+| 7 | [`part-07-multimodal.md`](part-07-multimodal.md) | Multimodal: Screenshot to UI | 30 |
+| 8 | [`part-08-refactor-docs.md`](part-08-refactor-docs.md) | Refactoring & Documentation at Scale | 24 |
+| 9 | [`part-09-skills-workflows.md`](part-09-skills-workflows.md) | Commands, Hooks & Reusable Workflows | 22 |
+| 10 | [`part-10-production-readiness.md`](part-10-production-readiness.md) | Production Readiness | 18 |
+| | | **Total instruction** | **240** |
 
-## Render
+## Required deck shape
 
-```bash
-# Install Marp CLI
-npm i -g @marp-team/marp-cli
+Every deck satisfies the contract at [`../specs/001-bootcamp-course-materials/contracts/slide-deck.contract.md`](../specs/001-bootcamp-course-materials/contracts/slide-deck.contract.md):
 
-# Render a single deck to PDF
-marp part-01-setup-mindset.md --pdf
+- Marp frontmatter with `marp: true`, `theme`, `paginate: true`, `size: 16:9`, `title`, `description`
+- A `<!-- duration: NN min -->` marker matching the table above
+- 14 H2 sections in order: Title · Promise · Why this matters · Concepts · Live demo flow · Mini project · Step-by-step lab · Suggested Claude Code prompts · Deliverable checklist · Definition of done · Review checkpoint · Common mistakes · Instructor notes · Transition to next module
 
-# Render all decks to HTML
-marp --input-dir . --html
-```
-
-### Build all decks to PPTX
+## Build
 
 ```bash
-./deploy-pptx.sh           # PPTX only -> dist/pptx/
-./deploy-pptx.sh --all     # PPTX + PDF + HTML
-./deploy-pptx.sh --clean   # wipe dist/ first
+./deploy-pptx.sh              # PPTX only       → dist/pptx/
+./deploy-pptx.sh --pdf        # PPTX + PDF      → dist/pdf/
+./deploy-pptx.sh --html       # PPTX + HTML     → dist/html/
+./deploy-pptx.sh --all        # PPTX + PDF + HTML
+./deploy-pptx.sh --clean      # remove dist/ first
+./deploy-pptx.sh --help
 ```
 
-The script auto-detects `marp` or falls back to `npx @marp-team/marp-cli`.
+The script auto-detects a global `marp` binary and falls back to `npx --yes @marp-team/marp-cli@latest`. If Marp cannot locate Chromium for PPTX/PDF export, point it explicitly:
 
-## Accountability Model
+```bash
+export CHROME_PATH="/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
+./deploy-pptx.sh --pdf
+```
 
-Every deck contains:
-1. **Promise** — what learners will be able to do
-2. **Topics** — concepts taught
-3. **Mini Project** — the hands-on build
-4. **Deliverable Checklist** — concrete artifacts to submit
-5. **Definition of Done** — pass/fail acceptance criteria
-6. **Review Checkpoint** — what the instructor checks before moving on
+## Build outputs
+
+```text
+slides/dist/
+├── pptx/    part-01-setup-mindset.pptx … part-10-production-readiness.pptx
+├── pdf/     (when --pdf or --all)
+└── html/    (when --html or --all)
+```
+
+`slides/dist/` is gitignored.

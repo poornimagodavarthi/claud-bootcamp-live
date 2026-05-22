@@ -1,0 +1,5 @@
+Prompt:
+Reply with one sentence that explains what Claude Code is, written for an absolute beginner.
+
+Reply:
+Claude Code is a small program that runs in your terminal and lets you have a back-and-forth conversation with an AI assistant who can read files, suggest changes, and answer questions about your project.

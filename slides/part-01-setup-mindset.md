@@ -2,150 +2,135 @@
 marp: true
 theme: default
 paginate: true
-header: "Claude Code Extended — Part 1"
-footer: "Luca Berton · Welcome, Setup & AI-First Mindset"
+size: 16:9
+title: "Module 1 — Welcome, Setup & AI-First Mindset"
+description: "Set the room up for 4 hours of high-velocity AI-paired delivery. Introduce the Plan→Implement→Test→Review→Commit loop."
 ---
 
-# Part 1
-## Welcome, Setup & AI-First Development Mindset
+<!-- duration: 20 min -->
 
-**Duration:** 20 min · **Format:** Instructor demo + guided setup
-**Deliverable:** A working AI Coding Workspace
+## Module 1 — Welcome, Setup & AI-First Mindset
 
----
-
-## Workshop Promise
-
-By the end of this 5-hour workshop you will:
-
-- Use Claude Code as an **AI development partner** (not autocomplete)
-- Ship **10 real-world projects** end-to-end
-- Walk away with a **repeatable workflow** + a **certificate**
+Claude Code Bootcamp · Day 1 · Block 1 of 10
+Instructor: **Luca Berton** · Endorsed by **Packt Certification**
 
 ---
 
-## Learning Outcomes for Part 1
+## Promise
 
-After this part you can:
+By the end of this 20-minute block you will:
 
-1. Explain how Claude Code differs from autocomplete tools
-2. Set up Claude Code for professional AI-assisted development
-3. Initialize a clean workshop workspace with Git
-4. Describe the Claude Code loop: **Plan → Implement → Test → Review → Commit**
-
----
-
-## Claude Code ≠ Autocomplete
-
-| Autocomplete | Claude Code |
-|---|---|
-| Single-line suggestions | End-to-end task delegation |
-| Reactive | Proactive (plans first) |
-| No memory of project | Reads files, runs tests, edits multi-file |
-| You drive every keystroke | You drive **intent**, Claude drives execution |
+1. Have verified your pre-work environment (Claude Code, Python 3.11+, Node.js 20+, Git).
+2. Know exactly how the next 4 hours of instruction are structured.
+3. Be able to name the five steps of the **AI coding loop** we will reuse in every module.
 
 ---
 
-## AI-First Mindset
+## Why this matters
 
-- **Delegate tasks**, not snippets
-- **Trust, but verify** — every diff is reviewed
-- **Plan before code** — make Claude write the plan first
-- **Fast feedback loops** — small, testable steps
-- **Safe delegation ≠ blind trust**
+- We are building **10 small projects in 4 hours**. That is impossible by hand. It is achievable when you treat Claude Code as a junior engineer that you direct, review, and merge.
+- The cost of "spray-and-pray" prompting compounds: bad prompt → bad code → bad tests → wasted module. A repeatable loop keeps you above the line.
+- Production teams using AI-paired coding report 30–50% throughput gains *only when* they use a loop. Everyone else regresses on quality.
 
 ---
 
-## The Claude Code Workflow
+## Concepts
 
-```
-        ┌────────┐
-        │  PLAN  │
-        └───┬────┘
-            ▼
-     ┌────────────┐
-     │ IMPLEMENT  │
-     └──────┬─────┘
-            ▼
-        ┌────────┐
-        │  TEST  │
-        └───┬────┘
-            ▼
-       ┌────────┐
-       │ REVIEW │
-       └───┬────┘
-           ▼
-       ┌────────┐
-       │ COMMIT │
-       └────────┘
-```
+- **AI-paired coding**: you stay the engineer of record. Claude proposes; you decide.
+- **The loop**: **Plan → Implement → Test → Review → Commit.** Every module repeats this.
+- **The skill library**: reusable instructions to Claude that survive across projects (`skills/`).
+- **Definition of Done**: a hard checklist per module; if it isn't checked, the module isn't shipped.
+- **Submission as proof of work**: every module produces a folder in your final zip.
 
 ---
 
-## Recommended Folder Structure
+## Live demo flow
 
-```
-claude-code-workshop/
-├── CLAUDE.md
-├── .gitignore
-├── README.md
-├── 01-cli-task-manager/
-├── 02-notes-api/
-├── 03-dashboard/
-├── commands/
-└── reports/
+1. Instructor opens this repo in their IDE with Claude Code attached.
+2. Runs `git status` — clean. Runs `python3 --version` and `node --version` — both green.
+3. Asks Claude: *"List the top-level files and tell me what kind of repository this is."*
+4. Class watches Claude read the repo and respond with the answer everyone produced in pre-work.
+5. Instructor narrates the 5-step loop while Claude is responding.
+
+---
+
+## Mini project
+
+**Verify your AI Coding Workspace.**
+
+Deliverable for module 1 in your submission zip: `module-01/` containing
+
+- `environment.txt` — output of `python3 --version`, `node --version`, `git --version`
+- `loop-notes.md` — your one-paragraph explanation of the 5-step loop, written in your own words
+
+---
+
+## Step-by-step lab
+
+1. Open a terminal. Run the three `--version` commands; pipe to `module-01/environment.txt`.
+2. In Claude Code, paste the prompt below.
+3. Read Claude's reply. Edit it into your own one-paragraph explanation.
+4. Save it to `module-01/loop-notes.md`.
+5. Tick the Definition of Done.
+
+---
+
+## Suggested Claude Code prompts
+
+```text
+You are onboarding a new engineer who has never used AI-paired coding.
+In one short paragraph (max 6 sentences), explain the loop:
+Plan → Implement → Test → Review → Commit.
+Use the metaphor of directing a junior engineer.
+End with one sentence about why skipping the Review step is the most common failure mode.
 ```
 
-One folder per project. One Git repo overall.
+---
+
+## Deliverable checklist
+
+- [ ] `module-01/environment.txt` contains three valid version strings.
+- [ ] `module-01/loop-notes.md` exists and is non-empty.
+- [ ] The notes name all five steps of the loop in order.
+- [ ] The notes are in **your own words**, not Claude's verbatim output.
 
 ---
 
-## Mini Project 1 — AI Coding Workspace Setup
+## Definition of done
 
-**Goal:** Create a clean local workspace ready for the next 9 projects.
-
-**Steps**
-
-1. Install / authenticate Claude Code
-2. `mkdir claude-code-workshop && cd claude-code-workshop`
-3. `git init` and add `.gitignore`
-4. Create the folder structure above
-5. First commit: `chore: scaffold workshop workspace`
+✅ Environment verified · ✅ Loop explained in your own words · ✅ Submission folder `module-01/` exists with both files.
 
 ---
 
-## Deliverable Checklist ✅
+## Review checkpoint
 
-- [ ] Claude Code installed and authenticated
-- [ ] Git repository initialized with first commit
-- [ ] Workshop project folder structure created
-- [ ] `README.md` with your name + workshop date
-- [ ] `.gitignore` configured for your stack
+Pair with the person next to you. In 60 seconds each:
 
----
-
-## Definition of Done
-
-- `git log` shows ≥ 1 commit
-- `claude --version` (or equivalent) works
-- Folder layout matches the recommended structure
-- You can run a Claude Code session inside the repo
+- Read each other's `loop-notes.md`.
+- Identify one sentence you would tighten.
+- Confirm both `environment.txt` files show identical major versions.
 
 ---
 
-## Review Checkpoint 🔎
+## Common mistakes
 
-Pair with a peer and verify:
-
-- Both repos boot cleanly
-- Both can launch a Claude Code session
-- Both committed their scaffold
-
-> If anything fails here, **stop and fix** — every later part depends on it.
+- Copying Claude's reply verbatim — instructor scoring penalises this.
+- Treating "Review" as optional. Skipping review is how AI-generated bugs reach production.
+- Using PowerShell on Windows. Move to WSL2 (see `student-guide.md`).
+- Pre-work skipped — you cannot keep up; pair with a neighbor for module 1 only.
 
 ---
 
-## Next Up
+## Instructor notes
 
-**Part 2 — Prompting Claude Code Like a Tech Lead**
-You will build the **CLI Task Manager** using "big prompts."
+- Keep this block to 20 min hard. Mindset only — **no live installs**.
+- Open with Claude Code on a known repo, not a slide.
+- If a student's environment is broken, mark them as paired and continue.
+- Reference the schedule table in `README.md`. Set expectations on break placement.
+
+---
+
+## Transition to next module
+
+Now that the loop is named, we apply step 1 — **Plan** — by writing prompts the way a Tech Lead writes specs.
+**Next: Module 2 — Prompting Like a Tech Lead.**

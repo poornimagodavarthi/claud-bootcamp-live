@@ -1,0 +1,15 @@
+## Vague version
+
+Can you review my code?
+
+## Clear version (role + goal + constraint + format)
+
+Act as a careful Python reviewer. I will paste a ~30-line function below. Your goal: find at most 3 real bugs, in order of severity. Constraint: no style nits and no rewrites. Format: a numbered list, each entry under 15 words.
+
+[function pasted here]
+
+## Reply
+
+1. `total // count` is integer division — fractional averages are silently truncated.
+2. `numbers=None` raises `TypeError` instead of a clear "expected a list" message.
+3. The function returns the int `0` for the empty-positive case but `int` for everything else; mixing types makes downstream code surprising.

@@ -1,0 +1,10 @@
+# Redacted version — safe to share.
+
+DATABASE_URL=postgres://USER:REDACTED@HOST:5432/DBNAME
+ADMIN_EMAIL=alice@example.com
+FEATURE_FLAG=INTERNAL
+
+# Other settings (already safe)
+LOG_LEVEL=info
+PORT=8080
+TIMEOUT_SECONDS=30
