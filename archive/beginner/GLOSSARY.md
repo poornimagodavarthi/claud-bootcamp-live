@@ -1,6 +1,6 @@
 # Glossary
 
-The shared, single-source-of-truth glossary for the Claude Code 101 beginner course. Every term defined here is referenced by at least one beginner slide deck under [slides/beginner/](slides/beginner/README.md), and every term that appears on any deck's "Glossary card" is defined here byte-identically. The structural validator (`scripts/validate.sh` check V8) enforces both directions: no drift, no orphans, no duplicates.
+The shared, single-source-of-truth glossary for the (archived) **Claude Code 101** beginner course. Every term defined here is referenced by at least one beginner slide deck under [slides/](slides/) and every term that appears on any deck's "Glossary card" is defined here byte-identically.
 
 Format for every entry: `- **Term**: One-line definition.` (single line, period at the end). Group by first letter under H2 headings, alphabetised within each group.
 

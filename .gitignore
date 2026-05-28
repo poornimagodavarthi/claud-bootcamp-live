@@ -6,6 +6,9 @@ slides/dist/
 !slides/dist/pptx/**
 !slides/dist/pdf/
 !slides/dist/pdf/**
+# Marp / build caches and gate logs are NOT tracked
+slides/dist/.cache/
+scripts/gates/*.log
 
 # OS / editor
 .DS_Store

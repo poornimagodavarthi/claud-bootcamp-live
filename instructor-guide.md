@@ -8,13 +8,80 @@
 
 Run this **the morning of delivery**, in order:
 
-- [ ] **Environment.** Clone the repo, run `cd slides && ./deploy-pptx.sh --all`. All 10 PPTX/PDF/HTML decks produced. If Marp can't find Chromium, set `CHROME_PATH`.
-- [ ] **Validator.** `bash scripts/validate.sh` exits 0. All structural and forbidden-token checks green.
+- [ ] **Environment.** Clone the repo, run `cd slides && ./deploy-pptx.sh --all`. All 11 PPTX/PDF/HTML decks produced (10 modules + Part 11 closing block). If Marp can't find Chromium, set `CHROME_PATH`.
+- [ ] **Pre-delivery audit.** `bash scripts/preflight.sh` exits `RC=0`. See [Pre-delivery audit (`scripts/preflight.sh`)](#pre-delivery-audit-scriptspreflightsh) below for the 15 gates and how to interpret failures.
 - [ ] **Reference solutions.** Smoke-test each `exercises/part-NN/solution/` per [`student-guide.md`](student-guide.md). All commands exit 0.
 - [ ] **Claude Code account.** Logged into a working tier; `claude --version` (or your CLI/IDE equivalent) responds.
 - [ ] **AV.** Screen sharing rehearsed at 16:9. Microphone tested. Recording on (if delivery contract requires).
 - [ ] **Pre-work entry-condition.** All registered students submitted `module-00-prework/hello-claude.txt` to the Packt LMS at least 1 hour before start. Students without pre-work are paired or moved to async cohort.
 - [ ] **Time-of-day check.** Workshop starts 09:00 AM EST. Have the schedule table from [`README.md`](README.md#schedule) visible on a second screen.
+
+## Pre-delivery audit (`scripts/preflight.sh`)
+
+Single command, 15 gates, ~3 seconds. Run from the repo root.
+
+```bash
+bash scripts/preflight.sh                       # all gates
+bash scripts/preflight.sh --gate audit.slide-anatomy   # one gate (smoke-test)
+bash scripts/preflight.sh --verbose             # show every check
+```
+
+### Return codes
+
+| RC | Meaning | Action |
+|---:|---|---|
+| 0 | All block gates PASS; WARNs may exist. | Safe to deliver. |
+| 1 | One or more **block** gates FAIL. | Fix before delivery. |
+| 2 | Internal script error (bad invocation, missing file). | File an issue against `scripts/preflight.sh`. |
+| 64 | Unsupported environment (bash too old, missing `find` or `awk`). | Use the documented environment. |
+
+### The 15 gates
+
+| Gate | Severity | What it checks |
+|---|---|---|
+| `audit.module-bundle` | block | Every module 01–10 + Part 11 has slide + exercise + solution (Part 11: slide only). |
+| `audit.slide-anatomy` | block | Each deck has H1 + the 13 required H2 sections in the canonical order. |
+| `audit.slide-theme` | block | Every deck declares `theme: wow-beginner`. |
+| `audit.slide-overflow` | block | No slide exceeds the 22-line content budget. |
+| `audit.duration-sum` | block | Σ `<!-- duration: NN min -->` markers for part-01..10 = 240 ± 5 min. |
+| `audit.exercise-anatomy` | block | Each exercise README has the 9 required H2 sections. |
+| `audit.solution-presence` | block | Each `exercises/part-NN/solution/` has an entry-point file (`README.md` / `run.sh` / `solution.*`). |
+| `audit.skill-contract` | block | All 12 catalogued skills present; each `SKILL.md` has the 6 required H2 sections. |
+| `audit.assessment-coverage` | block | All 5 assessment files present; rubric references modules 01–10; May-2026 topics covered. |
+| `audit.cross-links` | block | Every intra-repo markdown link resolves. |
+| `audit.bundle-coverage` | block | Skills · MCP · Hooks · GitHub Actions · Multi-agent each mentioned in ≥1 deck AND ≥1 exercise. |
+| `audit.no-clarifications-in-published` | block | No `[NEEDS CLARIFICATION:` markers in published surfaces (slides/exercises/skills/assessments/README/student-guide). |
+| `audit.archive-isolation` | block | Only the single, labelled README section "Optional pre-bootcamp warm-up (archived)" links into `archive/`. |
+| `audit.dist-freshness` | warn | Every deck has a corresponding artefact under `slides/dist/{pdf,pptx,html}/`. Stale or missing → WARN, not block. |
+| `audit.contrast` | block | Slide theme passes WCAG-AA contrast for text vs background. |
+
+### Interpreting failures
+
+Every FAIL prints `file:line` (or `file:` if the issue is whole-file). Fix the file, re-run. Most failures are 30-second edits.
+
+If `audit.dist-freshness` is the only WARN and you have time for a 7-minute rebuild, run `( cd slides && ./deploy-pptx.sh --all )` to clear it. Otherwise the WARN is acceptable for delivery — the `.pptx` exports are not the source of truth.
+
+### Injection round-trip (verify the audit catches breakage)
+
+Once per release, prove the audit is live by deliberately breaking one thing and confirming the gate catches it:
+
+```bash
+# 1. Break the slide anatomy of one deck (delete the Promise section heading)
+sed -i.bak '/^## Promise$/d' slides/part-01-setup-mindset.md
+bash scripts/preflight.sh --gate audit.slide-anatomy
+# Expected: RC=1, message pointing at slides/part-01-setup-mindset.md (missing 'Promise')
+mv slides/part-01-setup-mindset.md.bak slides/part-01-setup-mindset.md
+```
+
+```bash
+# 2. Inject a NEEDS CLARIFICATION marker
+echo '<!-- [NEEDS CLARIFICATION: round-trip test] -->' >> README.md
+bash scripts/preflight.sh --gate audit.no-clarifications-in-published
+# Expected: RC=1, message pointing at README.md:<lineno>
+git checkout README.md
+```
+
+If either round-trip does not produce the expected RC=1 + file pointer, the audit is silently broken — open an issue against `scripts/preflight.sh` before delivering.
 
 ## Live schedule (300 min total)
 

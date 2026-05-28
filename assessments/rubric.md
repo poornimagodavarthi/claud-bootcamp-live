@@ -69,3 +69,34 @@ pass = total% >= 70
 ## Issuance
 
 On pass: render [`../certificate-template.md`](../certificate-template.md) with the student's name and completion date and deliver via the Packt LMS.
+
+## Per-module assessment mapping
+
+Each module 01–10 must surface in at least one assessment item. This table is the cross-reference the grader uses to confirm the student demonstrated learning on every part.
+
+| Module | Module title | Primary assessment item | Where it's graded |
+|---|---|---|---|
+| Module 01 | Setup & AI-First Mindset | Pre-work smoke test + quiz Q on the plan/implement/test/review loop | Knowledge quiz |
+| Module 02 | Prompting Like a Tech Lead | Quiz Q on GCOE; practical-task `PROMPT.md` | Quiz + Practical |
+| Module 03 | Project Context with `CLAUDE.md` | Quiz Q on CLAUDE.md sections; practical-task uses a CLAUDE.md | Quiz + Practical |
+| Module 04 | Best-of-N | Quiz Q on candidate generation; practical-task `candidates.md` | Quiz + Practical |
+| Module 05 | Testing, Debugging & Self-Review | Quiz Q on `code-review` skill; reflection both bugs | Quiz + Reflection |
+| Module 06 | Git Workflows (incl. `@claude` GitHub Action) | Quiz Q on `@claude` action; practical-task `PR.md` | Quiz + Practical |
+| Module 07 | Multimodal | Quiz Q on screenshot-to-UI prompting; practical-task UI deliverable variant | Quiz + Practical |
+| Module 08 | Refactor & Handoff Docs | Quiz Q on refactor scope; reflection carry-over skill | Quiz + Reflection |
+| Module 09 | Skills, Hooks, MCP, Multi-agent | Quiz Q on each of the 4 pillars; practical-task SKILL.md authoring | Quiz + Practical |
+| Module 10 | Production Readiness | Quiz Q on 12-item checklist; practical-task readiness report | Quiz + Practical |
+
+## May 2026 coverage requirements
+
+The rubric must score the student on each of the five May 2026 headline shifts. Without these the grade does not reflect today's Claude Code surface.
+
+| Headline shift | Mandatory assessment evidence |
+|---|---|
+| **Skills** (bundled + author-your-own) | ≥1 quiz item + the `SKILL.md` artefact in the practical task |
+| **MCP** (Model Context Protocol connectors, e.g., Jira / Slack / GitHub) | ≥1 quiz item; practical-task brief produced with the `mcp-context-brief` skill |
+| **Hooks** (`.claude/hooks.json` pre-bash / post-edit / pre-commit) | ≥1 quiz item; reflection acknowledges at least one hook the student would adopt |
+| **GitHub Action `@claude`** (`anthropics/claude-code-action`) | ≥1 quiz item; practical-task `PR.md` references how `@claude` would review it |
+| **Multi-agent fan-out & background runs** | ≥1 quiz item; reflection names when NOT to fan out |
+
+Grader instruction: if any cell in this table is empty in the student's submission, deduct **3 points** from the practical-task subtotal per missing cell.

@@ -121,7 +121,9 @@ Each module has:
 
 Inside each `exercises/part-NN/README.md` you'll find 9 sections in order: Goal · Scenario · Starter instructions · Claude Code prompt · Manual validation · Expected deliverable · Definition of done · Stretch challenge · Troubleshooting. Follow them top to bottom.
 
-For code-producing modules (2, 4, 5, 7, 8) a **reference solution** lives at `exercises/part-NN/solution/`. **Do not open it before completing the lab** — it spoils the learning loop. After you finish, diff your code against it.
+Every module 01\u201310 has a **reference solution** at `exercises/part-NN/solution/`. **Do not open it before completing the lab** \u2014 it spoils the learning loop. After you finish, diff your code against it.
+
+Part 11 is the closing block (Q&A, exam briefing, "what to do Monday") \u2014 no exercise.
 
 ## Submission workflow
 

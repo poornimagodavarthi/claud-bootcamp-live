@@ -1,22 +1,23 @@
-# `wow-beginner` + `wow-intermediate` — Slide Design System
+# `wow-beginner` — Slide Design System
 
-The single source of truth for the visual identity of both deck families:
+The single source of truth for the visual identity of every deck in this repo.
 
-- **Beginner decks** (`slides/beginner/part-01..08-*.md`) → `theme: wow-beginner`
-- **Intermediate decks** (`slides/part-01..10-*.md`) → `theme: wow-intermediate`
+- **All decks** (`slides/part-01..11-*.md`) → `theme: wow-beginner`
 
 Source files:
 
-- [`wow-beginner.css`](./wow-beginner.css) — the base Marp custom theme.
-- [`wow-intermediate.css`](./wow-intermediate.css) — `@import`s the base and adds **one** new class: `tpl-demo` (for the intermediate Live-demo-flow slide).
+- [`wow-beginner.css`](./wow-beginner.css) — the (self-contained) Marp custom theme. All `tpl-*` classes live here.
 - [`fonts/`](./fonts) — bundled SIL OFL 1.1 fonts (Inter, JetBrains Mono).
 - [`icons/`](./icons) — bundled ISC-licensed Lucide icons (13 files).
-- Intermediate teaching SVGs live in [`slides/intermediate/assets/`](../intermediate/assets) (10 files, one per module).
+- Teaching SVGs live in [`slides/intermediate/assets/`](../intermediate/assets) (10 files, one per agenda module).
 
-Feature specs:
+> **History**: an earlier `wow-intermediate.css` `@import`ed this theme. Marp CLI does **not** resolve `@import` between themes registered via `--theme-set`, which produced unstyled exports. The intermediate theme was therefore folded into `wow-beginner.css` and deleted. Do **not** reintroduce a multi-file theme split.
 
-- Beginner: [`specs/003-slide-wow-polish/`](../../specs/003-slide-wow-polish/).
-- Intermediate: [`specs/004-intermediate-content-polish/`](../../specs/004-intermediate-content-polish/).
+Feature specs (historical):
+
+- [`specs/003-slide-wow-polish/`](../../specs/003-slide-wow-polish/)
+- [`specs/004-intermediate-content-polish/`](../../specs/004-intermediate-content-polish/)
+- [`specs/005-may-2026-bootcamp-refresh/`](../../specs/005-may-2026-bootcamp-refresh/)
 
 ---
 
@@ -57,7 +58,7 @@ Each recurring lesson section uses a CSS class applied via Marp's per-slide dire
 | `tpl-try` | "Try it yourself" — steps | numbered list + success-criterion blockquote |
 | `tpl-done` | "Definition of done" — checklist | unordered list + reflection blockquote |
 | `tpl-next` | Closing / next module | h2 title (final module: add `is-finale` class for ★) |
-| `tpl-demo` | **Intermediate only** — Live demo flow procedure | h2 + numbered steps (oversized mono numerals on accent-soft strip); optional `play` hero-icon |
+| `tpl-demo` | Live demo flow procedure | h2 + numbered steps (oversized mono numerals on accent-soft strip); optional `play` hero-icon |
 
 Detailed contracts per template: see [`specs/003-slide-wow-polish/contracts/slide-template-contracts.md`](../../specs/003-slide-wow-polish/contracts/slide-template-contracts.md).
 

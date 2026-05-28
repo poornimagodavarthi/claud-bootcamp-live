@@ -8,33 +8,33 @@
 [![Duration](https://img.shields.io/badge/duration-5h-informational)](#schedule)
 [![Level](https://img.shields.io/badge/level-beginner→intermediate-success)](#audience)
 [![Slides](https://img.shields.io/badge/slides-Marp-orange)](slides/README.md)
-[![Skills](https://img.shields.io/badge/skills-10+-purple)](skills/README.md)
+[![Skills](https://img.shields.io/badge/skills-12-purple)](skills/README.md)
 
 ---
 
 ## Start here
 
-New to this repo? Pick the path that matches you:
+> **Where do I start?** → Open [exercises/part-01/README.md](exercises/part-01/README.md). Everything else on this page is reference material.
 
-- **Never used Claude Code, or want a gentle on-ramp** → Take the free **Claude Code 101** beginner workshop (~210 minutes, 8 short modules + quiz + capstone). Start at [beginner-student-guide.md](beginner-student-guide.md). Deck index: [slides/beginner/README.md](slides/beginner/README.md). Instructors: [beginner-instructor-guide.md](beginner-instructor-guide.md).
-- **Comfortable with Claude Code and ready for production workflows** → Jump into the 5-hour intermediate bootcamp below.
+**Pre-work checklist** (complete before the live session — ~30 min):
+
+- [ ] **Claude Code** installed and signed in (any tier)
+- [ ] **Python 3.11+** on `PATH` (primary track)
+- [ ] **Node.js 20+** on `PATH` (secondary track for parts 2/4/5)
+- [ ] **Git ≥ 2.30** on `PATH`
+- [ ] An IDE you can drive (VS Code recommended)
+- [ ] macOS / Linux / Windows-via-WSL2 — native PowerShell is **not** supported
+
+Full pre-work is in [student-guide.md](student-guide.md#mandatory-pre-work-30-min).
+
+**During the bootcamp**, work through parts 01 → 10 in order. Each part is a ~22-minute block with a slide deck + an exercise + a reference solution. Part 11 is the closing Q&A + exam briefing.
 
 ```mermaid
 flowchart LR
-    A[Beginner workshop<br/>Claude Code 101<br/>~210 min] --> B[Intermediate bootcamp<br/>10 real-world projects<br/>5 h live]
-    B --> C[Packt Certificate<br/>+ Skills library]
+    A[Pre-work<br/>~30 min] --> B[Bootcamp<br/>parts 01–10<br/>4 h instruction]
+    B --> C[Part 11<br/>Q&A + exam briefing<br/>~30 min]
+    C --> D[Packt Certificate<br/>+ Skills library]
 ```
-
-<details>
-<summary>ASCII fallback if Mermaid doesn't render</summary>
-
-```text
-[Beginner workshop]  -->  [Intermediate bootcamp]  -->  [Certificate + Skills]
-  Claude Code 101         10 real-world projects        Packt Certification
-   ~210 minutes            5 hours live                  + reusable skills
-```
-
-</details>
 
 ## Table of Contents
 
@@ -105,7 +105,8 @@ By the end of the bootcamp you can:
 | 9 | Commands, Hooks & Reusable Workflows | 22 | Personal Claude Skills / Command Library |
 | 10 | Production Readiness | 18 | Production Readiness Report |
 | | **Instruction total** | **240** | |
-| | Breaks + Q&A + exam briefing | 60 | — |
+| 11 | Q&A, exam briefing, next steps (closing block) | 30 | Action plan for Monday |
+| | Breaks + buffer | 30 | — |
 | | **Schedule total** | **300** | |
 
 ## Projects
@@ -137,22 +138,26 @@ The 10 projects students build, in order:
 ├── slides/                         # 10 Marp decks + build script
 │   ├── README.md
 │   ├── deploy-pptx.sh
-│   └── part-01-…-part-10-….md
-├── exercises/                      # 10 hands-on labs
+│   └── part-01-…-part-10-….md (+ part-11 closing block)
+├── exercises/                      # 10 hands-on labs (parts 01–10)
 │   └── part-01/ … part-10/
-├── skills/                         # MIT-licensed Claude Skills library
+├── skills/                         # MIT-licensed Claude Skills library (12 skills)
 │   ├── LICENSE
 │   ├── README.md
-│   └── <10 skills>/SKILL.md
+│   └── <12 skills>/SKILL.md
 ├── assessments/                    # quiz, practical, reflection, rubric, key
 ├── scripts/
-│   └── validate.sh                 # structural + cross-artifact validation
+│   ├── preflight.sh                # 15-gate pre-cohort audit
+│   ├── check-slide-overflow.sh
+│   ├── check-contrast.sh
+│   └── check-verbatim-blocks.sh
+├── archive/                        # off-agenda content (optional warm-up)
 └── specs/                          # Spec Kit feature specs (maintainer-facing)
 ```
 
 ## Build
 
-Build all 10 slide decks to PPTX (and optionally PDF/HTML):
+Build all 11 slide decks (10 modules + closing block) to PPTX (and optionally PDF/HTML):
 
 ```bash
 cd slides
@@ -162,15 +167,21 @@ cd slides
 ./deploy-pptx.sh --clean    # remove dist/ before rebuilding
 ```
 
-All decks (intermediate + beginner) build to a single flat tree under `slides/dist/<format>/`. Intermediate decks use the `wow-intermediate` theme (which `@import`s `wow-beginner`); beginner decks use `wow-beginner` directly. See [`slides/themes/README.md`](slides/themes/README.md).
+All decks build to a single flat tree under `slides/dist/<format>/` using the self-contained `wow-beginner` theme. See [slides/themes/README.md](slides/themes/README.md).
 
-The script auto-detects a global `marp` and falls back to `npx --yes @marp-team/marp-cli@latest`. Set `CHROME_PATH` if Marp can't find Chromium for PPTX/PDF export. See [`slides/README.md`](slides/README.md).
+The script auto-detects a global `marp` and falls back to `npx --yes @marp-team/marp-cli@latest`. Set `CHROME_PATH` if Marp can't find Chromium for PPTX/PDF export. See [slides/README.md](slides/README.md).
 
-Validate repository structure (sections, terminology, durations, forbidden tokens):
+### Run the audit
+
+Before every cohort, run the pre-flight audit to catch broken cross-links, missing sections, drifted slide artefacts, and stray `[NEEDS CLARIFICATION]` tokens:
 
 ```bash
-bash scripts/validate.sh
+bash scripts/preflight.sh           # all 15 gates; RC=0 means safe to deliver
+bash scripts/preflight.sh --quick   # skip the slow slide-overflow render
+bash scripts/preflight.sh --gate audit.cross-links --verbose
 ```
+
+Gate reference: [instructor-guide.md § Pre-delivery audit](instructor-guide.md#pre-delivery-audit).
 
 ## Assessment
 
@@ -193,6 +204,10 @@ This repository uses a **dual-license** scheme:
 - **`skills/` directory** — [MIT](skills/LICENSE). Graduates may reuse skills in commercial projects without further restriction.
 
 "**Packt Certification**" and "**LLM Engineering by Packt**" are trademarks of Packt Publishing Ltd., used here under endorsement.
+
+## Optional pre-bootcamp warm-up (archived)
+
+There is an earlier **beginner track** kept under [archive/beginner/](archive/beginner/README.md). It is **not** part of the 4-hour bootcamp and is not maintained on the May 2026 refresh path. Use it only as a self-study warm-up if you have never used Claude Code before. Instructors: do not point students here during a cohort.
 
 ---
 
