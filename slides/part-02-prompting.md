@@ -17,167 +17,183 @@ description: "Translate a vague feature request into a precise, constraint-rich 
 
 # Prompting Like a Tech Lead
 
-Claude Code Bootcamp · Day 1 · Block 2 of 10
+**A great prompt is a spec. Write it the way a Tech Lead writes a ticket.**
 
 <img class="hero-icon" src="themes/icons/pencil.svg" alt="" />
+
+<!--
+SPEAKER NOTES — slide 1 (hook, 60 sec)
+- One line: "Today we turn a vague idea into a one-pass CLI."
+- Tease the demo: same task, vague prompt vs GCOE prompt, watch the lift.
+-->
 
 ---
 
 <!-- _class: tpl-objectives -->
 
-## Promise
+## Theory · The GCOE prompt (4 min)
 
-In 24 minutes you will:
+A production prompt has **four parts — skip one and quality drops**:
 
-1. Write a Tech-Lead-grade prompt using the **GCOE pattern** (Goal, Constraints, Output, Examples).
-2. Ship a working **CLI Task Manager** — add, list, complete, delete — to disk.
-3. Iterate the prompt by deleting one constraint and observing the diff.
+> **G**oal · **C**onstraints · **O**utput format · **E**xamples
 
----
+- **Goal** — one verb-led sentence: what can the user *do* at the end?
+- **Constraints** — language, deps, file layout, error handling, and what must **not** happen.
+- **Output format** — files, exit codes, JSON shapes if any.
+- **Examples** — one happy path + one edge case is enough to disambiguate.
 
-## Why this matters
+**A vague prompt produces plausible code that fails review. GCOE produces code you can merge.**
 
-- A vague prompt produces vague code. The bottleneck for AI-paired coding is **prompt quality**, not model quality.
-- A Tech Lead does not say *"build a CLI"*. They write a one-page spec. We are going to write that spec in 90 seconds and let Claude implement it.
-- Every later module reuses GCOE. Get this right and the day gets faster.
-
----
-
-## Concepts
-
-- **GCOE**: Goal · Constraints · Output format · Examples. Skip any one and quality drops.
-- **Goal**: what the user can do at the end. Verb-led, single sentence.
-- **Constraints**: language, dependencies, file layout, error handling, what must *not* be done.
-- **Output format**: file paths, exit codes, JSON schema if applicable.
-- **Examples**: one happy path + one edge case = enough.
-
-![h:280](intermediate/assets/02-prompt-anatomy.svg)
+<!--
+SPEAKER NOTES — slide 2 (theory, 4 min)
+- Anchor: constraints are where the engineering lives. "No third-party deps" is a design decision.
+- Examples aren't optional — the model uses them to resolve ambiguity.
+-->
 
 ---
 
 <!-- _class: tpl-show -->
 
-## Live demo flow
+## Anatomy of a GCOE prompt
 
-1. Instructor pastes a deliberately vague prompt: *"Make a CLI to manage tasks."*
-2. Class observes Claude's reasonable but generic output.
-3. Instructor rewrites in GCOE form. Re-runs.
-4. Class observes the lift: real CLI, real persistence, real tests scaffolded.
-5. Instructor **deletes one constraint** mid-demo (e.g., "no third-party deps") and re-runs to show the regression.
+![GCOE prompt anatomy: Goal, Constraints, Output, Examples](intermediate/assets/02-prompt-anatomy.svg)
 
----
+**G**oal · **C**onstraints · **O**utput · **E**xamples — skip one and quality drops.
 
-<!-- _class: tpl-show -->
-
-## Mini project
-
-**CLI Task Manager.**
-
-- `task add "<text>"` → appends a task with id, status, timestamp.
-- `task list [--status open|done]` → tabular output to stdout.
-- `task done <id>` → flips status.
-- `task delete <id>` → removes the row.
-- Persisted to `tasks.json` in the working directory.
-
----
-
-<!-- _class: tpl-try -->
-
-## Step-by-step lab
-
-1. Pick your track: **Python** (`argparse`, stdlib only) or **Node.js + TypeScript** (`commander` + `tsx`).
-2. Create `module-02/` in your working directory.
-3. Open Claude Code, paste the GCOE prompt below (verbatim, then edit the *Goal* line if you want a twist).
-4. Save the generated files into `module-02/`.
-5. Manually run all four commands; verify `tasks.json` updates.
-6. Iterate: delete the *"no third-party deps"* line in your prompt, re-generate, diff. Note the change in `module-02/iteration-notes.md`.
+<!--
+SPEAKER NOTES — slide 3 (diagram, 1 min)
+- Point at each block; the skeleton on the next slide maps 1:1 to this picture.
+-->
 
 ---
 
 <!-- _class: tpl-show -->
 
-## Suggested Claude Code prompts
+## Reference · GCOE skeleton you can paste
 
 ```text
-GOAL
-Build a single-binary CLI Task Manager so a developer can manage TODOs from the terminal.
+GOAL: A user can <verb> <thing> from the command line.
 
-CONSTRAINTS
-- Language: Python 3.11 (stdlib only) — OR — TypeScript on Node.js 20 with `commander` + `tsx`.
-- Persistence: a single JSON file `tasks.json` in CWD.
-- No background processes. No network calls.
-- Exit code 0 on success, 1 on user error, 2 on internal error.
-- All user-facing strings in English.
+CONSTRAINTS:
+- Language: Python 3.11, standard library only (no third-party deps).
+- Persist state to ./tasks.json.
+- Exit codes: 0 success, 1 user error, 2 internal error.
 
-OUTPUT FORMAT
-- One source file (Python) or `src/index.ts` + `package.json` (Node).
-- A short README explaining install + the four commands.
+OUTPUT:
+- A single runnable script + a short README with usage.
 
-EXAMPLES
-- `task add "Write the spec"` → "Added task #1: Write the spec"
-- `task list` → tabular: id, status, created_at, text
-- `task done 1` → "Marked #1 as done"
-- `task delete 99` → exit 1, "No task with id 99"
+EXAMPLES:
+- `task add "Buy milk"` -> prints new id, exit 0.
+- `task done 999` (missing id) -> prints error to stderr, exit 1.
 ```
 
----
+Keep it tight. Every line removes one wrong guess Claude could make.
 
-<!-- _class: tpl-done -->
-
-## Deliverable checklist
-
-- [ ] `module-02/` contains source + README.
-- [ ] All four commands work end-to-end with `tasks.json`.
-- [ ] `module-02/iteration-notes.md` documents one prompt edit and the resulting code diff.
-- [ ] Reference solution **not** consulted before completing the lab.
+<!--
+SPEAKER NOTES — slide 3 (reference, 1 min)
+- This is the students' copy-paste starting point for the exercise.
+-->
 
 ---
 
-<!-- _class: tpl-done -->
+<!-- _class: tpl-show -->
 
-## Definition of done
+## Reference · Common mistakes
 
-✅ Four commands all return correct exit codes · ✅ `tasks.json` round-trips state across runs · ✅ Iteration note explains *why* the deleted constraint mattered.
+- "Build a CLI" with no constraints — looks fine, fails review.
+- Allowing unintended third-party deps (the constraint exists for a reason).
+- Skipping examples and exit codes — production CLIs are graded on exit codes, not stdout.
+
+<!--
+SPEAKER NOTES — slide 4 (common mistakes, 30 sec)
+Instructor cues:
+- Show the vague-vs-GCOE diff live; let the lift sell itself.
+- Delete one constraint mid-demo to show the regression.
+-->
+
+---
+
+<!-- _class: tpl-show -->
+
+## Live demo · Vague vs. GCOE (5 min)
+
+**Step 1 — paste the vague prompt:**
+
+```text
+Make a CLI to manage tasks.
+```
+
+**Step 2 — paste the GCOE prompt and re-run:**
+
+```text
+GOAL: A user can add, list, complete, and delete tasks from the command line.
+CONSTRAINTS: Python 3.11, stdlib only; persist to ./tasks.json;
+  exit codes 0 success / 1 user error / 2 internal error.
+OUTPUT: one runnable script + a short usage README.
+EXAMPLES: `task add "Buy milk"` -> prints id, exit 0;
+  `task done 999` -> stderr error, exit 1.
+```
+
+**Success signal**: the GCOE version runs all four commands with correct exit codes; the vague one doesn't.
+
+<!--
+SPEAKER NOTES — slide 5 (demo, 5 min)
+- Run vague first, show generic output (no persistence, no exit codes).
+- Run GCOE, show the lift: real CLI, tasks.json, tests scaffolded.
+- Then DELETE the "stdlib only" constraint and re-run -> show the regression.
+- Keep the two outputs side by side. The contrast is the lesson.
+-->
 
 ---
 
 <!-- _class: tpl-try -->
 
-## Review checkpoint
+## Your turn · CLI Task Manager (12 min)
 
-In pairs (60 s each):
+**Exercise**: [`exercises/part-02/README.md`](../exercises/part-02/README.md)
 
-1. Run each other's `task add` and `task list`.
-2. Identify one missing edge case (empty title? duplicate id? corrupt JSON?).
-3. Decide whether you would add it as a new constraint or accept the gap.
+Build a CLI with four commands, persisted to `tasks.json`:
+
+```text
+task add "<title>"        # -> prints new id
+task list [--status STATE]
+task done <id>
+task delete <id>
+```
+
+**Prompt**: start from the GCOE skeleton; fill Goal/Constraints/Output/Examples for *your* task manager.
+
+**Deliverable**: working CLI in `module-02/` + `iteration-notes.md` recording one deleted constraint and its code diff.
+
+**Success signal**: all four commands run end-to-end; exit codes are `0` / `1` / `2`.
+
+<!--
+SPEAKER NOTES — slide 6 (hands-on, 12 min)
+- Walk the room. Catch students who skipped Constraints — that's where they lose points.
+- 3-min warning. Anyone stuck: have them paste their prompt and grade it against GCOE out loud.
+-->
 
 ---
 
-## Common mistakes
+<!-- _class: tpl-done -->
 
-- Asking Claude for "a CLI" with no constraints — output looks fine, fails review.
-- Allowing third-party deps you didn't intend to install. The constraint exists for a reason.
-- Skipping examples. The model uses examples to disambiguate; without them it guesses.
-- Forgetting exit codes. Production CLIs are graded on exit codes, not stdout.
+## Done & next (1 min)
 
----
+**Definition of done**
 
-## Instructor notes
+- [ ] Four commands work; `tasks.json` round-trips state.
+- [ ] Exit codes correct (`0` / `1` / `2`).
+- [ ] `iteration-notes.md` documents one deleted constraint + diff.
 
-- 6 / 4 / 12 / 2 split: concept · demo · lab · checkpoint.
-- The "delete one constraint and re-run" moment is the highlight. Don't skip it.
-- For mixed-language rooms: write the GCOE prompt in language-agnostic terms, only specify language in CONSTRAINTS.
-- If short on time, drop the iteration notes (still ship the CLI).
+**Next** — a good prompt is per-task. Now we make Claude follow your repo's rules *automatically*.
+**Module 3 — Project Context with CLAUDE.md.**
 
----
-
-<!-- _class: tpl-next -->
-
-## Transition to next module
-
-The prompt worked because it carried context: language, layout, exit codes. We now persist that context to a file so Claude remembers it across every prompt for the rest of the day.
-**Next: Module 3 — Project Context with `CLAUDE.md`.**
+<!--
+SPEAKER NOTES — slide 7 (wrap, 1 min)
+- Bridge: "GCOE every time is tiring. Module 3 bakes the constraints into the repo."
+-->
 
 <!-- polish-log
-(intermediate-content-polish feature 004) — populated during US2 polish pass.
+2026-05-28 · lean instructor-pacing shape (matches Module 1 pilot).
+cover -> theory (GCOE) -> reference (skeleton · mistakes) -> live demo -> your turn -> done.
 -->

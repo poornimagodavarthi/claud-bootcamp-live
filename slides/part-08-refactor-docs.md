@@ -17,179 +17,157 @@ description: "Refactor a messy module under hard written constraints and ship HA
 
 # Refactoring & Documentation at Scale
 
-Claude Code Bootcamp · Day 1 · Block 8 of 10
+**Refactor under written constraints. Document from the diff — never from the prompt.**
 
 <img class="hero-icon" src="themes/icons/file.svg" alt="" />
+
+<!--
+SPEAKER NOTES — slide 1 (hook, 60 sec)
+- One line: "Unconstrained, Claude rewrites everything. Constrained, it makes a surgical diff."
+-->
 
 ---
 
 <!-- _class: tpl-objectives -->
 
-## Promise
+## Theory · Constrained refactor + two-pass docs (4 min)
 
-In 24 minutes you will:
+> **Tell Claude what may NOT change**: public API, file count, runtime behavior.
 
-1. Refactor a deliberately messy Python module into something readable.
-2. Stay inside hard **written constraints** so Claude doesn't run away with it.
-3. Ship `HANDOFF.md` and `ARCHITECTURE.md` from the diff.
+- **Two-pass workflow** — keep them separate:
+  - **Pass 1**: refactor for readability only.
+  - **Pass 2**: generate docs **from the diff**.
+- **`HANDOFF.md`** — one-pager for the next engineer: what changed · why · risk · watch-outs.
+- **`ARCHITECTURE.md`** — component shape, data flow, **one** diagram (ASCII is fine), known limits.
 
----
+**Combine the two passes and the docs describe your prompt, not the code.**
 
-## Why this matters
-
-- Refactoring is where AI either delivers huge value or burns a day. The difference is **constraints**.
-- Documentation written from a fresh diff is more accurate than documentation written months after the fact.
-- Senior engineers are rated on what they *don't* change. Same here.
-
----
-
-## Concepts
-
-- **Constraint-bounded refactor**: tell Claude exactly what may *not* change. Public API, file count, runtime behavior — pick what to lock.
-- **Two-pass workflow**: first pass = refactor; second pass = generate docs from the diff. Never combined.
-- **`HANDOFF.md`**: a one-pager for the next engineer — what was done, why, watch-outs.
-- **`ARCHITECTURE.md`**: shape of the module — components, data flow, dependencies. One diagram (ASCII OK), not five.
-
-![h:280](intermediate/assets/08-refactor-constraints.svg)
+<!--
+SPEAKER NOTES — slide 2 (theory, 4 min)
+- constraints.md is the lab's load-bearing artefact. No constraints = no lab.
+-->
 
 ---
 
 <!-- _class: tpl-show -->
 
-## Live demo flow
+## Refactor inside the guardrails
 
-1. Instructor opens `exercises/part-08/before/` — a messy Python module on purpose.
-2. First, the **bad refactor**: prompt without constraints. Show the bloated diff.
-3. Reset. Now the **constrained refactor** prompt. Show the small, targeted diff.
-4. Run tests — still green.
-5. Second pass: generate `HANDOFF.md` from the diff. Read aloud.
+![Constrained refactor: constraints.md fixes what must not change, then two-pass docs](intermediate/assets/08-refactor-constraints.svg)
+
+**constraints.md** fixes what must NOT change — write it *before* you touch the code.
+
+<!--
+SPEAKER NOTES — slide 3 (diagram, 1 min)
+- Left half = guardrails; right half = the two doc passes.
+-->
 
 ---
 
 <!-- _class: tpl-show -->
 
-## Mini project
+## Reference · constraints.md (write it first)
 
-Refactor `exercises/part-08/before/` and ship `HANDOFF.md` + `ARCHITECTURE.md`.
+```text
+# Refactor constraints
 
-Deliverables under `module-08/`:
+## May change
+- Internal function structure, names, early returns.
 
-- `after/` — refactored source
-- `HANDOFF.md`
-- `ARCHITECTURE.md`
-- `constraints.md` — the exact constraint list you used
+## Must NOT change
+- Public function signatures / CLI flags.
+- File count (no new modules).
+- Observable runtime behavior — tests must stay green.
+
+## Style
+- Replace nested conditionals with early returns.
+- No comments unless they explain *why*.
+```
+
+<!--
+SPEAKER NOTES — slide 3 (reference, 1 min)
+-->
+
+---
+
+<!-- _class: tpl-show -->
+
+## Reference · Common mistakes
+
+- Skipping `constraints.md` → Claude rewrites everything → lab spent reading.
+- Combining refactor + docs in one prompt → docs describe the prompt.
+- Vetoing every unrequested change (some are fine — read the diff).
+- 200-line `ARCHITECTURE.md` (trim aggressively).
+
+<!--
+SPEAKER NOTES — slide 4 (common mistakes, 30 sec)
+Instructor cues:
+- Show the bad (unconstrained) diff first, then the constrained one.
+-->
+
+---
+
+<!-- _class: tpl-show -->
+
+## Live demo · Bad vs. constrained refactor (5 min)
+
+1. Open `exercises/part-08/before/` (messy). Show the **unconstrained** refactor → bloated diff.
+2. Reset. Paste the **constrained** prompt:
+
+```text
+Refactor for readability only, obeying constraints.md exactly. Do not change
+public signatures, file count, or behavior. Tests must stay green. Show the diff.
+```
+
+3. Run tests → still green.
+4. Pass 2: generate `HANDOFF.md` from the diff; read it aloud.
+
+**Success signal**: the constrained diff respects every line of `constraints.md` and tests stay green.
+
+<!--
+SPEAKER NOTES — slide 5 (demo, 5 min)
+-->
 
 ---
 
 <!-- _class: tpl-try -->
 
-## Step-by-step lab
+## Your turn · Refactor + handoff docs (12 min)
 
-1. Copy `exercises/part-08/before/` to `module-08/after/`.
-2. Read the messy module. Decide what is allowed to change and what isn't. Write `constraints.md` first.
-3. Run the **constrained refactor** prompt with `constraints.md` as input.
-4. Apply Claude's diff. Re-run the existing tests (provided in `before/`).
-5. Run the **HANDOFF** prompt against the diff.
-6. Run the **ARCHITECTURE** prompt against the refactored code.
-7. Edit both docs. Commit.
+**Exercise**: [`exercises/part-08/README.md`](../exercises/part-08/README.md)
 
----
+1. Copy the messy module to `module-08/after/`.
+2. Write `constraints.md` **before** touching code.
+3. Refactor for readability only; re-run the existing tests (must stay green).
+4. Pass 2 — generate `HANDOFF.md` and `ARCHITECTURE.md` from the diff.
 
-<!-- _class: tpl-show -->
+**Success signal**: tests green · diff respects every constraint · both docs within length limits.
 
-## Suggested Claude Code prompts
-
-```text
-CONSTRAINED REFACTOR
-You will refactor the module below for readability only.
-
-HARD CONSTRAINTS
-- No new files. No new dependencies.
-- Public function signatures unchanged. Module-level imports unchanged.
-- Behavior on all existing tests must be byte-identical.
-- Replace nested conditionals with early returns where it shortens code.
-- Rename local variables only when the new name is materially clearer.
-- No comments unless they explain a non-obvious *why*.
-
-Output: a unified diff. No prose around it.
-```
-
-```text
-HANDOFF.md
-Generate a one-page HANDOFF.md from the diff below. Sections:
-- What changed (3 bullets max)
-- Why
-- Risk + how to roll back
-- Watch-outs for the next engineer (specific, not generic)
-Keep under 40 lines.
-```
-
-```text
-ARCHITECTURE.md
-Read the refactored module and produce ARCHITECTURE.md.
-- One ASCII diagram (boxes and arrows) of components and data flow.
-- A short paragraph per component (purpose, inputs, outputs).
-- A "Known limitations" list with at most 5 items.
-Keep under 80 lines.
-```
+<!--
+SPEAKER NOTES — slide 6 (hands-on, 12 min)
+- Catch students who refactor before writing constraints.md. 3-min warning.
+-->
 
 ---
 
 <!-- _class: tpl-done -->
 
-## Deliverable checklist
+## Done & next (1 min)
 
-- [ ] `module-08/after/` passes the existing tests in `before/`.
-- [ ] `module-08/constraints.md` was written *before* the refactor.
-- [ ] `HANDOFF.md` ≤ 40 lines, has all four sections.
-- [ ] `ARCHITECTURE.md` ≤ 80 lines, has a diagram and component paragraphs.
+**Definition of done**
 
----
+- [ ] Tests still green; diff respects every constraint.
+- [ ] `HANDOFF.md` ≤ 40 lines, all four sections.
+- [ ] `ARCHITECTURE.md` ≤ 80 lines, has a diagram + component paragraphs.
 
-<!-- _class: tpl-done -->
+**Next** — we graduate from prompts to *agentic engineering*: Skills, Hooks, MCP, multi-agent.
+**Module 9 — Skills, Hooks, MCP & Multi-Agent Workflows.**
 
-## Definition of done
-
-✅ Tests still green · ✅ Diff respects every constraint · ✅ Both docs would orient a new engineer in 5 minutes.
-
----
-
-<!-- _class: tpl-try -->
-
-## Review checkpoint
-
-Pair (60 s each):
-
-1. Pick one constraint your partner wrote. Did the diff actually respect it?
-2. Read partner's `HANDOFF.md`. Could you take over the module from it?
-
----
-
-## Common mistakes
-
-- Skipping `constraints.md`. Without it Claude rewrites everything; you'll spend the lab reading.
-- Combining refactor + docs in one prompt. The docs end up describing the prompt, not the diff.
-- Letting Claude "improve while you're at it". Veto every unrequested change.
-- 200-line `ARCHITECTURE.md`. Trim aggressively.
-
----
-
-## Instructor notes
-
-- 5 / 5 / 12 / 2 split.
-- Show the unconstrained refactor first; the lift is what sells the technique.
-- If short, drop `ARCHITECTURE.md`; ship `HANDOFF.md` only.
-- The "before" directory must keep existing tests; verify before delivery.
-
----
-
-<!-- _class: tpl-next -->
-
-## Transition to next module
-
-We have shipped real artefacts in 7 modules. Now we capture the *patterns* — turn them into reusable Claude Skills you can carry to any project.
-**Next: Module 9 — Commands, Hooks & Reusable Workflows.**
+<!--
+SPEAKER NOTES — slide 7 (wrap, 1 min)
+-->
 
 <!-- polish-log
-(intermediate-content-polish feature 004) — populated during US2 polish pass.
+2026-05-28 · lean instructor-pacing shape (matches Module 1 pilot).
+cover -> theory (constrained refactor + 2-pass) -> reference (constraints.md · mistakes) -> live demo -> your turn -> done.
 -->

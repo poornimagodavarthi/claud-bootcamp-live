@@ -146,6 +146,37 @@ section pre code {
   padding: 0;
 }
 
+/* Force all code to render white-on-black: neutralize syntax-highlight
+ * token colors (highlight.js) so no language fence (yaml, markdown, json…)
+ * can produce dark/low-contrast tokens on the dark code background. */
+section pre code,
+section pre code [class*="hljs"],
+section pre code .hljs-comment,
+section pre code .hljs-keyword,
+section pre code .hljs-string,
+section pre code .hljs-number,
+section pre code .hljs-literal,
+section pre code .hljs-attr,
+section pre code .hljs-attribute,
+section pre code .hljs-name,
+section pre code .hljs-tag,
+section pre code .hljs-section,
+section pre code .hljs-title,
+section pre code .hljs-type,
+section pre code .hljs-built_in,
+section pre code .hljs-meta,
+section pre code .hljs-symbol,
+section pre code .hljs-bullet,
+section pre code .hljs-variable,
+section pre code .hljs-params,
+section pre code .hljs-emphasis,
+section pre code .hljs-strong {
+  color: #FAF7F2 !important;
+  background: transparent !important;
+  font-weight: inherit;
+  font-style: normal;
+}
+
 /* The `$` prompt convention in Show-Me terminal blocks: lines starting with $
  * are visually distinguished from output by a slightly brighter weight.
  * Marp/Markdown can't easily target individual lines inside a fence, so we

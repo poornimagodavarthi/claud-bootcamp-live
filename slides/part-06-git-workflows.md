@@ -17,181 +17,162 @@ description: "Branch, commit, and PR your AI-generated code safely. Have Claude 
 
 # Git Workflows for Safe AI Dev
 
-Claude Code Bootcamp · Day 1 · Block 6 of 10
+**Never let Claude push to main. Branch, commit atomically, PR — you stay the gate.**
 
 <img class="hero-icon" src="themes/icons/folder.svg" alt="" />
+
+<!--
+SPEAKER NOTES — slide 1 (hook, 60 sec)
+- One line: "Claude can write great commits and PRs — from the diff, not the prompt."
+-->
 
 ---
 
 <!-- _class: tpl-objectives -->
 
-## Promise
+## Theory · Safe git for AI code (4 min)
 
-In 22 minutes you will:
-
-1. Move your module-4/5 work onto a feature branch with a meaningful name.
-2. Stage atomic commits whose messages **Claude** wrote from the diff.
-3. Generate a **PR description** that a senior engineer would actually merge.
-
----
-
-## Why this matters
-
-- AI accelerates code production. Without disciplined Git, that acceleration becomes "20 commits called 'wip' on `main`".
-- A clean branch + commit + PR is the artefact that survives. The chat transcript does not.
-- Reviewers trust diffs they can read. Claude is excellent at turning diffs into prose.
-
----
-
-## Concepts
-
-- **Branch naming**: `<type>/<scope>-<short-summary>` — e.g., `feat/notes-api-search`.
-- **Atomic commits**: each commit changes one logical thing. Claude can split your working tree if you ask.
-- **Conventional Commits**: `feat:`, `fix:`, `chore:`, `docs:`, `test:`. The skill `skills/git-workflow/SKILL.md` holds the full set.
+- **Branch first**, always: `<type>/<scope>-<summary>` → `feat/notes-api-search`.
+- **Atomic commits** — one logical change each. Claude can split a dirty tree if you ask.
+- **Conventional Commits**: `feat:` · `fix:` · `chore:` · `docs:` · `test:`.
 - **PR description shape**: What changed · Why · How to test · Risk · Rollback.
 
-![h:280](intermediate/assets/06-git-flow.svg)
+> Claude writes the commit messages and PR — but **from the actual diff**, never from your prompt.
+
+Full reference: [`skills/git-workflow/SKILL.md`](../skills/git-workflow/SKILL.md).
+
+<!--
+SPEAKER NOTES — slide 2 (theory, 4 min)
+- "From the diff, not the prompt" — say it. PRs written from prompts lie about what shipped.
+-->
 
 ---
 
 <!-- _class: tpl-show -->
 
-## `@claude` in GitHub Actions
+## Branch → atomic commits → PR
 
-The official **anthropics/claude-code-action** turns Claude Code into a teammate inside your repo:
+![Git flow: branch first, atomic Conventional commits, then a PR](intermediate/assets/06-git-flow.svg)
 
-- **`@claude` mentions** on issues and PRs — answer questions, propose patches, push a fix branch.
-- **Automated PR review** — structured comments, security flags, suggested diffs.
-- **Issue-to-PR flow** — Claude reads the ticket, opens a branch, lands a draft PR.
-- **Scheduled maintenance** — release notes, changelog updates, dependency triage.
-- **Self-hosted runners** — keep code on your infrastructure; same action.
+Branch first · **atomic Conventional commits** · PR explains What · Why · Test · Risk · Rollback.
 
-Think of CI Claude as the **first reviewer** on every PR — you still merge.
-
----
-
-<!-- _class: tpl-show -->
-
-## Live demo flow
-
-1. Instructor on the module-5 working tree, dirty.
-2. `git switch -c feat/notes-api-tests-and-fixes`.
-3. Asks Claude: *"Group the staged changes into atomic commits and propose messages."*
-4. Applies, commits.
-5. Asks Claude: *"Write the PR description from the branch diff."* Reviews, edits, opens a draft PR (or simulates).
+<!--
+SPEAKER NOTES — slide 3 (diagram, 1 min)
+- Trace left to right; every commit is one logical change.
+-->
 
 ---
 
 <!-- _class: tpl-show -->
 
-## Mini project
+## Reference · Bonus · @claude GitHub Action
 
-Take your module-5 work and ship it as a branch + commits + PR text.
+`anthropics/claude-code-action` turns Claude into a **teammate in your repo**:
 
-Deliverables under `module-06/`:
+- Mention `@claude` in an issue or PR comment → it proposes a fix.
+- Automated PR review on every push.
+- Issue-to-PR flow: describe the bug, get a draft PR.
 
-- `branch.txt` — the branch name + final `git log --oneline` output
-- `commits.md` — the commit messages Claude proposed and which ones you accepted/edited
-- `pr.md` — the final PR description
+```yaml
+# .github/workflows/claude.yml (sketch)
+uses: anthropics/claude-code-action@v1
+with:
+  anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+```
+
+Stretch goal in the exercise — wire it on a throwaway repo.
+
+<!--
+SPEAKER NOTES — slide 3 (reference, 1 min)
+- Optional. Only the fast finishers wire the Action; everyone hears it exists.
+-->
+
+---
+
+<!-- _class: tpl-show -->
+
+## Reference · Common mistakes
+
+- One giant commit called `feat: stuff` — re-run the splitter.
+- PR that says *what* but not *why* — reviewers reject it.
+- Writing the PR from the prompt instead of the diff.
+- Pushing to main (always branch first).
+
+<!--
+SPEAKER NOTES — slide 4 (common mistakes, 30 sec)
+Instructor cues:
+- Demo on a dirty working tree so the commit-splitter has something to do.
+-->
+
+---
+
+<!-- _class: tpl-show -->
+
+## Live demo · Split commits, write the PR (5 min)
+
+1. On the Module 5 tree (dirty): `git switch -c feat/notes-api-tests-and-fixes`. Then paste:
+
+```text
+Group these staged changes into atomic commits using Conventional Commit
+subjects. Show the plan (files per commit + message) before committing.
+```
+
+2. Apply and commit. Then paste:
+
+```text
+Write a PR description from the branch diff: What, Why, How to test, Risk, Rollback.
+```
+
+3. Review, edit, open a draft PR (or simulate).
+
+**Success signal**: ≥ 3 atomic commits with Conventional subjects; PR explains *why*, not just *what*.
+
+<!--
+SPEAKER NOTES — slide 5 (demo, 5 min)
+-->
 
 ---
 
 <!-- _class: tpl-try -->
 
-## Step-by-step lab
+## Your turn · Branch → commits → PR (10 min)
 
-1. In your module-5 repo, `git switch -c feat/<your-scope>`.
-2. Stage everything: `git add -A`.
-3. Run the **commit-splitter** prompt. Apply Claude's groupings (you may override).
-4. Run the **PR-description** prompt against the branch diff.
-5. Review and edit. The PR text must mention test results and rollback.
-6. Save the three artefacts to `module-06/`.
+**Exercise**: [`exercises/part-06/README.md`](../exercises/part-06/README.md)
 
----
+Take your Module 5 work onto a feature branch and ship a clean history:
 
-<!-- _class: tpl-show -->
+- Create a feature branch; ask Claude to split into **≥ 3 atomic commits**.
+- Generate a PR description from the **diff** (What · Why · How to test · Risk · Rollback).
 
-## Suggested Claude Code prompts
+**Deliverables**: `branch.txt` (name + `git log --oneline`) · `commits.md` · `pr.md`.
 
-```text
-COMMIT SPLITTER
-Here is the working-tree diff (output of `git diff --staged`).
-Propose 3–6 atomic commits. For each: a Conventional Commit subject line
-(<= 72 chars) and a body explaining why (not what — the diff shows what).
-Then list which paths/hunks belong to which commit so I can split.
-```
+**Success signal**: a mergeable PR with sensible Conventional-Commit messages.
 
-```text
-PR DESCRIPTION
-Generate a pull request description from the branch diff below.
-Sections, in order:
-- Summary (2 sentences)
-- Why
-- What changed (bullets, grouped by area)
-- How to test (exact commands)
-- Risk
-- Rollback
-End with a "Reviewer checklist" of 3–5 yes/no items.
-Keep the whole thing under 40 lines.
-```
+<!--
+SPEAKER NOTES — slide 6 (hands-on, 10 min)
+- Watch for one-commit submissions — send them back to the splitter. 3-min warning.
+-->
 
 ---
 
 <!-- _class: tpl-done -->
 
-## Deliverable checklist
+## Done & next (1 min)
 
-- [ ] Feature branch exists and contains all module-5 work.
-- [ ] `commits.md` shows at least 3 atomic commits with Conventional Commit subjects.
-- [ ] `pr.md` has all six required sections.
-- [ ] You opened a real PR or simulated one (screenshot acceptable).
+**Definition of done**
 
----
+- [ ] Feature branch holds all Module 5 work.
+- [ ] ≥ 3 atomic commits with Conventional subjects.
+- [ ] `pr.md` has all sections: Summary · Why · What changed · How to test · Risk · Rollback.
 
-<!-- _class: tpl-done -->
+**Next** — code is safe in git. Now we feed Claude a *picture* and build a UI.
+**Module 7 — Multimodal: Screenshot to UI.**
 
-## Definition of done
-
-✅ Branch named correctly · ✅ Atomic commits with sensible messages · ✅ PR description is mergeable as-is.
-
----
-
-<!-- _class: tpl-try -->
-
-## Review checkpoint
-
-Pair (60 s each):
-
-1. Read partner's `pr.md`. Would you merge it cold? If not, why not?
-2. Check the commit log: any "wip" or "fix"? Coach.
-
----
-
-## Common mistakes
-
-- One giant commit called `feat: stuff`. Re-run the splitter.
-- PR description that says *what* but not *why* — reviewers reject these.
-- Letting Claude write the description from the prompt instead of from the diff. Always paste the diff.
-- Pushing to `main`. Branch first, always.
-
----
-
-## Instructor notes
-
-- 5 / 4 / 11 / 2 split.
-- The branch metaphor: "your AI work needs containment". Repeat it.
-- If short, drop the branch-name discussion; keep splitter and PR.
-- Use `skills/git-workflow/SKILL.md` as the canonical reference; cite it.
-
----
-
-<!-- _class: tpl-next -->
-
-## Transition to next module
-
-Code, tests, branch, PR — all from text prompts. Next we widen the input modality: from **a screenshot to a working UI** in one pass.
-**Next: Module 7 — Multimodal: Screenshot to UI.**
+<!--
+SPEAKER NOTES — slide 7 (wrap, 1 min)
+-->
 
 <!-- polish-log
-(intermediate-content-polish feature 004) — populated during US2 polish pass.
+2026-05-28 · lean instructor-pacing shape (matches Module 1 pilot).
+cover -> theory (safe git) -> reference (@claude Action · mistakes) -> live demo -> your turn -> done.
 -->

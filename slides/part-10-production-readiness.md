@@ -17,205 +17,153 @@ description: "Pick one project from today and write a Production Readiness Repor
 
 # Production Readiness
 
-Claude Code Bootcamp · Day 1 · Block 10 of 10
+**"It runs on my laptop" is not "ready to ship." Make the call across five axes.**
 
 <img class="hero-icon" src="themes/icons/award.svg" alt="" />
+
+<!--
+SPEAKER NOTES — slide 1 (hook, 60 sec)
+- One line: "We pick one project from today and decide, honestly, go or no-go."
+-->
 
 ---
 
 <!-- _class: tpl-objectives -->
 
-## Promise
+## Theory · Five axes + a verdict (4 min)
 
-In 18 minutes you will:
+Score every shipping candidate on five axes that **always** matter:
 
-1. Pick one project from today and run it through a 5-axis production readiness check.
-2. Write a one-page **Production Readiness Report** with go / no-go.
-3. Identify the smallest next step you would take Monday morning.
+> **Security · Observability · Deployment · Runbooks · Rollback**
 
----
+- For each axis: one **status** (🟢/🟡/🔴) · one **biggest risk** · one **smallest next step**.
+- Use [`skills/production-readiness-review/SKILL.md`](../skills/production-readiness-review/SKILL.md) as the durable instrument.
+- **Go / no-go is a decision, not a vibe.** End with a verdict and a ≤ 25-word rationale.
 
-## Why this matters
-
-- "Works on my laptop" is not the bar. Production has 5 axes that always matter.
-- Naming the gaps explicitly is what turns workshop output into something a real team can adopt.
-- Hiring managers and tech leads grade engineers on how they think about this list.
-
----
-
-## Concepts
-
-- **Five axes**: Security · Observability · Deployment · Runbooks · Rollback.
-- For each axis: one question you must answer, one risk you accept, one next step.
-- Go / no-go is a decision, not a vibe. State it.
-- Use `skills/production-readiness-review/SKILL.md` as the durable instrument.
-
-![h:280](intermediate/assets/10-five-axes.svg)
+<!--
+SPEAKER NOTES — slide 2 (theory, 4 min)
+- Push honesty: after one workshop, "all green" is almost never true.
+-->
 
 ---
 
 <!-- _class: tpl-show -->
 
-## Overeager agents — the May 2026 lesson
+## The five readiness axes
 
-Research this year (arXiv 2605.18583) showed coding agents routinely take **out-of-scope actions on benign tasks**: editing files they weren't asked to, running shell commands the user never approved, expanding scope silently.
+![Five production-readiness axes: Security, Observability, Deployment, Runbooks, Rollback](intermediate/assets/10-five-axes.svg)
 
-**Your defences, in order:**
+**Security · Observability · Deployment · Runbooks · Rollback** → one go/no-go verdict.
 
-- **Least-privilege tools** — only grant what this task needs.
-- **Permission modes** — `ask` for shell, `deny` for network, `read-only` for `do-not-touch/` zones.
+<!--
+SPEAKER NOTES — slide 3 (diagram, 1 min)
+- Each spoke gets a status; the hub is the verdict.
+-->
+
+---
+
+<!-- _class: tpl-show -->
+
+## Reference · Overeager agents (May 2026)
+
+arXiv **2605.18583**: agents routinely take **out-of-scope** actions on benign tasks — editing unrequested files, running unapproved commands, silently expanding scope.
+
+**Defences, in order:**
+
+- **Least-privilege tools** — grant only what this task needs.
+- **Permission modes** — `ask` for shell · `deny` for network · `read-only` zones.
 - **Shell approval** — every command requires a tap until trust is earned.
 - **Review before commit** — diff-first, always; never `--no-verify`.
 - **Disaster recovery** — clean branch, atomic commits, easy `git reset --hard`.
 
-Treat the agent like a junior with `sudo`. Polite, fast, occasionally dangerous.
+<!--
+SPEAKER NOTES — slide 3 (reference, 1 min)
+- Tie back to Module 6: the safe-git habits ARE the disaster-recovery plan.
+-->
 
 ---
 
 <!-- _class: tpl-show -->
 
-## Live demo flow
+## Reference · Common mistakes
 
-1. Instructor picks the module-4 Notes API.
-2. Invokes the production-readiness skill against the repo.
-3. Walks the class through the 5-axis output.
-4. Marks two axes red, three yellow, none green.
-5. States the go / no-go: **no-go**, with the smallest next step that would flip the verdict.
+- "All green, ready to ship" — almost never true after one workshop; be honest.
+- Vague next steps ("improve security") instead of one concrete action.
+- 4-page reports — one page or it doesn't get read.
+- Skipping the verdict entirely.
 
----
-
-<!-- _class: tpl-show -->
-
-## Mini project
-
-**Production Readiness Report** for one of your modules.
-
-Deliverable: `module-10/production-readiness-report.md` — one page, structured by axis.
-
----
-
-<!-- _class: tpl-try -->
-
-## Step-by-step lab
-
-1. Pick the module you'd actually want to ship: most likely module 4 (Notes API).
-2. Open `skills/production-readiness-review/SKILL.md`.
-3. Run the prompt below against your chosen module.
-4. Read the output critically. Override anything Claude is wrong about — *you* are the engineer of record.
-5. Fill the template below. Add a final go / no-go line.
-6. Save to `module-10/production-readiness-report.md`.
+<!--
+SPEAKER NOTES — slide 4 (common mistakes, 30 sec)
+Instructor cues:
+- Model honesty: mark two axes red live and say why.
+-->
 
 ---
 
 <!-- _class: tpl-show -->
 
-## Suggested Claude Code prompts
+## Live demo · Score the Notes API (4 min)
+
+1. Pick the Module 4 Notes API.
+2. Paste the assessment prompt:
 
 ```text
-PRODUCTION READINESS
-Use the production-readiness-review skill against the project at <path>.
-
-For each of the 5 axes (Security, Observability, Deployment, Runbooks, Rollback):
-- One sentence answering: would this hold up in production this week?
-- The single biggest risk.
-- The single smallest next step that materially reduces the risk.
-
-End with a one-line go / no-go verdict and the rationale (≤ 25 words).
+Assess this repo for production readiness across 5 axes: Security, Observability,
+Deployment, Runbooks, Rollback. Status per axis + biggest risk + a go/no-go verdict.
 ```
 
----
+3. Walk the class through the 5-axis output; mark two red, three amber, none green.
+4. State the go / no-go with the smallest next step.
 
-## Report template
+**Success signal**: an honest verdict with one concrete Monday-morning action.
 
-```markdown
-# Production Readiness Report — <project>
-
-## Security
-- Status (green/yellow/red):
-- Biggest risk:
-- Smallest next step:
-
-## Observability
-- Status:
-- Biggest risk:
-- Smallest next step:
-
-## Deployment
-- Status:
-- Biggest risk:
-- Smallest next step:
-
-## Runbooks
-- Status:
-- Biggest risk:
-- Smallest next step:
-
-## Rollback
-- Status:
-- Biggest risk:
-- Smallest next step:
-
-## Verdict
-Go / No-Go: <choice>. Rationale: <≤25 words>.
-```
-
----
-
-<!-- _class: tpl-done -->
-
-## Deliverable checklist
-
-- [ ] `module-10/production-readiness-report.md` covers all 5 axes.
-- [ ] Each axis has a status, a risk, and a next step.
-- [ ] Verdict line is present and decisive.
-- [ ] Rationale ≤ 25 words.
-
----
-
-<!-- _class: tpl-done -->
-
-## Definition of done
-
-✅ One project assessed across 5 axes · ✅ Honest go / no-go verdict · ✅ One concrete step you could take Monday.
+<!--
+SPEAKER NOTES — slide 5 (demo, 4 min)
+-->
 
 ---
 
 <!-- _class: tpl-try -->
 
-## Review checkpoint
+## Your turn · Production Readiness Report (8 min)
 
-Pair (60 s each):
+**Exercise**: [`exercises/part-10/README.md`](../exercises/part-10/README.md)
 
-1. Read partner's verdict line. Believe it?
-2. For one "yellow" axis, ask: what would actually flip it green?
+Pick **one** project from today (likely Module 4) and assess it:
 
----
+- Run the production-readiness skill against it.
+- One page: 5 axes, each with **status · biggest risk · smallest next step**.
+- End with a decisive **go / no-go** verdict (≤ 25-word rationale).
 
-## Common mistakes
+**Deliverable**: `module-10/production-readiness-report.md`.
 
-- "All green, ready to ship". Almost never true after one workshop. Be honest.
-- Vague next steps ("improve security"). Make them small and concrete.
-- 4-page reports. One page or it doesn't get read.
-- Skipping the verdict. The point of the exercise is the decision.
+**Success signal**: all five axes covered + an honest verdict + one concrete next step.
 
----
-
-## Instructor notes
-
-- 4 / 4 / 8 / 2 split.
-- Demo the skill live against your own module-4 reference solution.
-- If short, drop the verdict-rationale word limit but keep the verdict.
-- Brief students on the assessment immediately after (quiz + practical + reflection).
+<!--
+SPEAKER NOTES — slide 6 (hands-on, 8 min)
+- Catch "all green" reports — send them back. 2-min warning at the 6-min mark.
+-->
 
 ---
 
-<!-- _class: tpl-next is-finale -->
+<!-- _class: tpl-done -->
 
-## Transition to next module
+## Done & next (1 min)
 
-There is no next module — this is the wrap. Submit your zip per the **Submission workflow** in `student-guide.md`. Take the assessment. Earn the certificate. Go ship.
-**Workshop complete. Welcome to AI-paired engineering.**
+**Definition of done**
+
+- [ ] All 5 axes covered.
+- [ ] Honest go / no-go verdict with ≤ 25-word rationale.
+- [ ] One concrete Monday-morning step.
+
+**Next** — that's the loop, ten times over. We close with Q&A, the exam briefing, and Monday.
+**Part 11 — Q&A, Exam Briefing & Next Steps.**
+
+<!--
+SPEAKER NOTES — slide 7 (wrap, 1 min)
+-->
 
 <!-- polish-log
-(intermediate-content-polish feature 004) — populated during US2 polish pass.
+2026-05-28 · lean instructor-pacing shape (matches Module 1 pilot).
+cover -> theory (5 axes) -> reference (overeager agents · mistakes) -> live demo -> your turn -> done.
 -->

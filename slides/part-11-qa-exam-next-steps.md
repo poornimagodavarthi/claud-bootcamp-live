@@ -1,7 +1,7 @@
 ---
 marp: true
 theme: wow-beginner
-header: 'Claude Code Bootcamp · Day 1 · Closing Block'
+header: 'Claude Code Bootcamp · Day 1 · Part 11'
 paginate: true
 size: 16:9
 title: "Part 11 — Q&A, Exam Briefing & Next Steps"
@@ -13,186 +13,166 @@ description: "Closing block: common mistakes, prompting anti-patterns, certifica
 <!-- _paginate: false -->
 <!-- _header: "" -->
 
-<span class="module-chip">Closing block · 30 min</span>
+<span class="module-chip">Part 11 · 30 min · Closing</span>
 
 # Q&A, Exam Briefing & Next Steps
 
-Claude Code Bootcamp · Day 1 · Closing the loop
+**Ten projects done. Now: the three frameworks you keep, the exam, and Monday.**
 
 <img class="hero-icon" src="themes/icons/award.svg" alt="" />
+
+<!--
+SPEAKER NOTES — slide 1 (hook, 60 sec)
+- One line: "This block is the bridge from workshop to your real repo."
+-->
 
 ---
 
 <!-- _class: tpl-objectives -->
 
-## Promise
+## Theory · Three frameworks you keep (4 min)
 
-In 30 minutes you will:
+Forget the syntax; keep these three:
 
-1. Spot the **5 most common mistakes** AI-paired developers make
-2. Avoid the **prompting anti-patterns** that wreck loops
-3. Understand the **certification rules** (40/40/20, 70% pass)
-4. Walk out with a **Monday morning plan** to keep momentum
+1. **The loop** — Plan → Implement → Test → Review → Commit (every non-trivial change). *Module 1.*
+2. **The 40/40/20 rubric** — grade any AI output: 40% correctness · 40% quality · 20% fit. *Module 5 + assessment.*
+3. **The readiness checklist** — five axes before you tag a release. *Module 10.*
 
----
+> If you remember nothing else, remember the loop. It is the whole course in five words.
 
-## Why this matters
-
-The hour you spend right now is the difference between "interesting workshop" and "habit that ships software".
-
-- Today you wrote code with Claude.
-- Tomorrow you have to do it **alone, on a deadline, on your own repo**.
-- The closing block locks the loop: mistakes, fixes, certification, what to do next.
-
-If you skip this block you'll leave with technique and no system.
+<!--
+SPEAKER NOTES — slide 2 (theory, 4 min)
+- These three transfer to any model, any tool, any repo. That's the carry-out.
+-->
 
 ---
 
 <!-- _class: tpl-show -->
 
-## Concepts
+## Reference · The five most common mistakes
 
-Three frameworks that travel with you:
+1. **No plan** — jumping straight to "write the function".
+2. **Skipping review** — accepting the first diff.
+3. **Letting Claude commit** — losing the human checkpoint.
+4. **Treating skills as files** instead of habits invoked deliberately.
+5. **No CLAUDE.md** — re-explaining stack + conventions every session.
 
-| Framework | Use when | Source |
+Every one is a habit, not a knowledge gap. Fix the habit.
+
+<!--
+SPEAKER NOTES — slide 3 (reference, 1 min)
+- Ask the room which one they're most guilty of. Quick show of hands.
+-->
+
+---
+
+<!-- _class: tpl-show -->
+
+## Reference · Three prompting anti-patterns
+
+| Anti-pattern | Symptom | Fix |
 |---|---|---|
-| **Plan → implement → test → review → commit loop** | Every non-trivial change | Module 1 |
-| **40/40/20 evaluation rubric** | Grading any AI output | Module 5 + Assessment |
-| **12-item production-readiness checklist** | Before tagging a release | Module 10 + `skills/release-readiness` |
+| **"Fix it" loop** | Vague prompt → unfocused diff → re-prompt → drift | Paste the exact error + smallest reproducer |
+| **Over-eager agent** | Long run → wrong abstraction → 600-line diff | Stop at the plan, review, *then* implement |
+| **Merge-without-review** | Claude commits + pushes in one shot | Review-before-commit, even when "obviously fine" |
 
-> Each framework is a **checklist**, not a vibe. Print them.
+<!--
+SPEAKER NOTES — slide 4 (reference, 3 min)
+- Demo each anti-pattern + its fix if time allows. Otherwise narrate from the table.
+-->
 
 ---
 
 <!-- _class: tpl-show -->
 
-## Live demo flow
+## Live demo · "Fix it" loop vs. precise prompt (4 min)
 
-3 anti-patterns, demonstrated and fixed in 8 minutes:
-
-1. **The "fix it" loop** — vague prompt → unfocused diff → re-prompt → drift.
-   Fix: paste the exact error + the smallest reproducer.
-2. **The over-eager agent** — long autonomous run → wrong abstraction → 600-line diff.
-   Fix: stop at the plan, review, **then** implement.
-3. **The merged-without-review commit** — Claude writes commit + push in one shot.
-   Fix: review-before-commit, even when it's "obviously fine".
-
-Each fix is a **shorter prompt**, not a longer one.
-
----
-
-<!-- _class: tpl-try -->
-
-## Mini project
-
-Open the repo you came in with (your own project, not the bootcamp).
-
-1. Pick **one** change you've been putting off (a refactor, a test, a doc).
-2. Apply the 5-step loop with Claude Code, **on the clock — 15 minutes**.
-3. Stop at the commit. Do not push.
-
-> Success: you have a reviewable diff and a one-paragraph summary of what changed.
-
----
-
-<!-- _class: tpl-try -->
-
-## Step-by-step lab
-
-If you don't have your own repo ready, use today's deliverables:
-
-1. Open `exercises/part-10/` and run `skills/release-readiness/SKILL.md` against any module deliverable from today.
-2. Produce the 12-item table.
-3. Decide GO / NO-GO with a one-sentence justification.
-
-Time-box: 12 minutes.
-
----
-
-## Suggested Claude Code prompts
+1. Reproduce the **"fix it" loop** — vague prompt → unfocused diff → drift:
 
 ```text
-# 1. Loop reset when Claude drifts
-"Stop. Show me the next single step you intend to take and why. Do not write code yet."
-
-# 2. Self-review before commit
-"You are reviewing a stranger's PR. List every potential bug, ranked by severity. Smallest patch each."
-
-# 3. Honest readiness verdict
-"Walk my last commit through the 12-item production-readiness checklist. End with GO or NO-GO and a list of blocking item numbers."
+It's broken, fix it.
 ```
 
----
+2. Reset. Paste the precise prompt — exact error + smallest reproducer:
 
-## Deliverable checklist
+```text
+GET /notes/999 returns 500, expected 404. KeyError 'note' in get_note() line 42.
+Fix only this; keep all other behavior. Show the diff.
+```
 
-- [ ] One mini-deliverable (today's lab OR your own repo) reviewed
-- [ ] GO / NO-GO verdict written down
-- [ ] Knowledge quiz attempted (`assessments/knowledge-quiz.md`)
-- [ ] Practical task chosen (`assessments/practical-task.md`)
-- [ ] Code-review reflection drafted (`assessments/code-review-reflection.md`)
+3. Narrate: the difference between coaching and guessing.
 
----
+**Success signal**: the precise prompt fixes it in one pass; the vague loop doesn't.
 
-## Definition of done
-
-You are "done" with the bootcamp when:
-
-1. The three assessment artefacts are in your submission zip.
-2. Your weighted score against `assessments/rubric.md` is **≥ 70%**.
-3. You can name, from memory, the **5 May 2026 pillars**: Skills · Hooks · MCP · GitHub Actions · Multi-agent.
-4. You have a one-sentence answer to *"What will I try in my own repo on Monday?"*
+<!--
+SPEAKER NOTES — slide 5 (demo, 4 min)
+-->
 
 ---
 
-## Review checkpoint
+<!-- _class: tpl-show -->
 
-Go around the room (or chat) and complete this sentence:
+## Exam briefing · How to pass
 
-> "On Monday, I will use Claude Code to ___ on my project ___ , and I will stop the loop when ___ ."
+**Submit (zip to the Packt LMS):**
 
-If you can't finish the sentence, re-watch the Part 9 recording before submitting.
+- The three assessment artefacts from `assessments/`: knowledge-quiz · practical-task · code-review-reflection.
+- Weighted score **≥ 70%** against [`assessments/rubric.md`](../assessments/rubric.md).
 
----
+**Be ready to:**
 
-## Common mistakes
+- Name the five May 2026 pillars from memory: **Skills · Hooks · MCP · GitHub Actions · Multi-agent**.
+- Answer in one sentence: *"What will I try in my own repo on Monday?"*
 
-The five we see every cohort:
-
-1. **No plan slide** — jumping straight into "write the function".
-2. **Skipping the review pass** — accepting the first diff.
-3. **Letting Claude commit** — losing the human checkpoint.
-4. **Treating skills as files** — instead of habits invoked deliberately.
-5. **No CLAUDE.md** — Claude has no project context, you re-pay onboarding cost every session.
-
-Each maps to a module: 1, 5, 6, 9, 3.
+<!--
+SPEAKER NOTES — slide 6 (exam, 3 min)
+- Read the 70% bar out loud. Point students at the rubric file now.
+-->
 
 ---
 
-## Instructor notes
+<!-- _class: tpl-try -->
 
-Cut-line if running short:
+## Your turn · The Monday sentence (3 min)
 
-- **Cut first**: the "Step-by-step lab" slide (let students do it offline).
-- **Keep**: Common mistakes, Definition of done, the Monday-morning sentence.
-- **Never cut**: the assessment briefing — students need to know how grading works.
+No code this time — one sentence. Complete it and write it where you'll see it:
 
-Cohort notes (2026-05-30 inaugural):
-- Watch for a flat-energy room at this point; insert a 2-minute stretch.
-- Hand out the certification template URL only after Q&A.
+> *"On Monday, I will use Claude Code to **\_\_\_** on my project **\_\_\_**, and I will stop the loop when **\_\_\_**."*
+
+Then:
+
+- Upload your submission zip to the Packt LMS.
+- ⭐ Star the repo so you can find the skills on Monday.
+
+**Success signal**: you can say your Monday sentence out loud without hesitating.
+
+<!--
+SPEAKER NOTES — slide 7 (3 min)
+- If a student can't complete the sentence, send them to re-watch Module 9 before submitting.
+-->
 
 ---
 
-## Transition
+<!-- _class: tpl-done -->
 
-Three things, in this order, before you close your laptop:
+## Done · You're certified-ready (1 min)
 
-1. **Upload** your zip to the Packt LMS.
-2. **Star** the repo so you can find the skills library on Monday.
-3. **Write** your Monday-morning sentence somewhere you'll see it (Slack DM to yourself works).
+**Definition of done — the whole bootcamp**
 
-You have everything you need. Now ship.
+- [ ] Three assessment artefacts in the submission zip.
+- [ ] Weighted score ≥ 70% against the rubric.
+- [ ] Can name the five May 2026 pillars from memory.
+- [ ] Have your one-sentence Monday answer.
+
+**Thank you.** You direct, you review, you merge — you're the engineer of record. Go ship.
+
+<!--
+SPEAKER NOTES — slide 8 (close, 1 min)
+- End on the through-line: the loop goes home with them. Open the floor for Q&A.
+-->
 
 <!-- polish-log
-2026-05-28 · feature 005 · initial draft of closing block (R-002).
+2026-05-28 · lean instructor-pacing shape (closing variant: no hands-on exercise).
+cover -> theory (3 frameworks) -> reference (mistakes · anti-patterns) -> live demo -> exam briefing
+      -> your turn (Monday sentence) -> done.
 -->

@@ -5,7 +5,7 @@ header: 'Claude Code Bootcamp · Day 1 · Module 01'
 paginate: true
 size: 16:9
 title: "Module 1 — Welcome, Setup & AI-First Mindset"
-description: "Set the room up for 4 hours of high-velocity AI-paired delivery. Introduce the Plan→Implement→Test→Review→Commit loop."
+description: "Open the workshop. Meet the instructor, Anthropic, and the models. Name the 5-step AI coding loop. Confirm every laptop is ready."
 ---
 
 <!-- duration: 20 min -->
@@ -17,204 +17,269 @@ description: "Set the room up for 4 hours of high-velocity AI-paired delivery. I
 
 # Setup & AI-First Mindset
 
-Claude Code Bootcamp · Day 1 · Block 1 of 10
+**You + Claude Code = a junior engineer you direct, review, and merge.**
 
 Instructor: **Luca Berton** · Endorsed by **Packt Certification**
 
 <img class="hero-icon" src="themes/icons/terminal.svg" alt="" />
 
----
-
-## Your instructor — Luca Berton
-
-- **Automation engineer & educator.** 15+ years shipping infrastructure-as-code, Ansible, and developer-tooling for global enterprises.
-- **Author & speaker.** Books on Ansible and DevOps; regular conference speaker; runs a YouTube channel on automation.
-- **AI-paired delivery practitioner.** Uses Claude Code daily to plan, refactor, document, and review production code.
-- **Today's mission:** get you shipping with Claude Code the same way — safely, repeatably, with a loop you can take home.
-
-🔗 [lucaberton.com](https://lucaberton.com/)
-
----
-
-<!-- _class: tpl-show -->
-
-## Claude Code is everywhere (May 2026)
-
-Claude Code is no longer just a CLI — it ships on **four surfaces** with one shared context:
-
-- **Terminal** — hands-on repo work, scripts, `claude -p` piping.
-- **VS Code / JetBrains** — inline diffs, editor-native review, gutter actions.
-- **Desktop app** — side-by-side sessions, visual diff review, screenshots.
-- **Web** — remote/cloud tasks, parallel work, share a session with a teammate.
-
-Today we work mostly in **terminal + IDE**. The patterns transfer to the other surfaces unchanged.
+<!--
+SPEAKER NOTES — slide 1 (60 sec hook)
+- Welcome. Confirm everyone joined the LMS. Show today's schedule on your second screen.
+- ONE sentence: "By the end of today you'll ship 10 small projects with Claude Code."
+- DO NOT do live installs here. Pre-work is the entry condition.
+-->
 
 ---
 
 <!-- _class: tpl-objectives -->
 
-## Promise
+## Welcome · What you'll build today
 
-By the end of this 20-minute block you will:
+**10 small, real projects in 4 hours** — one per module, all with Claude Code.
 
-1. Have verified your pre-work environment (Claude Code, Python 3.11+, Node.js 20+, Git).
-2. Know exactly how the next 4 hours of instruction are structured.
-3. Be able to name the five steps of the **AI coding loop** we will reuse in every module.
+- **Format**: short theory → live demo → you build it → quick review. Every module.
+- **Proof of work**: each module drops a `module-NN/` folder into your final submission zip.
+- **Certificate**: pass the quiz + practical + reflection (≥ 70%) → Packt-endorsed certificate.
+- **The through-line**: one repeatable loop you take back to your day job on Monday.
+
+You direct. Claude implements. You review and merge. **You are always the engineer of record.**
+
+<!--
+SPEAKER NOTES — slide 2 (course intro, 2 min)
+- Point at the schedule in README.md on your second screen.
+- Set expectations on breaks. Time is the scarce resource today — say it out loud.
+-->
 
 ---
 
-## Why this matters
+## Your instructor — Luca Berton
 
-- We are building **10 small projects in 4 hours**. That is impossible by hand. It is achievable when you treat Claude Code as a junior engineer that you direct, review, and merge.
-- The cost of "spray-and-pray" prompting compounds: bad prompt → bad code → bad tests → wasted module. A repeatable loop keeps you above the line.
-- Production teams using AI-paired coding report 30–50% throughput gains *only when* they use a loop. Everyone else regresses on quality.
+- **Automation engineer & educator.** 15+ years shipping infrastructure-as-code, Ansible, and developer tooling for global enterprises.
+- **Author & speaker.** Books on Ansible and DevOps; regular conference speaker; runs a YouTube channel on automation.
+- **AI-paired delivery practitioner.** Uses Claude Code daily to plan, refactor, document, and review production code.
+- **Today's mission**: get you shipping with Claude Code the same way — safely, repeatably, with a loop you can take home.
 
----
+🔗 [lucaberton.com](https://lucaberton.com/)
 
-## Concepts
-
-- **AI-paired coding**: you stay the engineer of record. Claude proposes; you decide.
-- **The loop**: **Plan → Implement → Test → Review → Commit.** Every module repeats this.
-- **The skill library**: reusable instructions to Claude that survive across projects (`skills/`).
-- **Definition of Done**: a hard checklist per module; if it isn't checked, the module isn't shipped.
-- **Submission as proof of work**: every module produces a folder in your final zip.
-
-![h:280](intermediate/assets/01-tcc-loop.svg)
+<!--
+SPEAKER NOTES — slide 3 (instructor, 1 min)
+- Keep it short and credible. The students are here to build, not to hear a résumé.
+-->
 
 ---
 
 <!-- _class: tpl-show -->
 
-## Slash commands cheat sheet
+## Anthropic & the Claude models (May 2026)
 
-The most-used Claude Code slash commands. Type them at the prompt.
+**Anthropic** builds Claude — frontier models with a safety-first focus. **Claude Code** is their agentic coding tool.
+
+| Model | Best for | Trade-off |
+|---|---|---|
+| **Claude Opus** | Hardest reasoning: architecture, gnarly refactors, multi-file plans | Slowest · highest cost |
+| **Claude Sonnet** | The daily driver: most coding, reviews, tests | Balanced speed / cost / quality |
+| **Claude Haiku** | Fast, cheap: quick edits, summaries, high-volume calls | Less depth on hard problems |
+
+**Rule of thumb**: start on **Sonnet**. Escalate to **Opus** when stuck on design. Drop to **Haiku** for bulk/trivial work. Switch live with `/model`.
+
+<!--
+SPEAKER NOTES — slide 4 (models, 2 min)
+- Don't quote exact prices — they move. Teach the SHAPE: Opus=think, Sonnet=do, Haiku=fast.
+- Most of today runs fine on Sonnet. Mention you'll call out where Opus earns its cost.
+-->
+
+---
+
+<!-- _class: tpl-objectives -->
+
+## Theory · The AI coding loop (3 min)
+
+**You stay the engineer of record. Claude proposes; you decide.**
+
+Every module today repeats the same 5 steps:
+
+> **Plan → Implement → Test → Review → Commit**
+
+- **Plan** — write the prompt the way a Tech Lead writes a spec.
+- **Implement** — let Claude generate; you read every line.
+- **Test** — run it. If it doesn't run, you have nothing.
+- **Review** — read it as if it came from a stranger's PR.
+- **Commit** — atomic commits, written prose, no `Co-authored-by: Claude`.
+
+**Skipping `Review` is the #1 way AI-generated bugs reach production.**
+
+<!--
+SPEAKER NOTES — slide 5 (theory, 3 min)
+- Draw the loop on the whiteboard while talking through it.
+- Anchor "engineer of record" — you sign the PR, not Claude.
+-->
+
+---
+
+<!-- _class: tpl-show -->
+
+## The loop you'll repeat all day
+
+![The five-step Claude Code loop: Plan, Implement, Test, Review, Commit](intermediate/assets/01-tcc-loop.svg)
+
+**Plan → Implement → Test → Review → Commit.** Skipping **Review** is how AI bugs ship.
+
+<!--
+SPEAKER NOTES — slide 6 (diagram, 1 min)
+- Trace the arrows once with your cursor; the cycle is the whole course in one picture.
+-->
+
+---
+
+<!-- _class: tpl-show -->
+
+## Reference · Claude Code is everywhere (May 2026)
+
+Claude Code ships on **four surfaces** with one shared context:
+
+- **Terminal** — hands-on repo work, `claude -p` piping.
+- **VS Code / JetBrains** — inline diffs, gutter actions.
+- **Desktop app** — visual diff review, screenshots.
+- **Web** — remote/cloud tasks, parallel work, shared sessions.
+
+Today we work in **terminal + IDE**. Patterns transfer to the other surfaces unchanged.
+
+<!--
+SPEAKER NOTES — slide 6 (surfaces, 1 min)
+- One sentence each. Students only need to know: pick terminal or IDE today.
+-->
+
+---
+
+<!-- _class: tpl-show -->
+
+## Reference · Slash commands cheat sheet
 
 | Command | What it does |
 |---|---|
 | `/help` | List every available slash command |
 | `/init` | Scaffold a `CLAUDE.md` for the current repo |
 | `/clear` | Reset the conversation (forget context) |
-| `/compact` | Compress history to save tokens (keeps summary) |
-| `/model` | Switch model mid-session (e.g., Sonnet ↔ Opus) |
+| `/compact` | Compress history (keeps a summary, saves tokens) |
+| `/model` | Switch model: Sonnet / Opus / Haiku |
 | `/cost` | Show token spend and session cost |
 | `/review` | Review the working-tree diff |
-| `/agents` · `/mcp` · `/hooks` | Manage subagents, MCP servers, hooks |
-| `/memory` | Open the memory editor (persistent notes) |
+| `/agents` · `/mcp` · `/hooks` | Manage subagents · MCP servers · hooks |
+| `/memory` | Open the memory editor |
 | `/permissions` | Allow / deny tools per project |
-| `/doctor` | Diagnose env, auth, and integration issues |
+| `/doctor` | Diagnose env, auth, and integrations |
 | `/exit` | Leave the session (Ctrl-D works too) |
 
-Forgot one? `/help` is always one keystroke away.
+Forgot one? `/help` is one keystroke away.
+
+<!--
+SPEAKER NOTES — slide 7 (slash commands, 1 min)
+- Don't read the table. Call out the 4 you'll use today: /init, /model, /review, /clear.
+-->
 
 ---
 
 <!-- _class: tpl-show -->
 
-## Live demo flow
+## Reference · Common mistakes
 
-1. Instructor opens this repo in their IDE with Claude Code attached.
-2. Runs `git status` — clean. Runs `python3 --version` and `node --version` — both green.
-3. Asks Claude: *"List the top-level files and tell me what kind of repository this is."*
-4. Class watches Claude read the repo and respond with the answer everyone produced in pre-work.
-5. Instructor narrates the 5-step loop while Claude is responding.
+- Copying Claude's reply verbatim — the rubric penalises this.
+- Treating Review as optional.
+- Using PowerShell on Windows — move to WSL2 (see `student-guide.md`).
 
----
-
-<!-- _class: tpl-show -->
-
-## Mini project
-
-**Verify your AI Coding Workspace.**
-
-Deliverable for module 1 in your submission zip: `module-01/` containing
-
-- `environment.txt` — output of `python3 --version`, `node --version`, `git --version`
-- `loop-notes.md` — your one-paragraph explanation of the 5-step loop, written in your own words
-
----
-
-<!-- _class: tpl-try -->
-
-## Step-by-step lab
-
-1. Open a terminal. Run the three `--version` commands; pipe to `module-01/environment.txt`.
-2. In Claude Code, paste the prompt below.
-3. Read Claude's reply. Edit it into your own one-paragraph explanation.
-4. Save it to `module-01/loop-notes.md`.
-5. Tick the Definition of Done.
+<!--
+SPEAKER NOTES — slide 8 (common mistakes, 30 sec)
+- Flag the "verbatim copy" trap now — it costs students points later.
+Instructor cues:
+- Hard-cap this block at 20 min. Mindset only — no live installs.
+- Open from Claude Code on a known repo, not a slide.
+- Broken environment? Pair the student. Move on.
+-->
 
 ---
 
 <!-- _class: tpl-show -->
 
-## Suggested Claude Code prompts
+## Live demo · "Read this repo" (5 min)
+
+Watch. Don't type yet.
+
+1. Open this repo in your IDE; run `git status` (clean) + `python3 --version` / `node --version` (green).
+2. Paste the prompt verbatim:
 
 ```text
-You are onboarding a new engineer who has never used AI-paired coding.
-In one short paragraph (max 6 sentences), explain the loop:
-Plan → Implement → Test → Review → Commit.
-Use the metaphor of directing a junior engineer.
-End with one sentence about why skipping the Review step is the most common failure mode.
+List the top-level files and tell me what kind of repository this is.
 ```
 
----
+3. Claude reads the tree → narrates "workshop repo: slides + exercises + skills".
+4. While it responds, narrate the **5-step loop** out loud.
 
-<!-- _class: tpl-done -->
+**Success signal**: Claude names `slides/`, `exercises/`, and `skills/` without you opening them.
 
-## Deliverable checklist
-
-- [ ] `module-01/environment.txt` contains three valid version strings.
-- [ ] `module-01/loop-notes.md` exists and is non-empty.
-- [ ] The notes name all five steps of the loop in order.
-- [ ] The notes are in **your own words**, not Claude's verbatim output.
-
----
-
-<!-- _class: tpl-done -->
-
-## Definition of done
-
-✅ Environment verified · ✅ Loop explained in your own words · ✅ Submission folder `module-01/` exists with both files.
+<!--
+SPEAKER NOTES — slide 9 (demo, 5 min)
+- Project this terminal full-screen, font ≥ 18pt.
+- If Claude says something wrong, DO NOT correct it silently — narrate "see, this is why we review".
+- Backup plan if Claude is slow: switch to /cost and show the token spend.
+-->
 
 ---
 
 <!-- _class: tpl-try -->
 
-## Review checkpoint
+## Your turn · Verify + name the loop (8 min)
 
-Pair with the person next to you. In 60 seconds each:
+**Exercise**: [`exercises/part-01/README.md`](../exercises/part-01/README.md)
 
-- Read each other's `loop-notes.md`.
-- Identify one sentence you would tighten.
-- Confirm both `environment.txt` files show identical major versions.
+**Step 1** — capture your environment:
+
+```bash
+mkdir -p module-01
+{ python3 --version; node --version; git --version; } > module-01/environment.txt
+```
+
+**Step 2** — paste into Claude Code, then **rewrite the reply in your own words** into `module-01/loop-notes.md`:
+
+```text
+In one short paragraph (≤ 6 sentences), explain the loop:
+Plan → Implement → Test → Review → Commit.
+End with one sentence on why skipping Review is the most common failure mode.
+```
+
+**Success signal**: `module-01/` contains both files; the notes name all 5 steps in order.
+
+<!--
+SPEAKER NOTES — slide 10 (hands-on, 8 min)
+- Walk the room. Catch students copy-pasting Claude verbatim — that's the rubric trap.
+- If pre-work was skipped, pair them with a neighbour; no live installs in this block.
+- 2-min warning at the 6-min mark.
+-->
 
 ---
 
-## Common mistakes
+<!-- _class: tpl-done -->
 
-- Copying Claude's reply verbatim — instructor scoring penalises this.
-- Treating "Review" as optional. Skipping review is how AI-generated bugs reach production.
-- Using PowerShell on Windows. Move to WSL2 (see `student-guide.md`).
-- Pre-work skipped — you cannot keep up; pair with a neighbor for module 1 only.
+## Done & next (1 min)
 
----
+**Definition of done**
 
-## Instructor notes
+- [ ] `module-01/environment.txt` — three version strings.
+- [ ] `module-01/loop-notes.md` — names all 5 steps, **in your own words**.
 
-- Keep this block to 20 min hard. Mindset only — **no live installs**.
-- Open with Claude Code on a known repo, not a slide.
-- If a student's environment is broken, mark them as paired and continue.
-- Reference the schedule table in `README.md`. Set expectations on break placement.
+**Next** — we apply step 1 (**Plan**) by writing prompts a Tech Lead would sign off on.
+**Module 2 — Prompting Like a Tech Lead.**
 
----
-
-<!-- _class: tpl-next -->
-
-## Transition to next module
-
-Now that the loop is named, we apply step 1 — **Plan** — by writing prompts the way a Tech Lead writes specs.
-**Next: Module 2 — Prompting Like a Tech Lead.**
+<!--
+SPEAKER NOTES — slide 11 (wrap, 1 min)
+- Show the DoD on screen for a full 30 seconds.
+- Bridge in one sentence — don't over-explain Module 2 yet.
+-->
 
 <!-- polish-log
-(intermediate-content-polish feature 004) — populated during US2 polish pass.
+2026-05-28 · feature 005 follow-up — instructor-pacing shape.
+Flow: cover → welcome/course → instructor → Anthropic & models → theory loop
+      → 3 reference slides (surfaces · slash commands · mistakes/cues)
+      → live demo → hands-on → done & next.
+Instructor notes in HTML comments (visible in PPTX presenter view).
 -->

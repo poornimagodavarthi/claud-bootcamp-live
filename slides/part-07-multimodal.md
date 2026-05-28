@@ -17,192 +17,156 @@ description: "Hand Claude a wireframe image and produce a working single-page Da
 
 # Multimodal: Screenshot to UI
 
-Claude Code Bootcamp · Day 1 · Block 7 of 10
+**Claude can read a picture. Hand it a wireframe; get a working UI back.**
 
 <img class="hero-icon" src="themes/icons/eye.svg" alt="" />
+
+<!--
+SPEAKER NOTES — slide 1 (hook, 60 sec)
+- One line: "Today the prompt includes an image. We turn a wireframe into a running dashboard."
+-->
 
 ---
 
 <!-- _class: tpl-objectives -->
 
-## Promise
+## Theory · Layout-first prompting (4 min)
 
-In 30 minutes you will:
+> Let Claude **read the layout** from the image; you describe what it **can't** see.
 
-1. Hand Claude a **wireframe image** as input.
-2. Generate a single-page **Dashboard UI** matching the layout.
-3. Compare your render to the wireframe side-by-side and iterate one round.
+- The image carries: structure, regions, relative sizes.
+- You must state: framework, data source, interactivity — Claude can't infer these.
+- **Visual-diff loop**: render → screenshot → ask Claude "what's missing?" → patch. **Cap at 3 rounds.**
+- **Scope discipline**: ship the layout. Theming and animation are stretch goals.
 
----
+Two wireframes ship with the exercise: `wireframe.png` (canonical) and `wireframe-sketch.png` (rough).
 
-## Why this matters
-
-- Most product work starts as a sketch. Until now, you had to translate the sketch to text prompts. That step *was* the bottleneck.
-- Multimodal Claude reads the image directly. The translation cost goes to zero.
-- This is also where AI confidently invents details. Visual diffing keeps it honest.
-
----
-
-## Concepts
-
-- **Two wireframe sources** ship with the exercise: `wireframe.png` (canonical, generated from `wireframe.mmd` Mermaid source) and `wireframe-sketch.png` (rough-hand variant from `wireframe-sketch.svg`).
-- **Layout-first prompting**: describe what you cannot see in the image — interactivity, data source, framework — and let Claude read the layout.
-- **Visual diff loop**: render → screenshot → ask Claude to diff → patch.
-- **Scope discipline**: ship the layout. Theming and animations are stretch.
-
-![h:280](intermediate/assets/07-screenshot-to-ui.svg)
+<!--
+SPEAKER NOTES — slide 2 (theory, 4 min)
+- Forgetting to attach the image is the #1 fail — Claude can't read what isn't attached.
+-->
 
 ---
 
 <!-- _class: tpl-show -->
 
-## Feeding non-image files to the LLM — `markitdown`
+## From wireframe to running UI
 
-Multimodal isn't just screenshots. PDFs, DOCX, PPTX, XLSX, audio, video — Claude consumes them best as **Markdown**.
+![Screenshot-to-UI: layout-first prompt, build, screenshot-diff loop](intermediate/assets/07-screenshot-to-ui.svg)
 
-[`microsoft/markitdown`](https://github.com/microsoft/markitdown) (Apache-2.0, Python ≥ 3.10) is the converter the AutoGen team ships for exactly this.
+Layout-first prompt → build → **screenshot-diff loop** (cap at 3 rounds).
+
+<!--
+SPEAKER NOTES — slide 3 (diagram, 1 min)
+- The diff loop is the engine; the cap stops infinite pixel-chasing.
+-->
+
+---
+
+<!-- _class: tpl-show -->
+
+## Reference · markitdown — any file → Markdown
+
+For **non-image** sources (PDF, DOCX, PPTX, XLSX, audio, video, HTML, ZIP, YouTube), convert to Markdown first — it's cheap and LLM-native:
 
 ```bash
 pip install 'markitdown[all]'
-markitdown report.pdf       > report.md         # PDF → MD
-markitdown slides.pptx      > slides.md         # PowerPoint → MD
-markitdown call.wav         > transcript.md     # audio transcription
-cat invoice.xlsx | markitdown > invoice.md      # pipe-friendly
+markitdown report.pdf > report.md
 ```
 
-**Supports**: PDF · Word · PowerPoint · Excel · images (OCR) · audio · HTML · CSV/JSON/XML · ZIP · YouTube URLs · EPub.
+Then drop into the prompt: *"Attached is the converted Markdown of `report.pdf`."* Claude consumes tables and headings without burning vision tokens.
 
-**Why Markdown?** Tokens stay cheap; structure (headings, tables, links) survives; LLMs natively speak it.
-
-**Drop into the prompt**: `Attached is the converted Markdown of <file>. <Your question>.`
-
----
-
-<!-- _class: tpl-show -->
-
-## Live demo flow
-
-1. Instructor opens `exercises/part-07/wireframe-sketch.png` in Claude Code.
-2. Pastes the prompt with the framework constraint (Python: Flask + Jinja or Streamlit).
-3. Saves output, runs locally on `localhost:5000` or similar.
-4. Takes a screenshot, attaches it next to the wireframe, asks Claude: *"What's missing or wrong?"*
-5. Applies one round of fixes. Demo ends with a side-by-side comparison projected.
+<!--
+SPEAKER NOTES — slide 3 (reference, 1 min)
+- markitdown is the bridge for documents; image attachment is the bridge for visuals.
+-->
 
 ---
 
 <!-- _class: tpl-show -->
 
-## Mini project
+## Reference · Common mistakes
 
-**Dashboard UI** matching `exercises/part-07/wireframe.png`:
+- "Looks close enough" — the whole point is precision; diff again.
+- Pulling in Tailwind / shadcn (the constraint exists for a reason).
+- Forgetting to attach the image.
+- Iterating five rounds (cap at three).
 
-- Header bar with title + a primary action button.
-- Left sidebar with 3–5 nav links.
-- Main area: 3 KPI cards across the top, then a table of 5 sample rows.
-- Footer with a small "version" string.
-- Static data is fine. Hardcode it.
+<!--
+SPEAKER NOTES — slide 4 (common mistakes, 30 sec)
+Instructor cues:
+- Project the wireframe and the render side-by-side throughout.
+-->
+
+---
+
+<!-- _class: tpl-show -->
+
+## Live demo · Wireframe → running UI (6 min)
+
+1. Open `exercises/part-07/wireframe-sketch.png` in Claude Code.
+2. Paste the prompt **with the framework constraint**:
+
+```text
+Build this wireframe as a Flask + Jinja app (no other deps): one route, one
+template. Match the layout — header, sidebar, main, footer. Run on localhost:5000.
+```
+
+3. Save and run; screenshot it next to the wireframe, ask *"What's missing?"*
+4. Apply one round of fixes; end on a side-by-side comparison.
+
+**Success signal**: the app runs with one command and the layout clearly matches the wireframe.
+
+<!--
+SPEAKER NOTES — slide 5 (demo, 6 min)
+-->
 
 ---
 
 <!-- _class: tpl-try -->
 
-## Step-by-step lab
+## Your turn · Dashboard from wireframe (13 min)
 
-1. Open `exercises/part-07/`. Read `README.md` end to end.
-2. Decide which wireframe to use: `wireframe.png` (canonical) or `wireframe-sketch.png` (rough sketch — extra challenge).
-3. Run the multimodal prompt with the chosen image attached.
-4. Save the generated app to `module-07/`.
-5. Run it locally. Take a screenshot at 1280×720. Save as `module-07/render.png`.
-6. **Visual-diff loop**: paste both images into Claude. Ask for the gap list. Apply at most three fixes.
-7. Re-screenshot as `module-07/render-final.png`.
+**Exercise**: [`exercises/part-07/README.md`](../exercises/part-07/README.md)
 
----
-
-<!-- _class: tpl-show -->
-
-## Suggested Claude Code prompts
+Build a single-page dashboard matching the wireframe (static data OK):
 
 ```text
-INITIAL GENERATION
-Below is a wireframe image. Build a working single-page web app matching the layout.
-
-Constraints:
-- Python 3.11. Track A: Flask + Jinja templates. Track B: Streamlit. Pick one and state the choice in the README.
-- Static hardcoded sample data. No database. No auth.
-- Single command to run: `python app.py` (Flask) or `streamlit run app.py`.
-- Plain CSS, no Tailwind, no component libraries.
-- Render at 1280x720 should look unmistakably like the wireframe.
+Header (title + primary action) · Sidebar (3–5 nav links)
+Main (3 KPI cards + table of 5 rows) · Footer (version string)
 ```
 
-```text
-VISUAL DIFF
-Image 1: the wireframe.
-Image 2: my current render.
+Run the **visual-diff loop** at least once; record patches in `diff-notes.md`.
 
-List the gaps in priority order. For each gap:
-- One-sentence description.
-- Smallest patch that closes it.
+**Deliverables**: runnable app in `module-07/` · `render-final.png` at 1280×720 · `diff-notes.md`.
 
-Stop after 5 items.
-```
+**Success signal**: render at 1280×720 unmistakably matches the wireframe.
+
+<!--
+SPEAKER NOTES — slide 6 (hands-on, 13 min)
+- Catch students who skip the diff loop. "Looks close" isn't done. 3-min warning.
+-->
 
 ---
 
 <!-- _class: tpl-done -->
 
-## Deliverable checklist
+## Done & next (1 min)
 
-- [ ] `module-07/` contains a runnable app.
-- [ ] `module-07/render-final.png` exists at 1280×720.
-- [ ] Header, sidebar, 3 KPI cards, table of 5 rows, footer all present.
-- [ ] Visual-diff loop ran at least once with the patches recorded in `module-07/diff-notes.md`.
+**Definition of done**
 
----
+- [ ] Runnable app; header, sidebar, 3 KPI cards, 5-row table, footer all present.
+- [ ] `render-final.png` at 1280×720.
+- [ ] `diff-notes.md` records ≥ 1 visual-diff round.
 
-<!-- _class: tpl-done -->
+**Next** — we take messy code and make it clean *under constraints*, then document it.
+**Module 8 — Refactoring & Documentation at Scale.**
 
-## Definition of done
-
-✅ App runs with one command · ✅ Render is unmistakably the wireframe · ✅ One visual-diff iteration applied.
-
----
-
-<!-- _class: tpl-try -->
-
-## Review checkpoint
-
-Pair (60 s each):
-
-1. Open partner's render and the wireframe side by side. Score 0–3 on layout fidelity.
-2. Pick one gap they missed.
-
----
-
-## Common mistakes
-
-- "Looks close enough" — the whole point of multimodal is precision. Diff again.
-- Pulling in Tailwind / shadcn / a component library because it's faster. Constraint exists for a reason.
-- Forgetting to attach the image. Claude can't read what isn't attached.
-- Iterating five rounds. Cap at three; ship the layout.
-
----
-
-## Instructor notes
-
-- 5 / 5 / 17 / 3 split.
-- Demo with the **sketch** variant; lab default is the canonical wireframe.
-- Have a fallback render of your own ready in case Chromium / image attachment misbehaves.
-- If short, drop the visual-diff loop; ship initial render only.
-
----
-
-<!-- _class: tpl-next -->
-
-## Transition to next module
-
-We have a UI. Real codebases also have *legacy* — modules nobody wants to touch. Next we refactor a messy module under hard constraints and document the result.
-**Next: Module 8 — Refactoring & Documentation at Scale.**
+<!--
+SPEAKER NOTES — slide 7 (wrap, 1 min)
+-->
 
 <!-- polish-log
-(intermediate-content-polish feature 004) — populated during US2 polish pass.
+2026-05-28 · lean instructor-pacing shape (matches Module 1 pilot).
+cover -> theory (layout-first) -> reference (markitdown · mistakes) -> live demo -> your turn -> done.
 -->

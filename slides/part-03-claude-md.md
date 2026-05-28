@@ -17,158 +17,211 @@ description: "Author a project-level CLAUDE.md that makes Claude Code follow you
 
 # Project Context with CLAUDE.md
 
-Claude Code Bootcamp · Day 1 · Block 3 of 10
+**Stop re-explaining your stack. Write it once; Claude reads it every prompt.**
 
 <img class="hero-icon" src="themes/icons/book.svg" alt="" />
+
+<!--
+SPEAKER NOTES — slide 1 (hook, 60 sec)
+- One line: "CLAUDE.md is the difference between coaching a new hire every morning and one good onboarding doc."
+-->
 
 ---
 
 <!-- _class: tpl-objectives -->
 
-## Promise
+## Theory · CLAUDE.md is a behavior file (4 min)
 
-In 22 minutes you will:
+`CLAUDE.md` lives at the repo root. Claude reads it **automatically on every prompt**.
 
-1. Understand what `CLAUDE.md` is and why it sits at repo root.
-2. Author a `CLAUDE.md` for **a real repository of your choice**.
-3. Watch Claude follow your conventions on the very next prompt.
+> It is a *behavior* file, not documentation. Every line must change Claude's output.
 
----
+Five sections earn their place:
 
-## Why this matters
+- **Stack** — languages, versions, frameworks.
+- **Conventions** — naming, layout, lint rules.
+- **Commands** — exact build / test / run / lint.
+- **Do-not** — hard lessons, the traps.
+- **Glossary** — domain terms only your team uses.
 
-- Without a `CLAUDE.md`, you re-explain your stack, conventions, and "do nots" in every prompt. That is wasted typing and inconsistent output.
-- A good `CLAUDE.md` is the difference between *"please use Python 3.11 with type hints"* repeated 30 times and *"add the endpoint"*.
-- It is the single most leveraged file in an AI-paired codebase.
+**Trim test**: delete a section; if Claude behaves the same, it was bloat. Aim **under 80 lines**.
 
----
-
-## Concepts
-
-- **`CLAUDE.md`**: a project-level instruction file Claude Code reads automatically on every prompt.
-- **Behavior file, not a doc**: every line should change Claude's output. If a line is just nice-to-know, it belongs in `README.md`.
-- **Sections that pay rent**: Stack · Conventions · Commands · Do-not list · Glossary.
-- **The trim test**: delete each section in turn; if Claude still behaves the same, that section was bloat.
-
-![h:280](intermediate/assets/03-claude-md-cheatsheet.svg)
+<!--
+SPEAKER NOTES — slide 2 (theory, 4 min)
+- Hammer the README vs CLAUDE.md split: nice-to-know -> README; changes-output -> CLAUDE.md.
+-->
 
 ---
 
 <!-- _class: tpl-show -->
 
-## Live demo flow
+## CLAUDE.md at a glance
 
-1. Instructor opens the repo from module 2's lab — no `CLAUDE.md` yet.
-2. Asks Claude: *"Add an `--export csv` flag."* Observe the output.
-3. Adds a 12-line `CLAUDE.md`. Asks the same prompt in a fresh chat.
-4. Class sees the diff: same intent, on-convention output.
-5. Run the trim test live — delete one section, re-prompt, observe drift.
+![CLAUDE.md cheat sheet: Stack, Conventions, Commands, Do-not, Glossary](intermediate/assets/03-claude-md-cheatsheet.svg)
 
----
+Five sections — **Stack · Conventions · Commands · Do-not · Glossary** — under 80 lines.
 
-<!-- _class: tpl-show -->
-
-## Mini project
-
-**`CLAUDE.md` for a real repo.**
-
-- Pick the repo from module 2 (or any personal repo you trust to commit to).
-- Author `CLAUDE.md` covering Stack · Conventions · Commands · Do-not.
-- Keep it under 80 lines — every line earns its place.
-- Commit it.
-
----
-
-<!-- _class: tpl-try -->
-
-## Step-by-step lab
-
-1. `cd` into the repo from module 2 (or your repo of choice).
-2. Open `skills/claude-md-template/SKILL.md` for a worked example.
-3. Run the prompt below; let Claude draft a candidate.
-4. Edit ruthlessly. Delete anything that doesn't change behavior.
-5. Save as `CLAUDE.md` at repo root and commit.
-6. Open a fresh Claude Code chat and ask one new prompt about the repo. Verify on-convention output.
-7. Copy the final file into your submission as `module-03/CLAUDE.md` plus a screenshot of Claude obeying it (`module-03/proof.png`).
+<!--
+SPEAKER NOTES — slide 3 (diagram, 1 min)
+- Each box is a section; the file on the next slide is this picture as text.
+-->
 
 ---
 
 <!-- _class: tpl-show -->
 
-## Suggested Claude Code prompts
+## Reference · A lean CLAUDE.md (≤ 80 lines)
 
 ```text
-You are drafting CLAUDE.md for the repo at the current working directory.
-Read the repo first. Then propose a CLAUDE.md with these sections:
+# CLAUDE.md
 
-# Stack       — languages, package managers, runtime versions
-# Conventions — naming, file layout, lint/format rules
-# Commands    — exact commands for build, test, run, lint
-# Do-not      — things you must never do (e.g., add deps without asking)
-# Glossary    — domain terms only this team uses
+## Stack
+- Python 3.11, standard library only.
 
-Each line must change your behavior on a future prompt. If a line is just
-documentation, omit it. Keep the whole file under 80 lines.
+## Conventions
+- snake_case files; one command per module under cli/.
+- Lint: ruff. Format: black.
+
+## Commands
+- Test:  pytest -q
+- Run:   python -m taskcli
+- Lint:  ruff check .
+
+## Do-not
+- Do NOT add third-party deps without asking.
+- Do NOT swallow exceptions; surface exit codes.
 ```
 
----
+Template: [`skills/claude-md-template/SKILL.md`](../skills/claude-md-template/SKILL.md).
 
-<!-- _class: tpl-done -->
-
-## Deliverable checklist
-
-- [ ] `module-03/CLAUDE.md` exists and is < 80 lines.
-- [ ] The file has all five sections — `Stack`, `Conventions`, `Commands`, `Do-not`, `Glossary`.
-- [ ] `module-03/proof.png` shows Claude following one convention from the file.
-- [ ] You can name one line you deleted during the trim test, and why.
+<!--
+SPEAKER NOTES — slide 3 (reference, 1 min)
+-->
 
 ---
 
-<!-- _class: tpl-done -->
+<!-- _class: tpl-show -->
 
-## Definition of done
+## Reference · A complete CLAUDE.md (all 5 sections)
 
-✅ `CLAUDE.md` committed to the underlying repo · ✅ Trim test performed at least once · ✅ Submission folder populated.
+```text
+# CLAUDE.md — Notes API
+
+## Stack
+- Python 3.11 · FastAPI · Pydantic v2 · SQLite (stdlib sqlite3).
+- Tests: pytest + httpx. Lint: ruff. Format: black.
+
+## Conventions
+- snake_case modules; routes in app/routers/, models in app/models.py.
+- One Pydantic model per resource; never return ORM rows directly.
+- HTTP status: 201 create · 200 read/update · 204 delete · 404 · 422.
+
+## Commands
+- Test:  pytest -q
+- Run:   uvicorn app.main:app --reload
+- Lint:  ruff check . && black --check .
+
+## Do-not
+- Do NOT add deps without asking — stdlib + the four above only.
+- Do NOT swallow exceptions; raise HTTPException with a clear detail.
+- Do NOT write to the DB outside a repository function.
+
+## Glossary
+- "note": {id, title, body, created_at} — body may be empty, title may not.
+- "winner": the Best-of-N candidate chosen in Module 4.
+```
+
+Every line changes Claude's output. Still under 80 lines.
+
+<!--
+SPEAKER NOTES — slide 4 (reference, 1 min)
+- This is the "good example" — point out each section earns its place.
+- Glossary is short on purpose: only terms unique to THIS team/repo.
+- Contrast with the lean version on the previous slide: same shape, more teeth.
+-->
+
+---
+
+<!-- _class: tpl-show -->
+
+## Reference · Common mistakes
+
+- Writing an `ABOUT.md` (documentation) instead of a behavior file.
+- 200 lines of bloat instead of a lean 80.
+- Skipping **Do-not** — and not committing the file (if it's not in git, it isn't real).
+
+<!--
+SPEAKER NOTES — slide 5 (common mistakes, 30 sec)
+Instructor cues:
+- Run the trim test live: delete a section, re-prompt, watch the drift.
+-->
+
+---
+
+<!-- _class: tpl-show -->
+
+## Live demo · Before vs. after CLAUDE.md (5 min)
+
+**The prompt — run it twice, unchanged (before, then after):**
+
+```text
+Add an `--export csv` flag to the task CLI that writes all tasks
+to a file. Match the project's existing conventions.
+```
+
+1. Run it on the Module 2 repo with **no** `CLAUDE.md` → off-convention output.
+2. Drop in a 12-line `CLAUDE.md`; in a **fresh chat**, paste the **same** prompt → now follows conventions.
+3. Trim test: delete one section, re-prompt, observe the drift.
+
+**Success signal**: with `CLAUDE.md` present, Claude matches your naming/layout without being told.
+
+<!--
+SPEAKER NOTES — slide 6 (demo, 5 min)
+- Fresh chat matters — show that the file, not the chat history, carries the rules.
+-->
 
 ---
 
 <!-- _class: tpl-try -->
 
-## Review checkpoint
+## Your turn · Author your CLAUDE.md (10 min)
 
-Pair (60 s each):
+**Exercise**: [`exercises/part-03/README.md`](../exercises/part-03/README.md)
 
-1. Read the partner's `CLAUDE.md`.
-2. Find one line that does *not* change Claude's behavior. Defend or delete.
-3. Confirm the proof screenshot actually demonstrates obedience.
+Write a `CLAUDE.md` for your Module 2 repo (or a personal repo):
 
----
+- All five sections: **Stack · Conventions · Commands · Do-not · Glossary**.
+- **Under 80 lines.** Run the **trim test** at least once.
 
-## Common mistakes
+**Prompt**: *"Read this repo and draft a CLAUDE.md with Stack, Conventions, Commands, Do-not, Glossary. Keep it under 80 lines; every line must change your behavior."*
 
-- Treating `CLAUDE.md` as an `ABOUT.md`. It is not — it is a behavior file.
-- Stuffing 200 lines in. Long files dilute attention; keep ≤ 80.
-- Forgetting the **Do-not** section. This is where you encode hard-won lessons.
-- Not committing it. If it isn't in version control, it isn't real.
+**Success signal**: on the next prompt, Claude obeys one convention you wrote — capture a proof screenshot.
 
----
-
-## Instructor notes
-
-- 5 / 5 / 10 / 2 split.
-- Open `skills/claude-md-template/SKILL.md` live — students copy from it.
-- For students with no personal repo, point them at `module-02/`.
-- If short, drop the proof screenshot but keep the file.
+<!--
+SPEAKER NOTES — slide 7 (hands-on, 10 min)
+- Catch students pasting README prose. Ask: "does this line change Claude's output?" If no, cut it.
+-->
 
 ---
 
-<!-- _class: tpl-next -->
+<!-- _class: tpl-done -->
 
-## Transition to next module
+## Done & next (1 min)
 
-We have *one* prompt working well, and it is now context-aware. Next we generate **multiple candidates** and pick the winner — turning Claude from a single proposer into a small team.
-**Next: Module 4 — Build Faster with Best-of-N.**
+**Definition of done**
+
+- [ ] `CLAUDE.md` < 80 lines, all five sections, committed to git.
+- [ ] Trim test performed at least once.
+- [ ] Proof screenshot of Claude obeying one convention.
+
+**Next** — with rules in place, we generate *several* solutions and pick the best.
+**Module 4 — Build Faster with Best-of-N.**
+
+<!--
+SPEAKER NOTES — slide 8 (wrap, 1 min)
+-->
 
 <!-- polish-log
-(intermediate-content-polish feature 004) — populated during US2 polish pass.
+2026-05-28 · lean instructor-pacing shape (matches Module 1 pilot).
+cover -> theory (behavior file) -> reference (sample · mistakes) -> live demo -> your turn -> done.
 -->

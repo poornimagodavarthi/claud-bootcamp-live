@@ -116,8 +116,14 @@ list_decks() {
   fi
 }
 
-# 13 canonical H2 sections for a deck (the H1 title is mandatory but not an H2).
-DECK_SECTIONS="Promise|Why this matters|Concepts|Live demo flow|Mini project|Step-by-step lab|Suggested Claude Code prompts|Deliverable checklist|Definition of done|Review checkpoint|Common mistakes|Instructor notes|Transition"
+# Lean instructor-pacing shape (May 2026 refresh): every teaching deck flows
+# theory -> live demo -> hands-on -> done, with optional "Reference - ..." appendix
+# slides. These are the REQUIRED core H2 sections for modules 01..10.
+DECK_SECTIONS="Theory|Live demo|Your turn|Done"
+
+# Part 11 is the closing/exam block: no hands-on "Your turn" exercise. It must
+# still teach (Theory) and wrap up (Done).
+DECK_SECTIONS_CLOSING="Theory|Done"
 
 # 9 canonical H2 sections for an exercise.
 EXERCISE_SECTIONS="Goal|Scenario|Starter instructions|Claude Code prompt to use|Manual validation steps|Expected deliverable|Definition of done|Stretch challenge|Troubleshooting"
@@ -176,21 +182,26 @@ gate_module_bundle() {
 # GATE 2: audit.slide-anatomy   (block)
 # ---------------------------------------------------------------------------
 gate_slide_anatomy() {
-  local fails="" deck section
-  while IFS='|' read -r section; do :; done < /dev/null  # noop to prove pipe support
+  local fails="" deck section sections
   for deck in $( list_decks all ); do
-    local IFS='|'
-    for section in $DECK_SECTIONS; do
+    # Part 11 (closing/exam block) has no hands-on exercise: use the closing set.
+    case "$deck" in
+      *part-11-*) sections="$DECK_SECTIONS_CLOSING" ;;
+      *)          sections="$DECK_SECTIONS" ;;
+    esac
+    local OLD_IFS="$IFS"
+    IFS='|'
+    for section in $sections; do
       if ! deck_has_section "$deck" "$section"; then
         fails="${fails}${deck}: missing section \"${section}\"\n"
       fi
     done
-    unset IFS
+    IFS="$OLD_IFS"
   done
   if [ -z "$fails" ]; then
     local count
     count=$( list_decks all | wc -l | tr -d ' ' )
-    echo "[PASS] audit.slide-anatomy         ($count decks \u00d7 13 required H2 sections present (+ H1 title))"
+    echo "[PASS] audit.slide-anatomy         ($count decks: lean shape Theory -> Live demo -> Your turn -> Done present)"
     return 0
   else
     echo "[FAIL] audit.slide-anatomy"

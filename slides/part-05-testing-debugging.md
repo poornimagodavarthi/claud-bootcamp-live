@@ -17,184 +17,149 @@ description: "Write a real test suite for the module 4 API, plant and fix two bu
 
 # Testing, Debugging & Self-Review
 
-Claude Code Bootcamp · Day 1 · Block 5 of 10
+**Untested AI code is a guess. Make Claude review its own work as a stranger's PR.**
 
 <img class="hero-icon" src="themes/icons/shield.svg" alt="" />
+
+<!--
+SPEAKER NOTES — slide 1 (hook, 60 sec)
+- One line: "We test the Module 4 winner, plant bugs, and let Claude catch them — with the right framing."
+-->
 
 ---
 
 <!-- _class: tpl-objectives -->
 
-## Promise
+## Theory · Test, then self-review (4 min)
 
-In 28 minutes you will:
+**Test pyramid for AI code**: many cheap unit tests · a few integration tests on the happy path · always cover **error paths**.
 
-1. Generate a real **pytest** (or **vitest**) suite against your module-4 Notes API.
-2. Find and fix **two seeded bugs** using Claude's self-review.
-3. Author your own **Code Review Rubric** at `exercises/part-05/code-review-rubric.md`.
+> **Self-review prompt**: ask Claude to find bugs *as if reviewing a stranger's PR.* The framing kills sycophancy.
 
----
+- Off-by-one and **boundary** bugs are Claude's blind spot — always test boundaries.
+- Bundled skills cut prompt repetition: `/debug` · `/verify` · `/code-review` · `/loop` · `/batch`.
+- You ship a **personal** `code-review-rubric.md` — your blind spots, not the instructor's.
 
-## Why this matters
-
-- AI generates plausible code. Plausible ≠ correct. Tests are the only durable contract.
-- Self-review by Claude catches a surprising fraction of its own mistakes — *if you ask correctly*.
-- Your **Code Review Rubric** becomes the discriminator for "done" for the rest of the day. It outlasts the workshop.
-
----
-
-## Concepts
-
-- **Test pyramid for AI code**: lots of cheap unit tests + a few integration tests covering the happy path + error paths.
-- **Self-review prompt**: ask Claude to enumerate bugs *as if* it were reviewing a stranger's PR. The framing matters.
-- **Off-by-one and boundary bugs**: Claude's blind spot. Always test boundaries.
-- **Your rubric ≠ instructor rubric**. The student deliverable here is `code-review-rubric.md`. The instructor's grading rubric lives at `assessments/rubric.md`. Two distinct artifacts.
-
-![h:280](intermediate/assets/05-test-debug-loop.svg)
+<!--
+SPEAKER NOTES — slide 2 (theory, 4 min)
+- The "stranger's PR" phrase is the whole trick — say it twice.
+-->
 
 ---
 
 <!-- _class: tpl-show -->
 
-## Bundled skills do the heavy lifting
+## The test-and-review loop
 
-Claude Code ships bundled skills you can invoke directly. Use them instead of rewriting prompts.
+![Test and debug loop: write tests, find the bug, self-review, fix, re-run](intermediate/assets/05-test-debug-loop.svg)
 
-- `/debug` — reproduce, isolate, propose a minimal fix with a regression test.
-- `/verify` — re-run the failing case after the fix and prove it green.
-- `/code-review` — structured review against rubric (security, tests, naming, edge cases).
-- `/loop` — iterate test → fix → test until green or a hard stop.
-- `/batch` — apply the same fix shape across many files.
+Tests → find the bug → **self-review as a stranger** → fix → re-run until green.
 
-**Rule of thumb:** if you find yourself typing the same prompt twice, reach for a bundled skill or author your own (Module 9).
-
----
-
-<!-- _class: tpl-show -->
-
-## Live demo flow
-
-1. Instructor opens the module-4 winner.
-2. Asks Claude to generate a test suite (Python: pytest + httpx; Node: vitest + supertest-like fetch).
-3. Runs tests — green.
-4. Plants **one** off-by-one bug live (e.g., pagination boundary).
-5. Self-review prompt → Claude finds the bug.
-6. Class repeats with a second seeded bug from `BUGS.md` in the reference solution.
+<!--
+SPEAKER NOTES — slide 3 (diagram, 1 min)
+- The self-review step is the one humans skip; that's where the rubric lives.
+-->
 
 ---
 
 <!-- _class: tpl-show -->
 
-## Mini project
+## Reference · The self-review prompt
 
-Three deliverables under `module-05/`:
+```text
+Review this code as if it were a stranger's pull request.
+List every bug, edge case, and boundary error you can find.
+Be specific: file, line, symptom, and the fix. Do not be polite.
+```
 
-1. `tests/` — full suite for the module-4 API.
-2. `bug-fix-notes.md` — for each of two bugs: symptom, suspected cause, Claude's diagnosis, your fix.
-3. `code-review-rubric.md` — your personal rubric for reviewing AI code.
+Test in-process with a temp SQLite DB per test — **no network, no HTTP mocks, never mock the system under test.**
+
+<!--
+SPEAKER NOTES — slide 3 (reference, 1 min)
+-->
+
+---
+
+<!-- _class: tpl-show -->
+
+## Reference · Common mistakes
+
+- Tests that mock the system under test (useless).
+- Self-review without the "stranger's PR" framing (sycophantic output).
+- Copying the skill rubric verbatim — your rubric must reflect *your* blind spots.
+- Confusing the student rubric with the instructor grading rubric (different files).
+
+<!--
+SPEAKER NOTES — slide 4 (common mistakes, 30 sec)
+Instructor cues:
+- Plant the first bug live; let the class plant the second.
+-->
+
+---
+
+<!-- _class: tpl-show -->
+
+## Live demo · Plant a bug, catch it (6 min)
+
+1. Open the Module 4 winner; ask for a test suite (pytest + httpx, or vitest + fetch). Run → green.
+2. Plant one off-by-one bug live (e.g. a pagination boundary).
+3. Paste the **self-review prompt** verbatim:
+
+```text
+Review this code as if it were a stranger's PR you must approve.
+List concrete bugs with file, line, and a minimal fix. Don't say "looks good".
+```
+
+4. Claude finds it → fix → re-run. Repeat with a second seeded bug.
+
+**Success signal**: the self-review names the bug's file, line, and fix — not "looks good".
+
+<!--
+SPEAKER NOTES — slide 5 (demo, 6 min)
+- If Claude misses the bug, that's a teachable moment: refine the framing, don't accept the miss.
+-->
 
 ---
 
 <!-- _class: tpl-try -->
 
-## Step-by-step lab
+## Your turn · Suite + 2 bugs + your rubric (11 min)
 
-1. `cd` into your module-4 winner folder.
-2. Run the prompt for the test suite. Save under `tests/`.
-3. Run the suite. Fix any genuine failures.
-4. Open `BUGS.md` from the reference solution (instructor will publish it) and inject the two seeded bugs into your code.
-5. Run tests — they should fail.
-6. Use the self-review prompt to fix each. Document in `bug-fix-notes.md`.
-7. Author `code-review-rubric.md` (≤ 1 page, 5–8 checks).
-8. Copy all three deliverables into `module-05/` for submission.
+**Exercise**: [`exercises/part-05/README.md`](../exercises/part-05/README.md)
 
----
+1. Write a full suite: create, list, search, get-one, update, delete, 404, 422.
+2. Plant **two** seeded bugs (from the reference), use the self-review prompt to fix them.
+3. Author `code-review-rubric.md` — ≤ 1 page, 5–8 checks, focused on Claude's blind spots.
 
-<!-- _class: tpl-show -->
+**Deliverables**: green suite · `bug-fix-notes.md` (symptom → cause → diagnosis → fix) · personal rubric.
 
-## Suggested Claude Code prompts
+**Success signal**: tests pass on fixed code; rubric has ≥ 1 check not in `skills/code-review/SKILL.md`.
 
-```text
-GENERATE TESTS
-Read the Notes API in this folder. Write a pytest suite (or vitest if Node)
-covering: create, list, search, get-one, update, delete, 404, 422.
-Use httpx (or fetch) and a temp SQLite DB per test. No network. No mocks
-of HTTP — start the app in-process.
-```
-
-```text
-SELF-REVIEW
-You are reviewing a stranger's PR. The diff is below.
-Enumerate every potential bug (off-by-one, null handling, race, error path,
-type coercion). Rank by severity. Propose the smallest possible fix per item.
-Do not write code yet — just the list.
-```
-
-```text
-RUBRIC
-Draft a one-page code review rubric for AI-generated code.
-5–8 checks. Each check is a yes/no question that takes ≤ 30 seconds to answer.
-Optimize for catching the kinds of bugs Claude tends to miss
-(boundaries, error paths, hidden assumptions about types).
-```
+<!--
+SPEAKER NOTES — slide 6 (hands-on, 11 min)
+- Walk the room. Catch students mocking the app itself. 3-min warning before wrap.
+-->
 
 ---
 
 <!-- _class: tpl-done -->
 
-## Deliverable checklist
+## Done & next (1 min)
 
-- [ ] `module-05/tests/` exists; full suite runs green on the fixed code.
-- [ ] `module-05/bug-fix-notes.md` documents two bugs end-to-end.
-- [ ] `module-05/code-review-rubric.md` is one page or less and is a checklist, not prose.
-- [ ] You can name one rubric item that is *not* in `skills/code-review/SKILL.md` — it is **yours**.
+**Definition of done**
 
----
+- [ ] Test suite runs green on fixed code.
+- [ ] `bug-fix-notes.md` documents both bugs (symptom, cause, diagnosis, fix).
+- [ ] Personal rubric with ≥ 1 original check.
 
-<!-- _class: tpl-done -->
+**Next** — tested code earns a safe path to main: branches, atomic commits, a real PR.
+**Module 6 — Git Workflows for Safe AI Dev.**
 
-## Definition of done
-
-✅ Test suite green · ✅ Two bugs found and fixed with notes · ✅ Personal rubric authored and committed.
-
----
-
-<!-- _class: tpl-try -->
-
-## Review checkpoint
-
-Pair (60 s each):
-
-1. Run the partner's tests against your module-4 winner. Green or red?
-2. Read each other's `code-review-rubric.md`. Pick one item to *steal* and one to challenge.
-
----
-
-## Common mistakes
-
-- Letting Claude generate tests that mock the SUT itself — useless.
-- Self-review without the "stranger's PR" framing — you get sycophantic output.
-- Copying the skill rubric verbatim. Your rubric must reflect *your* blind spots.
-- Mixing up the student rubric with the instructor's grading rubric. They are different files.
-
----
-
-## Instructor notes
-
-- 6 / 6 / 13 / 3 split.
-- Plant the off-by-one live; the *aha* lands hardest in real time.
-- Have `BUGS.md` from the reference solution ready to publish at lab start.
-- Reinforce the two-rubrics distinction every time it comes up.
-
----
-
-<!-- _class: tpl-next -->
-
-## Transition to next module
-
-We have a tested, debugged, reviewed module. Now we ship it through Git the way a senior engineer would — branch, commit message, PR description.
-**Next: Module 6 — Git Workflows for Safe AI Dev.**
+<!--
+SPEAKER NOTES — slide 7 (wrap, 1 min)
+-->
 
 <!-- polish-log
-(intermediate-content-polish feature 004) — populated during US2 polish pass.
+2026-05-28 · lean instructor-pacing shape (matches Module 1 pilot).
+cover -> theory (test + self-review) -> reference (prompt · mistakes) -> live demo -> your turn -> done.
 -->
