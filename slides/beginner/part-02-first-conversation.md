@@ -1,21 +1,29 @@
 ---
 marp: true
-theme: default
+theme: wow-beginner
 paginate: true
 size: 16:9
+header: "Claude Code 101 · Module 02"
 title: "Module 02 — Your first real conversation"
 description: "Multi-turn chat with Claude Code: ask, follow up, accept, reject."
 ---
 
 <!-- duration: 25 min -->
+<!-- _class: tpl-cover -->
+<!-- _paginate: false -->
+<!-- _header: "" -->
 
-# Module 02 — Your first real conversation
+<span class="module-chip">Module 02 · 25 min</span>
+
+# Your first real conversation
 
 Claude Code 101 · Beginner Workshop · Module 2 of 8
 
 A conversation is more than one prompt. By the end of this lesson you will ask, follow up, and decide what to keep.
 
 ---
+
+<!-- _class: tpl-objectives -->
 
 ## What you'll learn
 
@@ -43,7 +51,11 @@ Inside one `claude` session, all your previous prompts and Claude's previous rep
 
 When you type `/exit`, the conversation ends and the next session starts fresh.
 
+![w:880](./assets/02-session-memory.svg)
+
 ---
+
+<!-- _class: tpl-show -->
 
 ## Show me
 
@@ -74,6 +86,8 @@ Notice that the second and third prompts never repeat "Git" or "junior developer
 
 ---
 
+<!-- _class: tpl-try -->
+
 ## Try it yourself
 
 Open Claude Code and run a 3-turn conversation about a topic you actually care about:
@@ -97,6 +111,8 @@ Time budget: 8 minutes inside the session, 2 minutes to save the file.
 
 ---
 
+<!-- _class: tpl-done -->
+
 ## Lesson reflection
 
 Take 60 seconds:
@@ -106,6 +122,8 @@ Take 60 seconds:
 3. If you had to teach a colleague the "follow-up" idea in one sentence, what would you say?
 
 ---
+
+<!-- _class: tpl-next -->
 
 ## What's next
 

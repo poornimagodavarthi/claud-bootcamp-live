@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 360" role="img" aria-labelledby="title desc">
+  <title id="title">Role + Goal + Constraint + Format equals a sharp prompt</title>
+  <desc id="desc">Four labelled circles converge into a single arrow that points to a result card.</desc>
+  <defs>
+    <style>
+      .ink { fill: #1B1B1F; } .accent { fill: #D9531E; } .accent-soft { fill: #FCE6DA; } .bg { fill: #FAF7F2; }
+      .stroke-ink { fill: none; stroke: #1B1B1F; stroke-width: 2.5; }
+      .stroke-accent { fill: none; stroke: #D9531E; stroke-width: 2.5; }
+      text { font-family: Inter, sans-serif; font-weight: 700; fill: #1B1B1F; text-anchor: middle; }
+      .word { font-size: 22px; }
+      .sub { font-size: 13px; fill: #5A5A66; font-weight: 600; }
+      .res { font-size: 20px; fill: #FAF7F2; text-anchor: start; }
+    </style>
+    <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#1B1B1F"/>
+    </marker>
+  </defs>
+
+  <!-- four circles -->
+  <g transform="translate(80,90)">
+    <circle cx="60" cy="60" r="56" class="accent-soft"/>
+    <circle cx="60" cy="60" r="56" class="stroke-ink"/>
+    <text x="60" y="58" class="word">Role</text>
+    <text x="60" y="82" class="sub">who Claude is</text>
+  </g>
+  <g transform="translate(80,220)">
+    <circle cx="60" cy="60" r="56" class="accent-soft"/>
+    <circle cx="60" cy="60" r="56" class="stroke-ink"/>
+    <text x="60" y="58" class="word">Goal</text>
+    <text x="60" y="82" class="sub">one thing you want</text>
+  </g>
+  <g transform="translate(280,90)">
+    <circle cx="60" cy="60" r="56" class="accent-soft"/>
+    <circle cx="60" cy="60" r="56" class="stroke-ink"/>
+    <text x="60" y="56" class="word">Constraint</text>
+    <text x="60" y="80" class="sub">a hard limit</text>
+  </g>
+  <g transform="translate(280,220)">
+    <circle cx="60" cy="60" r="56" class="accent-soft"/>
+    <circle cx="60" cy="60" r="56" class="stroke-ink"/>
+    <text x="60" y="58" class="word">Format</text>
+    <text x="60" y="82" class="sub">bullets · table · code</text>
+  </g>
+
+  <!-- arrows converge -->
+  <path class="stroke-ink" d="M 200 150 L 510 175" marker-end="url(#ah)"/>
+  <path class="stroke-ink" d="M 400 150 L 510 175" marker-end="url(#ah)"/>
+  <path class="stroke-ink" d="M 200 280 L 510 185" marker-end="url(#ah)"/>
+  <path class="stroke-ink" d="M 400 280 L 510 185" marker-end="url(#ah)"/>
+
+  <!-- result card (dark) -->
+  <g transform="translate(540,110)">
+    <rect width="380" height="140" rx="18" fill="#1B1B1F"/>
+    <rect width="380" height="140" rx="18" class="stroke-accent"/>
+    <text x="24" y="40" class="res">A prompt you won't</text>
+    <text x="24" y="74" class="res">have to rewrite.</text>
+    <text x="24" y="112" class="res" font-size="14" fill="#D9531E">One ask, one answer, zero follow-ups</text>
+  </g>
+</svg>

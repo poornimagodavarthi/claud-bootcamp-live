@@ -1,21 +1,29 @@
 ---
 marp: true
-theme: default
+theme: wow-beginner
 paginate: true
 size: 16:9
+header: "Claude Code 101 · Module 06"
 title: "Module 06 — CLAUDE.md cheat sheet"
 description: "Write a tiny CLAUDE.md so Claude knows your project conventions without being told every session."
 ---
 
 <!-- duration: 25 min -->
+<!-- _class: tpl-cover -->
+<!-- _paginate: false -->
+<!-- _header: "" -->
 
-# Module 06 — CLAUDE.md cheat sheet
+<span class="module-chip">Module 06 · 25 min</span>
+
+# CLAUDE.md cheat sheet
 
 Claude Code 101 · Beginner Workshop · Module 6 of 8
 
 A 15-line file in your repo can save you 15 prompts a day. Today you write that file.
 
 ---
+
+<!-- _class: tpl-objectives -->
 
 ## What you'll learn
 
@@ -43,7 +51,11 @@ That's it. No special syntax, no special location, no plugin. It's a Markdown fi
 
 The size cap is for you, not Claude. A 200-line CLAUDE.md never gets updated. A 15-line one does.
 
+![w:880](./assets/06-claude-md-root.svg)
+
 ---
+
+<!-- _class: tpl-show -->
 
 ## Show me
 
@@ -73,6 +85,8 @@ Tiny CLI for personal notes. Single file, no dependencies.
 
 ---
 
+<!-- _class: tpl-try -->
+
 ## Try it yourself
 
 [`exercises/beginner/part-06/starter/`](../../exercises/beginner/part-06/starter/) contains a minimal `notes.py` and an empty `CLAUDE.md`. Your job: fill in the CLAUDE.md by answering the five questions in the exercise, then prove Claude is using it by asking a project-specific question.
@@ -90,6 +104,8 @@ Time budget: 12 minutes.
 
 ---
 
+<!-- _class: tpl-done -->
+
 ## Lesson reflection
 
 Take 60 seconds:
@@ -99,6 +115,8 @@ Take 60 seconds:
 3. Did Claude actually behave differently after you saved the file? If not, did you save it in the repo root?
 
 ---
+
+<!-- _class: tpl-next -->
 
 ## What's next
 

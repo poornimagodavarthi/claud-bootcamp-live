@@ -1,21 +1,29 @@
 ---
 marp: true
-theme: default
+theme: wow-beginner
 paginate: true
 size: 16:9
+header: "Claude Code 101 · Module 04"
 title: "Module 04 — Reading code together"
 description: "Ask Claude to explain unfamiliar code in plain English, line by line if needed."
 ---
 
 <!-- duration: 25 min -->
+<!-- _class: tpl-cover -->
+<!-- _paginate: false -->
+<!-- _header: "" -->
 
-# Module 04 — Reading code together
+<span class="module-chip">Module 04 · 25 min</span>
+
+# Reading code together
 
 Claude Code 101 · Beginner Workshop · Module 4 of 8
 
 The fastest way to understand someone else's code is to read it with a patient partner. Today Claude is that partner.
 
 ---
+
+<!-- _class: tpl-objectives -->
 
 ## What you'll learn
 
@@ -43,7 +51,11 @@ The session has no automatic access to your filesystem unless you give it permis
 
 Because Claude only sees what you paste, the quality of the explanation depends on you pasting the right amount: too little = guessing, too much = surface skim.
 
+![w:880](./assets/04-paste-explain.svg)
+
 ---
+
+<!-- _class: tpl-show -->
 
 ## Show me
 
@@ -73,6 +85,8 @@ It catches: (1) any command that exits non-zero (`-e`), (2) any reference to a v
 
 ---
 
+<!-- _class: tpl-try -->
+
 ## Try it yourself
 
 Open Claude Code, paste the script from [`exercises/beginner/part-04/starter/`](../../exercises/beginner/part-04/starter/), and ask for a plain-English explanation. Then ask one follow-up about a line you didn't understand.
@@ -92,6 +106,8 @@ Time budget: 10 minutes.
 
 ---
 
+<!-- _class: tpl-done -->
+
 ## Lesson reflection
 
 Take 60 seconds:
@@ -101,6 +117,8 @@ Take 60 seconds:
 3. Would you trust Claude's reading of a 30-line script? A 300-line one? A 3000-line one?
 
 ---
+
+<!-- _class: tpl-next -->
 
 ## What's next
 

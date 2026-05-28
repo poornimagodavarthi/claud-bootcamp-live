@@ -96,6 +96,16 @@ fi
 
 echo "Found ${#DECKS[@]} deck(s) (${#INTERMEDIATE_DECKS[@]} intermediate, ${#BEGINNER_DECKS[@]} beginner). Building ..."
 
+# Optional custom Marp theme directory. If slides/themes/ exists and contains at
+# least one *.css file, pass --theme-set so decks can opt-in via front-matter
+# (e.g. `theme: wow-beginner`). Absent or empty themes/ → behaviour unchanged.
+THEME_DIR="$SLIDES_DIR/themes"
+THEME_ARGS=()
+if [ -d "$THEME_DIR" ] && compgen -G "$THEME_DIR/*.css" > /dev/null; then
+  THEME_ARGS=(--theme-set "$THEME_DIR")
+  echo "Custom themes: $THEME_DIR"
+fi
+
 # Map a deck path to its output subdirectory ("" for intermediate, "beginner" for beginner).
 deck_subdir() {
   case "$1" in
@@ -118,18 +128,18 @@ for deck in "${DECKS[@]}"; do
   echo "==> ${sub:+$sub/}$base"
 
   echo "    -> PPTX"
-  "${MARP[@]}" --allow-local-files --pptx \
+  "${MARP[@]}" --allow-local-files "${THEME_ARGS[@]}" --pptx \
     -o "$out_pptx/${base}.pptx" "$deck"
 
   if $BUILD_PDF; then
     echo "    -> PDF"
-    "${MARP[@]}" --allow-local-files --pdf \
+    "${MARP[@]}" --allow-local-files "${THEME_ARGS[@]}" --pdf \
       -o "$out_pdf/${base}.pdf" "$deck"
   fi
 
   if $BUILD_HTML; then
     echo "    -> HTML"
-    "${MARP[@]}" --allow-local-files --html \
+    "${MARP[@]}" --allow-local-files "${THEME_ARGS[@]}" --html \
       -o "$out_html/${base}.html" "$deck"
   fi
 done

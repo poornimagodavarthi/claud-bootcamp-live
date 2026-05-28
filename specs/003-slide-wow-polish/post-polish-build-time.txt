@@ -1,0 +1,10 @@
+419.59
+# Post-polish build time for SC-006 verification.
+# Measured: 28 May 2026 on macOS (Lucas-MacBook-Pro), Node v26.0.0,
+# Marp CLI via `npx --yes @marp-team/marp-cli@latest`, warm cache.
+# Command: time ./slides/deploy-pptx.sh --all --clean
+# Result:  170.56s user / 67.15s system / 6:59.59 total / exit 0
+# Baseline (baseline-build-time.txt):  423.86 seconds
+# Ratio:                                419.59 / 423.86 = 0.990 (≤ 1.5 ✓)
+# SC-006: PASS — polish builds at ~99% of baseline wall-clock.
+# Decks built: 10 intermediate + 8 beginner = 18 × 3 formats = 54 conversions.

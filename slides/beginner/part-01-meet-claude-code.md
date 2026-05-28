@@ -1,21 +1,29 @@
 ---
 marp: true
-theme: default
+theme: wow-beginner
 paginate: true
 size: 16:9
+header: "Claude Code 101 · Module 01"
 title: "Module 01 — Meet Claude Code"
 description: "Your first 20 minutes with Claude Code: install, send a prompt, save the reply."
 ---
 
 <!-- duration: 20 min -->
+<!-- _class: tpl-cover -->
+<!-- _paginate: false -->
+<!-- _header: "" -->
 
-# Module 01 — Meet Claude Code
+<span class="module-chip">Module 01 · 20 min</span>
+
+# Meet Claude Code
 
 Claude Code 101 · Beginner Workshop · Module 1 of 8
 
 The first 20 minutes. By the end you will have sent your first prompt and saved the reply.
 
 ---
+
+<!-- _class: tpl-objectives -->
 
 ## What you'll learn
 
@@ -45,7 +53,11 @@ You type a sentence. It types a sentence back. That's the whole tool.
 
 The only difference from a chat website is that the conversation happens in your terminal, next to your files, so you can ask Claude about your own code later in the course. Today we're not asking about code yet — we're just saying hello.
 
+![w:880](./assets/01-three-skills.svg)
+
 ---
+
+<!-- _class: tpl-show -->
 
 ## Show me
 
@@ -66,9 +78,11 @@ Claude Code is a small program that runs in your terminal and lets you have a ba
 $
 ```
 
-If your screen looks like this, you are done with the lesson. Copy the prompt and the reply into `~/first-prompt.txt`.
+> If your screen looks like this, you are done with the lesson. Copy the prompt and the reply into `~/first-prompt.txt`.
 
 ---
+
+<!-- _class: tpl-try -->
 
 ## Try it yourself
 
@@ -97,6 +111,8 @@ Time budget: 5 minutes. If it takes longer than 10, jump to "Common mistakes" be
 
 ---
 
+<!-- _class: tpl-done -->
+
 ## Lesson reflection
 
 Take 60 seconds and answer in your head:
@@ -108,6 +124,8 @@ Take 60 seconds and answer in your head:
 There is no right answer here. The reflection itself is the win.
 
 ---
+
+<!-- _class: tpl-next -->
 
 ## What's next
 

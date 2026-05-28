@@ -1,21 +1,29 @@
 ---
 marp: true
-theme: default
+theme: wow-beginner
 paginate: true
 size: 16:9
+header: "Claude Code 101 · Module 07"
 title: "Module 07 — Safer & smarter"
 description: "What never to paste into Claude: secrets, PII, anything you'd be embarrassed to email."
 ---
 
 <!-- duration: 25 min -->
+<!-- _class: tpl-cover -->
+<!-- _paginate: false -->
+<!-- _header: "" -->
 
-# Module 07 — Safer & smarter
+<span class="module-chip">Module 07 · 25 min</span>
+
+# Safer & smarter
 
 Claude Code 101 · Beginner Workshop · Module 7 of 8
 
 The model is helpful, polite, and remembers what you paste. Three things you should always think twice before sending.
 
 ---
+
+<!-- _class: tpl-objectives -->
 
 ## What you'll learn
 
@@ -47,7 +55,11 @@ By the end of this 25-minute lesson you will be able to:
 
 If you cannot honestly redact something, you cannot paste it. That is the test.
 
+![w:880](./assets/07-three-no-paste.svg)
+
 ---
+
+<!-- _class: tpl-show -->
 
 ## Show me
 
@@ -69,6 +81,8 @@ Claude can debug the second one just as well as the first. The first one might e
 
 ---
 
+<!-- _class: tpl-try -->
+
 ## Try it yourself
 
 [`exercises/beginner/part-07/starter/leaky_config.txt`](../../exercises/beginner/part-07/starter/leaky_config.txt) contains a fake config file with three planted leaks. Your job: redact all three and save the cleaned version. The exercise asks Claude **only** about the redacted version.
@@ -87,6 +101,8 @@ Time budget: 10 minutes. None of the leaks are real — they are obvious placeho
 
 ---
 
+<!-- _class: tpl-done -->
+
 ## Lesson reflection
 
 Take 90 seconds:
@@ -96,6 +112,8 @@ Take 90 seconds:
 3. If a colleague asked you "is it safe to paste this?", what one-sentence rule would you give them?
 
 ---
+
+<!-- _class: tpl-next -->
 
 ## What's next
 

@@ -1,21 +1,29 @@
 ---
 marp: true
-theme: default
+theme: wow-beginner
 paginate: true
 size: 16:9
+header: "Claude Code 101 · Module 05"
 title: "Module 05 — Editing one file safely"
 description: "Let Claude propose a real change. Accept it, reject it, or undo it — never lose work."
 ---
 
 <!-- duration: 30 min -->
+<!-- _class: tpl-cover -->
+<!-- _paginate: false -->
+<!-- _header: "" -->
 
-# Module 05 — Editing one file safely
+<span class="module-chip">Module 05 · 30 min</span>
+
+# Editing one file safely
 
 Claude Code 101 · Beginner Workshop · Module 5 of 8
 
 This is the first lesson where Claude actually changes a file. We do it in a Git repo so every change is reversible.
 
 ---
+
+<!-- _class: tpl-objectives -->
 
 ## What you'll learn
 
@@ -45,7 +53,11 @@ That sentence is the entire safety net. Memorize it.
 - A **hunk** is one contiguous block of changes inside that diff. You can accept hunk by hunk; you don't have to take everything.
 - `git restore <file>` returns the file to the last committed state. As long as you committed first, nothing is ever lost.
 
+![w:880](./assets/05-safe-edit-loop.svg)
+
 ---
+
+<!-- _class: tpl-show -->
 
 ## Show me
 
@@ -81,6 +93,8 @@ If you had skipped the commit step and `git restore` could not help, you'd be hu
 
 ---
 
+<!-- _class: tpl-try -->
+
 ## Try it yourself
 
 A tiny Git repo lives at [`exercises/beginner/part-05/starter/`](../../exercises/beginner/part-05/starter/). Your job: ask Claude to add a docstring to `greet()`, accept the diff, then run `git restore` to undo it on purpose. You will end this lesson knowing the file is exactly as it started.
@@ -98,6 +112,8 @@ Time budget: 15 minutes (mostly Git ceremony, not Claude).
 
 ---
 
+<!-- _class: tpl-done -->
+
 ## Lesson reflection
 
 Take 90 seconds:
@@ -107,6 +123,8 @@ Take 90 seconds:
 3. If you had been working on three different files and Claude edited all three, would you have known how to undo just one?
 
 ---
+
+<!-- _class: tpl-next -->
 
 ## What's next
 

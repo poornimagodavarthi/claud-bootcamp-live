@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 320" role="img" aria-labelledby="title desc">
+  <title id="title">CLAUDE.md lives at the repo root and is read on every session</title>
+  <desc id="desc">A folder tree shows the repo root with CLAUDE.md highlighted; an arrow points from CLAUDE.md into a Claude session on the right.</desc>
+  <defs>
+    <style>
+      .ink { fill: #1B1B1F; } .accent { fill: #D9531E; } .accent-soft { fill: #FCE6DA; } .bg { fill: #FAF7F2; }
+      .stroke-ink { fill: none; stroke: #1B1B1F; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+      .stroke-accent { fill: none; stroke: #D9531E; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+      .dashed { stroke-dasharray: 6 6; }
+      text { font-family: Inter, sans-serif; fill: #1B1B1F; }
+      .mono { font-family: 'JetBrains Mono', monospace; font-size: 16px; font-weight: 600; }
+      .step { font-size: 13px; fill: #5A5A66; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 700; }
+      .lbl { font-size: 18px; font-weight: 700; }
+    </style>
+    <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#D9531E"/>
+    </marker>
+  </defs>
+
+  <!-- repo tree card -->
+  <g transform="translate(50,50)">
+    <rect width="380" height="240" rx="16" class="bg"/>
+    <rect width="380" height="240" rx="16" class="stroke-ink"/>
+    <text x="20" y="36" class="step">Repo root</text>
+    <text x="24" y="74" class="mono">my-project/</text>
+    <text x="48" y="100" class="mono">.git/</text>
+    <!-- highlighted line -->
+    <rect x="40" y="112" width="320" height="32" rx="8" class="accent-soft"/>
+    <rect x="40" y="112" width="320" height="32" rx="8" class="stroke-accent"/>
+    <text x="48" y="134" class="mono" fill="#D9531E">CLAUDE.md</text>
+    <text x="240" y="134" class="mono" fill="#5A5A66" font-size="13">≤ 20 lines</text>
+    <text x="48" y="166" class="mono">README.md</text>
+    <text x="48" y="190" class="mono">src/</text>
+    <text x="48" y="214" class="mono">tests/</text>
+  </g>
+
+  <!-- arrow -->
+  <path class="stroke-accent" d="M 440 170 Q 510 170 580 170" marker-end="url(#ah)"/>
+  <text x="510" y="155" text-anchor="middle" font-size="13" font-weight="700" fill="#D9531E">read on every session start</text>
+
+  <!-- claude session terminal -->
+  <g transform="translate(590,50)">
+    <rect width="320" height="240" rx="16" fill="#1B1B1F"/>
+    <rect width="320" height="240" rx="16" class="stroke-ink"/>
+    <circle cx="22" cy="24" r="6" fill="#9A2B2B"/>
+    <circle cx="44" cy="24" r="6" fill="#E7C100"/>
+    <circle cx="66" cy="24" r="6" fill="#1F7A4D"/>
+    <text x="20" y="76" class="mono" fill="#FAF7F2">$ claude</text>
+    <text x="20" y="108" class="mono" fill="#FCE6DA" font-size="13">Loading CLAUDE.md…</text>
+    <text x="20" y="148" class="mono" fill="#FAF7F2">&gt; run the tests</text>
+    <text x="20" y="184" class="mono" fill="#FAF7F2" font-size="13">$ pytest -q   ✓ ok</text>
+    <text x="20" y="220" font-family="Inter,sans-serif" font-size="12" font-style="italic" fill="#FCE6DA">— didn't have to ask which command.</text>
+  </g>
+</svg>

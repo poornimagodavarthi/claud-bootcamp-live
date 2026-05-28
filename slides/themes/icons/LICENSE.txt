@@ -1,0 +1,44 @@
+Bundled icons for the `wow-beginner` slide design system
+========================================================
+
+All 13 SVG files under this directory are sourced from Lucide
+(https://lucide.dev), pinned to release v0.477.0 obtained via
+the npm package `lucide-static@0.477.0` distributed on jsDelivr.
+
+Lucide is licensed under the ISC License.
+
+Files in this directory and their original Lucide names:
+
+  arrow-right.svg   → arrow-right
+  award.svg         → award
+  book.svg          → book
+  check.svg         → check
+  eye.svg           → eye
+  file.svg          → file
+  folder.svg        → folder
+  lightbulb.svg     → lightbulb
+  pencil.svg        → pencil
+  play.svg          → play
+  shield.svg        → shield
+  terminal.svg      → terminal
+  warning.svg       → triangle-alert (renamed locally for clarity)
+
+
+----------------------------------------------------------------
+ISC License
+
+ISC License
+
+Copyright (c) 2024 Lucide Contributors
+
+Permission to use, copy, modify, and/or distribute this software for
+any purpose with or without fee is hereby granted, provided that the
+above copyright notice and this permission notice appear in all copies.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT
+OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.

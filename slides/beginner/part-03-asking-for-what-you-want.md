@@ -1,21 +1,29 @@
 ---
 marp: true
-theme: default
+theme: wow-beginner
 paginate: true
 size: 16:9
+header: "Claude Code 101 · Module 03"
 title: "Module 03 — Asking for what you want"
 description: "Write prompts that get the answer you needed on the first try: role, goal, constraints."
 ---
 
 <!-- duration: 30 min -->
+<!-- _class: tpl-cover -->
+<!-- _paginate: false -->
+<!-- _header: "" -->
 
-# Module 03 — Asking for what you want
+<span class="module-chip">Module 03 · 30 min</span>
+
+# Asking for what you want
 
 Claude Code 101 · Beginner Workshop · Module 3 of 8
 
 The shortest path from "I have a question" to "I have a useful answer" is a clear first prompt.
 
 ---
+
+<!-- _class: tpl-objectives -->
 
 ## What you'll learn
 
@@ -46,7 +54,11 @@ By the end of this 30-minute lesson you will be able to:
 
 Miss any of the four and Claude has to guess. Guessing is where bad answers come from.
 
+![w:880](./assets/03-rgcf-prompt.svg)
+
 ---
+
+<!-- _class: tpl-show -->
 
 ## Show me
 
@@ -70,6 +82,8 @@ Same model, same code — the second prompt gets a focused, actionable list ever
 
 ---
 
+<!-- _class: tpl-try -->
+
 ## Try it yourself
 
 Pick a real ~30-line function from any project you have (or use the sample in [`exercises/beginner/part-03/starter/`](../../exercises/beginner/part-03/starter/)). Then write **one** prompt using the role + goal + constraint + format pattern.
@@ -90,6 +104,8 @@ Time budget: 12 minutes (most of it is reading the function and writing the prom
 
 ---
 
+<!-- _class: tpl-done -->
+
 ## Lesson reflection
 
 Take 90 seconds:
@@ -99,6 +115,8 @@ Take 90 seconds:
 3. Pick one prompt you've used in real life recently. Could you have saved a follow-up by adding a constraint to it?
 
 ---
+
+<!-- _class: tpl-next -->
 
 ## What's next
 

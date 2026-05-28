@@ -1,21 +1,29 @@
 ---
 marp: true
-theme: default
+theme: wow-beginner
 paginate: true
 size: 16:9
+header: "Claude Code 101 · Module 08 · Capstone"
 title: "Module 08 — Putting it together"
 description: "Build a tiny notes CLI in 30 minutes using everything from Modules 01–07."
 ---
 
 <!-- duration: 30 min -->
+<!-- _class: tpl-cover -->
+<!-- _paginate: false -->
+<!-- _header: "" -->
 
-# Module 08 — Putting it together
+<span class="module-chip">Module 08 · Capstone · 30 min</span>
+
+# Putting it together
 
 Claude Code 101 · Beginner Workshop · Module 8 of 8
 
 This is the capstone. You build a real, runnable CLI, and a script grades it.
 
 ---
+
+<!-- _class: tpl-objectives -->
 
 ## What you'll learn
 
@@ -51,7 +59,11 @@ The full contract:
 
 State persists in a `notes.json` file in the current directory. IDs increase monotonically — deleting note 1 does **not** make the next `add` reuse id 1.
 
+![w:880](./assets/08-capstone-stack.svg)
+
 ---
+
+<!-- _class: tpl-show -->
 
 ## Show me
 
@@ -76,6 +88,8 @@ added: 3
 Notice the new note gets id 3, not 1. That is the persistence + monotonic-id rule.
 
 ---
+
+<!-- _class: tpl-try -->
 
 ## Try it yourself
 
@@ -104,6 +118,8 @@ That 8-character token goes on your certificate.
 
 ---
 
+<!-- _class: tpl-done -->
+
 ## Lesson reflection
 
 Take 2 minutes:
@@ -113,6 +129,8 @@ Take 2 minutes:
 3. If a colleague asked you to teach them Claude Code in 4 hours, which 3 of these 8 modules would you keep?
 
 ---
+
+<!-- _class: tpl-next is-finale -->
 
 ## What's next
 
