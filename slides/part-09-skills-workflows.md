@@ -1,47 +1,62 @@
 ---
 marp: true
-theme: default
+theme: wow-beginner
+header: 'Claude Code Bootcamp · Day 1 · Module 09'
 paginate: true
 size: 16:9
-title: "Module 9 — Commands, Hooks & Reusable Workflows"
-description: "Author your own project-agnostic Claude Skill following the SKILL.md contract and use it on a real task."
+title: "Module 9 — Skills, Hooks, MCP & Multi-Agent Workflows"
+description: "From prompts to agentic engineering: author a Skill, add a Hook, connect via MCP, coordinate sub-agents."
 ---
 
 <!-- duration: 22 min -->
+<!-- _class: tpl-cover -->
+<!-- _paginate: false -->
+<!-- _header: "" -->
 
-## Module 9 — Commands, Hooks & Reusable Workflows
+<span class="module-chip">Module 09 · 22 min</span>
+
+# Skills, Hooks, MCP & Multi-Agent Workflows
 
 Claude Code Bootcamp · Day 1 · Block 9 of 10
 
+<img class="hero-icon" src="themes/icons/lightbulb.svg" alt="" />
+
 ---
+
+<!-- _class: tpl-objectives -->
 
 ## Promise
 
 In 22 minutes you will:
 
-1. Read an existing skill (`skills/code-review/SKILL.md`) as a worked example.
-2. Author **your own** `SKILL.md` following the contract.
-3. Invoke your new skill on a real task and verify it earns its rent.
+1. Author **your own** `SKILL.md` following the contract — the reusable workflow you keep.
+2. Add a **hook** that runs format + lint before Claude can commit.
+3. Recognise where an **MCP connector** would replace a paste-the-context prompt.
+4. Decide when to fan out to **multi-agent / worktree** workflows — and when not to.
 
 ---
 
 ## Why this matters
 
 - A skill is the unit of *carry-over*. It is the prompt that survives leaving this workshop.
-- Skills make Claude consistent across projects, teams, and days. Without skills you re-invent each prompt.
-- The 10 skills shipped with this repo are the durable artifact you take home — but the one *you* write is the skill you'll actually use first.
+- Hooks turn safety from "I hope I remembered" into "the tooling enforced it."
+- MCP lets Claude **fetch** the ticket, the doc, the schema — instead of you pasting it.
+- Multi-agent splits a feature across frontend / backend / tests and reassembles it. Powerful when scoped; chaotic when not.
 
 ---
 
-## Concepts
+## Concepts — four pillars of agentic engineering
 
-- **Skill = directory** at `skills/<kebab-name>/SKILL.md`.
-- **Frontmatter**: `name`, `description`. Both required.
-- **Body**: 6 H2 sections — Purpose · When to use · Body · Inputs · Outputs · Worked example.
-- **Project-agnostic**: a skill that mentions your repo's specific filenames is broken. Reference shapes, not paths.
-- **The contract**: see `specs/001-bootcamp-course-materials/contracts/skill.contract.md`.
+- **Skills** — packaged, reusable workflows at `skills/<name>/SKILL.md`. Invoke with `/<name>`.
+- **Hooks** — shell commands that fire before/after Claude actions (format, lint, deny dangerous commands, log).
+- **MCP** — Model Context Protocol connectors. Claude reads Jira, Slack, Drive, GitHub, internal tools as first-class context.
+- **Multi-agent** — a lead agent coordinates sub-agents in parallel worktrees; merge results back to one branch.
+
+![h:280](intermediate/assets/09-skills-catalogue.svg)
 
 ---
+
+<!-- _class: tpl-show -->
 
 ## Live demo flow
 
@@ -52,6 +67,60 @@ In 22 minutes you will:
 5. Class watches Claude produce structured output that matches the skill's "Outputs" section.
 
 ---
+
+<!-- _class: tpl-show -->
+
+## Pillar 2 — Hooks: safety as tooling
+
+Hooks fire **before or after** Claude actions. Use them to make good behaviour automatic.
+
+- `post-edit` → run formatter (Prettier, Black, `cargo fmt`).
+- `pre-commit` → run lint + tests; block commit on failure.
+- `pre-bash` → deny `rm -rf`, `git push --force`, `--no-verify`.
+- `post-action` → append to an agent action log for audit.
+
+```jsonc
+// .claude/hooks.json
+{ "pre-bash": "scripts/deny-dangerous.sh",
+  "post-edit":  "npx prettier --write $CLAUDE_FILES",
+  "pre-commit": "npm test && npm run lint" }
+```
+
+---
+
+<!-- _class: tpl-show -->
+
+## Pillar 3 — MCP: connect Claude to real work
+
+**Model Context Protocol** = open standard for plugging Claude into external data.
+
+- **Issue trackers** (Jira, Linear, GitHub Issues) — Claude reads the ticket, asks clarifying questions, implements.
+- **Docs** (Drive, Notion, Confluence) — Claude grounds answers in your actual spec, not a guess.
+- **Chat** (Slack) — summarise threads, draft replies, file incidents.
+- **Internal tools** — expose your own service over MCP; Claude treats it as a tool.
+
+**Prompting changes**: stop pasting context. Say *"read MCP:jira/PROJ-123 and implement."* Set hard boundaries on what each connector may read/write.
+
+---
+
+<!-- _class: tpl-show -->
+
+## Pillar 4 — Multi-agent & background workflows
+
+One lead agent splits a feature across worker agents in **separate worktrees**:
+
+- Worker A — backend API + migrations.
+- Worker B — frontend component + state.
+- Worker C — tests + fixtures.
+- Lead — reviews each worktree, resolves conflicts, opens a single PR.
+
+**Background sessions** let multiple full Claude Code sessions run in parallel.
+
+**When NOT to fan out:** tasks under ≈30 minutes, shared mutable state, when sub-tasks aren't independent. The merge overhead eats the gain.
+
+---
+
+<!-- _class: tpl-show -->
 
 ## Mini project
 
@@ -64,6 +133,8 @@ Author one new skill of your own. Pick a workflow you actually want to repeat:
 
 ---
 
+<!-- _class: tpl-try -->
+
 ## Step-by-step lab
 
 1. Open `skills/code-review/SKILL.md` in one pane and `specs/001-bootcamp-course-materials/contracts/skill.contract.md` in another.
@@ -74,6 +145,8 @@ Author one new skill of your own. Pick a workflow you actually want to repeat:
 6. If the output matches your "Outputs" section: ship it. If not: tighten "Body" and re-run.
 
 ---
+
+<!-- _class: tpl-show -->
 
 ## Suggested Claude Code prompts
 
@@ -94,6 +167,8 @@ Produce the output exactly as the skill's "Outputs" section specifies.
 
 ---
 
+<!-- _class: tpl-done -->
+
 ## Deliverable checklist
 
 - [ ] `module-09/skill/SKILL.md` exists with valid frontmatter (`name`, `description`).
@@ -103,11 +178,15 @@ Produce the output exactly as the skill's "Outputs" section specifies.
 
 ---
 
+<!-- _class: tpl-done -->
+
 ## Definition of done
 
 ✅ Skill validates against the contract · ✅ Project-agnostic · ✅ Real invocation produced output that matches the "Outputs" section.
 
 ---
+
+<!-- _class: tpl-try -->
 
 ## Review checkpoint
 
@@ -123,7 +202,9 @@ Pair (60 s each):
 - Skill body that says "do a good job" — meaningless. Be operational.
 - Embedding repo-specific paths or framework versions. The skill won't carry over.
 - Skipping "Worked example". Reviewers can't tell whether the skill works without it.
-- Authoring 5 skills in 22 minutes. Author 1 well; carry the others home as homework.
+- Hooks that swallow exit codes — a `pre-commit` that returns 0 on lint failure is worse than no hook.
+- MCP connectors with **write** scope when **read** would do. Least privilege.
+- Fanning out to 4 sub-agents on a 10-minute task — merge tax > productivity.
 
 ---
 
@@ -136,7 +217,13 @@ Pair (60 s each):
 
 ---
 
+<!-- _class: tpl-next -->
+
 ## Transition to next module
 
 We have skills, code, tests, branches, docs. The last 18 minutes ask the hardest question: would you put any of this in production tomorrow?
 **Next: Module 10 — Production Readiness.**
+
+<!-- polish-log
+(intermediate-content-polish feature 004) — populated during US2 polish pass.
+-->

@@ -6,17 +6,19 @@
 # content is taller than the canvas, Marp clips it silently. This script makes
 # that failure loud.
 #
-# Strategy: render each beginner deck to HTML, then for each <section> count
-# the number of headings, paragraphs, list items, table rows, and image tags.
-# Any single section that exceeds a generous content budget gets reported.
+# Strategy: render each deck to HTML, then for each <section> count the number
+# of headings, paragraphs, list items, table rows, and image tags. Any single
+# section that exceeds a content budget gets reported.
 #
 # This is a structural canary, not a pixel-perfect overflow detector — but it
 # catches the most common slip (someone adding a 25th bullet to a tpl-objectives
 # slide that was already at the limit).
 #
 # Usage:
-#   scripts/check-slide-overflow.sh              # check all beginner decks
-#   scripts/check-slide-overflow.sh part-01      # check a single deck (basename match)
+#   scripts/check-slide-overflow.sh                      # default: beginner @ budget 18
+#   scripts/check-slide-overflow.sh --budget 22 <html-dir>
+#   scripts/check-slide-overflow.sh <html-dir>           # explicit directory; budget defaults to 18
+#   scripts/check-slide-overflow.sh part-01              # legacy filter on default beginner dir
 #
 # Exit 0 = all decks within budget.
 # Exit 1 = at least one slide over budget (details printed).
@@ -24,19 +26,43 @@
 set -euo pipefail
 
 REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-SLIDES_DIR="$REPO_ROOT/slides/beginner"
-DIST_DIR="$REPO_ROOT/slides/dist/html/beginner"
 
-# Content-element budget per slide. 16 covers the largest legitimate slide
-# (the Module 08 contract table). Anything above 18 is over budget.
+# Default to beginner layout for backwards compatibility (feature 003 contract).
+DIST_DIR="$REPO_ROOT/slides/dist/html"
 BUDGET=18
+filter=""
 
-filter="${1:-}"
+while [ $# -gt 0 ]; do
+  case "$1" in
+    --budget)
+      BUDGET="$2"
+      shift 2
+      ;;
+    --budget=*)
+      BUDGET="${1#--budget=}"
+      shift
+      ;;
+    -*)
+      echo "Unknown flag: $1" >&2
+      exit 2
+      ;;
+    *)
+      if [ -d "$1" ]; then
+        DIST_DIR="$1"
+      else
+        filter="$1"
+      fi
+      shift
+      ;;
+  esac
+done
 
 if [ ! -d "$DIST_DIR" ]; then
   echo "ERROR: $DIST_DIR not found. Run ./slides/deploy-pptx.sh --html first." >&2
   exit 2
 fi
+
+echo "Scanning: $DIST_DIR (budget=$BUDGET)"
 
 shopt -s nullglob
 fails=0

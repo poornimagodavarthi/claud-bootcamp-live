@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" role="img" aria-labelledby="t d">
+  <title id="t">Test, debug, ship — the red-green loop</title>
+  <desc id="d">Four boxes arranged in a horseshoe: write a failing test, run it (red), make the smallest fix, then arrive at green and commit.</desc>
+  <defs>
+    <style>
+      .ink { fill: #1B1B1F; }
+      .muted { fill: #5A5A66; }
+      .accent { fill: #D9531E; }
+      .soft { fill: #FCE6DA; }
+      .bg { fill: #FAF7F2; }
+      .success { fill: #1F7A4D; }
+      .stroke-ink { fill: none; stroke: #1B1B1F; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+      .stroke-accent { fill: none; stroke: #D9531E; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+      .stroke-muted { fill: none; stroke: #5A5A66; stroke-width: 1.5; stroke-dasharray: 4 4; }
+      text { font-family: 'Inter Variable', Inter, Helvetica, Arial, sans-serif; }
+      .h { font-weight: 700; font-size: 22px; fill: #1B1B1F; }
+      .b { font-weight: 500; font-size: 16px; fill: #1B1B1F; }
+      .s { font-weight: 600; font-size: 12px; fill: #5A5A66; letter-spacing: 0.1em; text-transform: uppercase; }
+      .mono { font-family: 'JetBrains Mono Variable', ui-monospace, monospace; font-weight: 600; font-size: 14px; fill: #1B1B1F; }
+    </style>
+    <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#1B1B1F"/>
+    </marker>
+  </defs>
+
+  <text class="s" x="400" y="40" text-anchor="middle">Test → fail → fix → green</text>
+  <g transform="translate(60,90)">
+    <rect class="soft" width="160" height="100" rx="10"/>
+    <rect class="stroke-ink" width="160" height="100" rx="10"/>
+    <text class="b" x="80" y="44" text-anchor="middle">Write test</text>
+    <text class="mono" x="80" y="74" text-anchor="middle">red</text>
+  </g>
+  <path class="stroke-accent" d="M 230 140 L 290 140" marker-end="url(#ah)"/>
+  <g transform="translate(300,90)">
+    <rect class="bg" width="160" height="100" rx="10"/>
+    <rect class="stroke-ink" width="160" height="100" rx="10"/>
+    <text class="b" x="80" y="44" text-anchor="middle">Run</text>
+    <text class="mono" x="80" y="74" text-anchor="middle" fill="#D9531E">FAIL</text>
+  </g>
+  <path class="stroke-accent" d="M 470 140 L 530 140" marker-end="url(#ah)"/>
+  <g transform="translate(540,90)">
+    <rect class="bg" width="180" height="100" rx="10"/>
+    <rect class="stroke-ink" width="180" height="100" rx="10"/>
+    <text class="b" x="90" y="44" text-anchor="middle">Smallest fix</text>
+    <text class="mono" x="90" y="74" text-anchor="middle">edit one file</text>
+  </g>
+  <path class="stroke-accent" d="M 630 200 Q 630 320 400 320 Q 170 320 140 240" marker-end="url(#ah)"/>
+  <g transform="translate(320,290)">
+    <rect class="success" width="160" height="80" rx="10" opacity="0.18"/>
+    <rect class="stroke-ink" width="160" height="80" rx="10"/>
+    <text class="b" x="80" y="34" text-anchor="middle" fill="#1F7A4D">GREEN</text>
+    <text class="mono" x="80" y="60" text-anchor="middle">commit</text>
+  </g>
+
+</svg>

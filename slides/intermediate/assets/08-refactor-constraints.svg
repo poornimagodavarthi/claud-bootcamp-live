@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" role="img" aria-labelledby="t d">
+  <title id="t">Refactor under written constraints</title>
+  <desc id="d">Three constraint pills across the top — line cap, no new dependencies, public API unchanged — above a before/after comparison of a function with cyclomatic complexity dropping from 24 to 4.</desc>
+  <defs>
+    <style>
+      .ink { fill: #1B1B1F; }
+      .muted { fill: #5A5A66; }
+      .accent { fill: #D9531E; }
+      .soft { fill: #FCE6DA; }
+      .bg { fill: #FAF7F2; }
+      .success { fill: #1F7A4D; }
+      .stroke-ink { fill: none; stroke: #1B1B1F; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+      .stroke-accent { fill: none; stroke: #D9531E; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+      .stroke-muted { fill: none; stroke: #5A5A66; stroke-width: 1.5; stroke-dasharray: 4 4; }
+      text { font-family: 'Inter Variable', Inter, Helvetica, Arial, sans-serif; }
+      .h { font-weight: 700; font-size: 22px; fill: #1B1B1F; }
+      .b { font-weight: 500; font-size: 16px; fill: #1B1B1F; }
+      .s { font-weight: 600; font-size: 12px; fill: #5A5A66; letter-spacing: 0.1em; text-transform: uppercase; }
+      .mono { font-family: 'JetBrains Mono Variable', ui-monospace, monospace; font-weight: 600; font-size: 14px; fill: #1B1B1F; }
+    </style>
+    <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#1B1B1F"/>
+    </marker>
+  </defs>
+
+  <text class="s" x="400" y="40" text-anchor="middle">Refactor under written constraints</text>
+  <g transform="translate(60,80)">
+    <rect class="soft" width="190" height="40" rx="20"/>
+    <text class="b" x="95" y="26" text-anchor="middle">≤ 60 lines / function</text>
+  </g>
+  <g transform="translate(280,80)">
+    <rect class="soft" width="180" height="40" rx="20"/>
+    <text class="b" x="90" y="26" text-anchor="middle">No new deps</text>
+  </g>
+  <g transform="translate(490,80)">
+    <rect class="soft" width="250" height="40" rx="20"/>
+    <text class="b" x="125" y="26" text-anchor="middle">Public API unchanged</text>
+  </g>
+
+  <g transform="translate(60,160)">
+    <rect class="bg" width="320" height="240" rx="10"/>
+    <rect class="stroke-ink" width="320" height="240" rx="10"/>
+    <text class="s" x="20" y="32">Before</text>
+    <text class="mono" x="20" y="64">def handle(x):</text>
+    <text class="mono" x="20" y="86">  # 180 lines</text>
+    <text class="mono" x="20" y="108">  # nested ifs</text>
+    <text class="mono" x="20" y="130">  # 4 globals</text>
+    <text class="mono" x="20" y="152">  ...</text>
+    <text class="mono" x="20" y="200" fill="#D9531E">cyclomatic: 24</text>
+  </g>
+  <path class="stroke-accent" d="M 400 280 L 460 280" marker-end="url(#ah)"/>
+  <g transform="translate(470,160)">
+    <rect class="bg" width="270" height="240" rx="10"/>
+    <rect class="stroke-ink" width="270" height="240" rx="10"/>
+    <text class="s" x="20" y="32">After</text>
+    <text class="mono" x="20" y="64">def handle(x):</text>
+    <text class="mono" x="20" y="86">  v = validate(x)</text>
+    <text class="mono" x="20" y="108">  d = build(v)</text>
+    <text class="mono" x="20" y="130">  return send(d)</text>
+    <text class="mono" x="20" y="200" fill="#1F7A4D">cyclomatic: 4</text>
+  </g>
+
+</svg>

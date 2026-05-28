@@ -1,6 +1,7 @@
 ---
 marp: true
-theme: default
+theme: wow-beginner
+header: 'Claude Code Bootcamp · Day 1 · Module 02'
 paginate: true
 size: 16:9
 title: "Module 2 — Prompting Like a Tech Lead"
@@ -8,12 +9,21 @@ description: "Translate a vague feature request into a precise, constraint-rich 
 ---
 
 <!-- duration: 24 min -->
+<!-- _class: tpl-cover -->
+<!-- _paginate: false -->
+<!-- _header: "" -->
 
-## Module 2 — Prompting Like a Tech Lead
+<span class="module-chip">Module 02 · 24 min</span>
+
+# Prompting Like a Tech Lead
 
 Claude Code Bootcamp · Day 1 · Block 2 of 10
 
+<img class="hero-icon" src="themes/icons/pencil.svg" alt="" />
+
 ---
+
+<!-- _class: tpl-objectives -->
 
 ## Promise
 
@@ -41,7 +51,11 @@ In 24 minutes you will:
 - **Output format**: file paths, exit codes, JSON schema if applicable.
 - **Examples**: one happy path + one edge case = enough.
 
+![h:280](intermediate/assets/02-prompt-anatomy.svg)
+
 ---
+
+<!-- _class: tpl-show -->
 
 ## Live demo flow
 
@@ -52,6 +66,8 @@ In 24 minutes you will:
 5. Instructor **deletes one constraint** mid-demo (e.g., "no third-party deps") and re-runs to show the regression.
 
 ---
+
+<!-- _class: tpl-show -->
 
 ## Mini project
 
@@ -65,6 +81,8 @@ In 24 minutes you will:
 
 ---
 
+<!-- _class: tpl-try -->
+
 ## Step-by-step lab
 
 1. Pick your track: **Python** (`argparse`, stdlib only) or **Node.js + TypeScript** (`commander` + `tsx`).
@@ -75,6 +93,8 @@ In 24 minutes you will:
 6. Iterate: delete the *"no third-party deps"* line in your prompt, re-generate, diff. Note the change in `module-02/iteration-notes.md`.
 
 ---
+
+<!-- _class: tpl-show -->
 
 ## Suggested Claude Code prompts
 
@@ -102,6 +122,8 @@ EXAMPLES
 
 ---
 
+<!-- _class: tpl-done -->
+
 ## Deliverable checklist
 
 - [ ] `module-02/` contains source + README.
@@ -111,11 +133,15 @@ EXAMPLES
 
 ---
 
+<!-- _class: tpl-done -->
+
 ## Definition of done
 
 ✅ Four commands all return correct exit codes · ✅ `tasks.json` round-trips state across runs · ✅ Iteration note explains *why* the deleted constraint mattered.
 
 ---
+
+<!-- _class: tpl-try -->
 
 ## Review checkpoint
 
@@ -145,7 +171,13 @@ In pairs (60 s each):
 
 ---
 
+<!-- _class: tpl-next -->
+
 ## Transition to next module
 
 The prompt worked because it carried context: language, layout, exit codes. We now persist that context to a file so Claude remembers it across every prompt for the rest of the day.
 **Next: Module 3 — Project Context with `CLAUDE.md`.**
+
+<!-- polish-log
+(intermediate-content-polish feature 004) — populated during US2 polish pass.
+-->

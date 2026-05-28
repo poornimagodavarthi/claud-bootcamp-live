@@ -1,6 +1,7 @@
 ---
 marp: true
-theme: default
+theme: wow-beginner
+header: 'Claude Code Bootcamp · Day 1 · Module 05'
 paginate: true
 size: 16:9
 title: "Module 5 — Testing, Debugging & Self-Review"
@@ -8,12 +9,21 @@ description: "Write a real test suite for the module 4 API, plant and fix two bu
 ---
 
 <!-- duration: 28 min -->
+<!-- _class: tpl-cover -->
+<!-- _paginate: false -->
+<!-- _header: "" -->
 
-## Module 5 — Testing, Debugging & Self-Review
+<span class="module-chip">Module 05 · 28 min</span>
+
+# Testing, Debugging & Self-Review
 
 Claude Code Bootcamp · Day 1 · Block 5 of 10
 
+<img class="hero-icon" src="themes/icons/shield.svg" alt="" />
+
 ---
+
+<!-- _class: tpl-objectives -->
 
 ## Promise
 
@@ -40,7 +50,27 @@ In 28 minutes you will:
 - **Off-by-one and boundary bugs**: Claude's blind spot. Always test boundaries.
 - **Your rubric ≠ instructor rubric**. The student deliverable here is `code-review-rubric.md`. The instructor's grading rubric lives at `assessments/rubric.md`. Two distinct artifacts.
 
+![h:280](intermediate/assets/05-test-debug-loop.svg)
+
 ---
+
+<!-- _class: tpl-show -->
+
+## Bundled skills do the heavy lifting
+
+Claude Code ships bundled skills you can invoke directly. Use them instead of rewriting prompts.
+
+- `/debug` — reproduce, isolate, propose a minimal fix with a regression test.
+- `/verify` — re-run the failing case after the fix and prove it green.
+- `/code-review` — structured review against rubric (security, tests, naming, edge cases).
+- `/loop` — iterate test → fix → test until green or a hard stop.
+- `/batch` — apply the same fix shape across many files.
+
+**Rule of thumb:** if you find yourself typing the same prompt twice, reach for a bundled skill or author your own (Module 9).
+
+---
+
+<!-- _class: tpl-show -->
 
 ## Live demo flow
 
@@ -53,6 +83,8 @@ In 28 minutes you will:
 
 ---
 
+<!-- _class: tpl-show -->
+
 ## Mini project
 
 Three deliverables under `module-05/`:
@@ -62,6 +94,8 @@ Three deliverables under `module-05/`:
 3. `code-review-rubric.md` — your personal rubric for reviewing AI code.
 
 ---
+
+<!-- _class: tpl-try -->
 
 ## Step-by-step lab
 
@@ -75,6 +109,8 @@ Three deliverables under `module-05/`:
 8. Copy all three deliverables into `module-05/` for submission.
 
 ---
+
+<!-- _class: tpl-show -->
 
 ## Suggested Claude Code prompts
 
@@ -104,6 +140,8 @@ Optimize for catching the kinds of bugs Claude tends to miss
 
 ---
 
+<!-- _class: tpl-done -->
+
 ## Deliverable checklist
 
 - [ ] `module-05/tests/` exists; full suite runs green on the fixed code.
@@ -113,11 +151,15 @@ Optimize for catching the kinds of bugs Claude tends to miss
 
 ---
 
+<!-- _class: tpl-done -->
+
 ## Definition of done
 
 ✅ Test suite green · ✅ Two bugs found and fixed with notes · ✅ Personal rubric authored and committed.
 
 ---
+
+<!-- _class: tpl-try -->
 
 ## Review checkpoint
 
@@ -146,7 +188,13 @@ Pair (60 s each):
 
 ---
 
+<!-- _class: tpl-next -->
+
 ## Transition to next module
 
 We have a tested, debugged, reviewed module. Now we ship it through Git the way a senior engineer would — branch, commit message, PR description.
 **Next: Module 6 — Git Workflows for Safe AI Dev.**
+
+<!-- polish-log
+(intermediate-content-polish feature 004) — populated during US2 polish pass.
+-->

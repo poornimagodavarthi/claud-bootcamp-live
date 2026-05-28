@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" role="img" aria-labelledby="t d">
+  <title id="t">Git workflow for safe AI development</title>
+  <desc id="d">A horizontal main branch with a feature branch carrying three commits c1, c2, c3 below it, merged back into main via a Pull Request card.</desc>
+  <defs>
+    <style>
+      .ink { fill: #1B1B1F; }
+      .muted { fill: #5A5A66; }
+      .accent { fill: #D9531E; }
+      .soft { fill: #FCE6DA; }
+      .bg { fill: #FAF7F2; }
+      .success { fill: #1F7A4D; }
+      .stroke-ink { fill: none; stroke: #1B1B1F; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+      .stroke-accent { fill: none; stroke: #D9531E; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+      .stroke-muted { fill: none; stroke: #5A5A66; stroke-width: 1.5; stroke-dasharray: 4 4; }
+      text { font-family: 'Inter Variable', Inter, Helvetica, Arial, sans-serif; }
+      .h { font-weight: 700; font-size: 22px; fill: #1B1B1F; }
+      .b { font-weight: 500; font-size: 16px; fill: #1B1B1F; }
+      .s { font-weight: 600; font-size: 12px; fill: #5A5A66; letter-spacing: 0.1em; text-transform: uppercase; }
+      .mono { font-family: 'JetBrains Mono Variable', ui-monospace, monospace; font-weight: 600; font-size: 14px; fill: #1B1B1F; }
+    </style>
+    <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#1B1B1F"/>
+    </marker>
+  </defs>
+
+  <text class="s" x="400" y="40" text-anchor="middle">main ← PR ← branch (your AI work)</text>
+  <line class="stroke-ink" x1="80" y1="200" x2="720" y2="200"/>
+  <text class="s" x="80" y="186">main</text>
+  <line class="stroke-accent" x1="180" y1="200" x2="180" y2="280"/>
+  <line class="stroke-accent" x1="180" y1="280" x2="600" y2="280"/>
+  <line class="stroke-accent" x1="600" y1="280" x2="600" y2="200"/>
+  <text class="s" x="180" y="306">branch: feature/x</text>
+
+  <g><circle class="bg" cx="180" cy="200" r="10"/><circle class="stroke-ink" cx="180" cy="200" r="10"/></g>
+  <g><circle class="bg" cx="260" cy="280" r="10"/><circle class="stroke-accent" cx="260" cy="280" r="10"/><text class="mono" x="260" y="316" text-anchor="middle">c1</text></g>
+  <g><circle class="bg" cx="380" cy="280" r="10"/><circle class="stroke-accent" cx="380" cy="280" r="10"/><text class="mono" x="380" y="316" text-anchor="middle">c2</text></g>
+  <g><circle class="bg" cx="500" cy="280" r="10"/><circle class="stroke-accent" cx="500" cy="280" r="10"/><text class="mono" x="500" y="316" text-anchor="middle">c3</text></g>
+  <g><circle class="accent" cx="600" cy="200" r="10"/><text class="mono" x="600" y="186" text-anchor="middle">merge</text></g>
+
+  <g transform="translate(440,90)">
+    <rect class="soft" width="240" height="60" rx="10"/>
+    <rect class="stroke-ink" width="240" height="60" rx="10"/>
+    <text class="b" x="120" y="26" text-anchor="middle">Pull Request</text>
+    <text class="mono" x="120" y="48" text-anchor="middle" fill="#5A5A66">Claude writes the description</text>
+  </g>
+  <line class="stroke-muted" x1="560" y1="150" x2="600" y2="190"/>
+
+</svg>

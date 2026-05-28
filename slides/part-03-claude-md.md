@@ -1,6 +1,7 @@
 ---
 marp: true
-theme: default
+theme: wow-beginner
+header: 'Claude Code Bootcamp · Day 1 · Module 03'
 paginate: true
 size: 16:9
 title: "Module 3 — Project Context with CLAUDE.md"
@@ -8,12 +9,21 @@ description: "Author a project-level CLAUDE.md that makes Claude Code follow you
 ---
 
 <!-- duration: 22 min -->
+<!-- _class: tpl-cover -->
+<!-- _paginate: false -->
+<!-- _header: "" -->
 
-## Module 3 — Project Context with `CLAUDE.md`
+<span class="module-chip">Module 03 · 22 min</span>
+
+# Project Context with CLAUDE.md
 
 Claude Code Bootcamp · Day 1 · Block 3 of 10
 
+<img class="hero-icon" src="themes/icons/book.svg" alt="" />
+
 ---
+
+<!-- _class: tpl-objectives -->
 
 ## Promise
 
@@ -40,7 +50,11 @@ In 22 minutes you will:
 - **Sections that pay rent**: Stack · Conventions · Commands · Do-not list · Glossary.
 - **The trim test**: delete each section in turn; if Claude still behaves the same, that section was bloat.
 
+![h:280](intermediate/assets/03-claude-md-cheatsheet.svg)
+
 ---
+
+<!-- _class: tpl-show -->
 
 ## Live demo flow
 
@@ -51,6 +65,8 @@ In 22 minutes you will:
 5. Run the trim test live — delete one section, re-prompt, observe drift.
 
 ---
+
+<!-- _class: tpl-show -->
 
 ## Mini project
 
@@ -63,6 +79,8 @@ In 22 minutes you will:
 
 ---
 
+<!-- _class: tpl-try -->
+
 ## Step-by-step lab
 
 1. `cd` into the repo from module 2 (or your repo of choice).
@@ -74,6 +92,8 @@ In 22 minutes you will:
 7. Copy the final file into your submission as `module-03/CLAUDE.md` plus a screenshot of Claude obeying it (`module-03/proof.png`).
 
 ---
+
+<!-- _class: tpl-show -->
 
 ## Suggested Claude Code prompts
 
@@ -93,6 +113,8 @@ documentation, omit it. Keep the whole file under 80 lines.
 
 ---
 
+<!-- _class: tpl-done -->
+
 ## Deliverable checklist
 
 - [ ] `module-03/CLAUDE.md` exists and is < 80 lines.
@@ -102,11 +124,15 @@ documentation, omit it. Keep the whole file under 80 lines.
 
 ---
 
+<!-- _class: tpl-done -->
+
 ## Definition of done
 
 ✅ `CLAUDE.md` committed to the underlying repo · ✅ Trim test performed at least once · ✅ Submission folder populated.
 
 ---
+
+<!-- _class: tpl-try -->
 
 ## Review checkpoint
 
@@ -136,7 +162,13 @@ Pair (60 s each):
 
 ---
 
+<!-- _class: tpl-next -->
+
 ## Transition to next module
 
 We have *one* prompt working well, and it is now context-aware. Next we generate **multiple candidates** and pick the winner — turning Claude from a single proposer into a small team.
 **Next: Module 4 — Build Faster with Best-of-N.**
+
+<!-- polish-log
+(intermediate-content-polish feature 004) — populated during US2 polish pass.
+-->

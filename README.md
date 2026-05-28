@@ -157,10 +157,12 @@ Build all 10 slide decks to PPTX (and optionally PDF/HTML):
 ```bash
 cd slides
 ./deploy-pptx.sh            # PPTX only → slides/dist/pptx/
-./deploy-pptx.sh --all      # PPTX + PDF + HTML
+./deploy-pptx.sh --all      # PPTX + PDF + HTML → slides/dist/{pptx,pdf,html}/
 ./deploy-pptx.sh --pdf      # PPTX + PDF
 ./deploy-pptx.sh --clean    # remove dist/ before rebuilding
 ```
+
+All decks (intermediate + beginner) build to a single flat tree under `slides/dist/<format>/`. Intermediate decks use the `wow-intermediate` theme (which `@import`s `wow-beginner`); beginner decks use `wow-beginner` directly. See [`slides/themes/README.md`](slides/themes/README.md).
 
 The script auto-detects a global `marp` and falls back to `npx --yes @marp-team/marp-cli@latest`. Set `CHROME_PATH` if Marp can't find Chromium for PPTX/PDF export. See [`slides/README.md`](slides/README.md).
 

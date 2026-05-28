@@ -1,6 +1,7 @@
 ---
 marp: true
-theme: default
+theme: wow-beginner
+header: 'Claude Code Bootcamp · Day 1 · Module 06'
 paginate: true
 size: 16:9
 title: "Module 6 — Git Workflows for Safe AI Dev"
@@ -8,12 +9,21 @@ description: "Branch, commit, and PR your AI-generated code safely. Have Claude 
 ---
 
 <!-- duration: 22 min -->
+<!-- _class: tpl-cover -->
+<!-- _paginate: false -->
+<!-- _header: "" -->
 
-## Module 6 — Git Workflows for Safe AI Dev
+<span class="module-chip">Module 06 · 22 min</span>
+
+# Git Workflows for Safe AI Dev
 
 Claude Code Bootcamp · Day 1 · Block 6 of 10
 
+<img class="hero-icon" src="themes/icons/folder.svg" alt="" />
+
 ---
+
+<!-- _class: tpl-objectives -->
 
 ## Promise
 
@@ -40,7 +50,27 @@ In 22 minutes you will:
 - **Conventional Commits**: `feat:`, `fix:`, `chore:`, `docs:`, `test:`. The skill `skills/git-workflow/SKILL.md` holds the full set.
 - **PR description shape**: What changed · Why · How to test · Risk · Rollback.
 
+![h:280](intermediate/assets/06-git-flow.svg)
+
 ---
+
+<!-- _class: tpl-show -->
+
+## `@claude` in GitHub Actions
+
+The official **anthropics/claude-code-action** turns Claude Code into a teammate inside your repo:
+
+- **`@claude` mentions** on issues and PRs — answer questions, propose patches, push a fix branch.
+- **Automated PR review** — structured comments, security flags, suggested diffs.
+- **Issue-to-PR flow** — Claude reads the ticket, opens a branch, lands a draft PR.
+- **Scheduled maintenance** — release notes, changelog updates, dependency triage.
+- **Self-hosted runners** — keep code on your infrastructure; same action.
+
+Think of CI Claude as the **first reviewer** on every PR — you still merge.
+
+---
+
+<!-- _class: tpl-show -->
 
 ## Live demo flow
 
@@ -51,6 +81,8 @@ In 22 minutes you will:
 5. Asks Claude: *"Write the PR description from the branch diff."* Reviews, edits, opens a draft PR (or simulates).
 
 ---
+
+<!-- _class: tpl-show -->
 
 ## Mini project
 
@@ -64,6 +96,8 @@ Deliverables under `module-06/`:
 
 ---
 
+<!-- _class: tpl-try -->
+
 ## Step-by-step lab
 
 1. In your module-5 repo, `git switch -c feat/<your-scope>`.
@@ -74,6 +108,8 @@ Deliverables under `module-06/`:
 6. Save the three artefacts to `module-06/`.
 
 ---
+
+<!-- _class: tpl-show -->
 
 ## Suggested Claude Code prompts
 
@@ -101,6 +137,8 @@ Keep the whole thing under 40 lines.
 
 ---
 
+<!-- _class: tpl-done -->
+
 ## Deliverable checklist
 
 - [ ] Feature branch exists and contains all module-5 work.
@@ -110,11 +148,15 @@ Keep the whole thing under 40 lines.
 
 ---
 
+<!-- _class: tpl-done -->
+
 ## Definition of done
 
 ✅ Branch named correctly · ✅ Atomic commits with sensible messages · ✅ PR description is mergeable as-is.
 
 ---
+
+<!-- _class: tpl-try -->
 
 ## Review checkpoint
 
@@ -143,7 +185,13 @@ Pair (60 s each):
 
 ---
 
+<!-- _class: tpl-next -->
+
 ## Transition to next module
 
 Code, tests, branch, PR — all from text prompts. Next we widen the input modality: from **a screenshot to a working UI** in one pass.
 **Next: Module 7 — Multimodal: Screenshot to UI.**
+
+<!-- polish-log
+(intermediate-content-polish feature 004) — populated during US2 polish pass.
+-->

@@ -1,6 +1,7 @@
 ---
 marp: true
-theme: default
+theme: wow-beginner
+header: 'Claude Code Bootcamp · Day 1 · Module 08'
 paginate: true
 size: 16:9
 title: "Module 8 — Refactoring & Documentation at Scale"
@@ -8,12 +9,21 @@ description: "Refactor a messy module under hard written constraints and ship HA
 ---
 
 <!-- duration: 24 min -->
+<!-- _class: tpl-cover -->
+<!-- _paginate: false -->
+<!-- _header: "" -->
 
-## Module 8 — Refactoring & Documentation at Scale
+<span class="module-chip">Module 08 · 24 min</span>
+
+# Refactoring & Documentation at Scale
 
 Claude Code Bootcamp · Day 1 · Block 8 of 10
 
+<img class="hero-icon" src="themes/icons/file.svg" alt="" />
+
 ---
+
+<!-- _class: tpl-objectives -->
 
 ## Promise
 
@@ -40,7 +50,11 @@ In 24 minutes you will:
 - **`HANDOFF.md`**: a one-pager for the next engineer — what was done, why, watch-outs.
 - **`ARCHITECTURE.md`**: shape of the module — components, data flow, dependencies. One diagram (ASCII OK), not five.
 
+![h:280](intermediate/assets/08-refactor-constraints.svg)
+
 ---
+
+<!-- _class: tpl-show -->
 
 ## Live demo flow
 
@@ -51,6 +65,8 @@ In 24 minutes you will:
 5. Second pass: generate `HANDOFF.md` from the diff. Read aloud.
 
 ---
+
+<!-- _class: tpl-show -->
 
 ## Mini project
 
@@ -65,6 +81,8 @@ Deliverables under `module-08/`:
 
 ---
 
+<!-- _class: tpl-try -->
+
 ## Step-by-step lab
 
 1. Copy `exercises/part-08/before/` to `module-08/after/`.
@@ -76,6 +94,8 @@ Deliverables under `module-08/`:
 7. Edit both docs. Commit.
 
 ---
+
+<!-- _class: tpl-show -->
 
 ## Suggested Claude Code prompts
 
@@ -115,6 +135,8 @@ Keep under 80 lines.
 
 ---
 
+<!-- _class: tpl-done -->
+
 ## Deliverable checklist
 
 - [ ] `module-08/after/` passes the existing tests in `before/`.
@@ -124,11 +146,15 @@ Keep under 80 lines.
 
 ---
 
+<!-- _class: tpl-done -->
+
 ## Definition of done
 
 ✅ Tests still green · ✅ Diff respects every constraint · ✅ Both docs would orient a new engineer in 5 minutes.
 
 ---
+
+<!-- _class: tpl-try -->
 
 ## Review checkpoint
 
@@ -157,7 +183,13 @@ Pair (60 s each):
 
 ---
 
+<!-- _class: tpl-next -->
+
 ## Transition to next module
 
 We have shipped real artefacts in 7 modules. Now we capture the *patterns* — turn them into reusable Claude Skills you can carry to any project.
 **Next: Module 9 — Commands, Hooks & Reusable Workflows.**
+
+<!-- polish-log
+(intermediate-content-polish feature 004) — populated during US2 polish pass.
+-->

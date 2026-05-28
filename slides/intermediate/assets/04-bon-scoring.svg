@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" role="img" aria-labelledby="t d">
+  <title id="t">Best-of-N scoring grid</title>
+  <desc id="d">A 3-by-3 grid scoring three candidate solutions A, B, C against three criteria. Column B is highlighted as the winner with the highest total.</desc>
+  <defs>
+    <style>
+      .ink { fill: #1B1B1F; }
+      .muted { fill: #5A5A66; }
+      .accent { fill: #D9531E; }
+      .soft { fill: #FCE6DA; }
+      .bg { fill: #FAF7F2; }
+      .success { fill: #1F7A4D; }
+      .stroke-ink { fill: none; stroke: #1B1B1F; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+      .stroke-accent { fill: none; stroke: #D9531E; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+      .stroke-muted { fill: none; stroke: #5A5A66; stroke-width: 1.5; stroke-dasharray: 4 4; }
+      text { font-family: 'Inter Variable', Inter, Helvetica, Arial, sans-serif; }
+      .h { font-weight: 700; font-size: 22px; fill: #1B1B1F; }
+      .b { font-weight: 500; font-size: 16px; fill: #1B1B1F; }
+      .s { font-weight: 600; font-size: 12px; fill: #5A5A66; letter-spacing: 0.1em; text-transform: uppercase; }
+      .mono { font-family: 'JetBrains Mono Variable', ui-monospace, monospace; font-weight: 600; font-size: 14px; fill: #1B1B1F; }
+    </style>
+    <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#1B1B1F"/>
+    </marker>
+  </defs>
+<text class="s" x="400" y="40" text-anchor="middle">Best-of-N · score the candidates, pick the winner</text>
+  <g><rect class="bg" x="160" y="80" width="120" height="280" rx="10"/><rect class="stroke-ink" x="160" y="80" width="120" height="280" rx="10"/><text class="h" x="220" y="112" text-anchor="middle">A</text></g>
+  <g><rect class="soft" x="340" y="80" width="120" height="280" rx="10"/><rect class="stroke-accent" x="340" y="80" width="120" height="280" rx="10"/><text class="h" x="400" y="112" text-anchor="middle">B</text></g>
+  <g><rect class="bg" x="520" y="80" width="120" height="280" rx="10"/><rect class="stroke-ink" x="520" y="80" width="120" height="280" rx="10"/><text class="h" x="580" y="112" text-anchor="middle">C</text></g>
+  <text class="b" x="60" y="170">Correctness</text>
+  <g><rect class="bg" x="194" y="138" width="52" height="40" rx="6"/><rect class="stroke-ink" x="194" y="138" width="52" height="40" rx="6"/><text class="mono" x="220" y="164" text-anchor="middle">3</text></g>
+  <g><rect class="bg" x="374" y="138" width="52" height="40" rx="6"/><rect class="stroke-ink" x="374" y="138" width="52" height="40" rx="6"/><text class="mono" x="400" y="164" text-anchor="middle">5</text></g>
+  <g><rect class="bg" x="554" y="138" width="52" height="40" rx="6"/><rect class="stroke-ink" x="554" y="138" width="52" height="40" rx="6"/><text class="mono" x="580" y="164" text-anchor="middle">2</text></g>
+  <text class="b" x="60" y="230">Readability</text>
+  <g><rect class="bg" x="194" y="198" width="52" height="40" rx="6"/><rect class="stroke-ink" x="194" y="198" width="52" height="40" rx="6"/><text class="mono" x="220" y="224" text-anchor="middle">4</text></g>
+  <g><rect class="bg" x="374" y="198" width="52" height="40" rx="6"/><rect class="stroke-ink" x="374" y="198" width="52" height="40" rx="6"/><text class="mono" x="400" y="224" text-anchor="middle">5</text></g>
+  <g><rect class="bg" x="554" y="198" width="52" height="40" rx="6"/><rect class="stroke-ink" x="554" y="198" width="52" height="40" rx="6"/><text class="mono" x="580" y="224" text-anchor="middle">3</text></g>
+  <text class="b" x="60" y="290">Tests</text>
+  <g><rect class="bg" x="194" y="258" width="52" height="40" rx="6"/><rect class="stroke-ink" x="194" y="258" width="52" height="40" rx="6"/><text class="mono" x="220" y="284" text-anchor="middle">2</text></g>
+  <g><rect class="bg" x="374" y="258" width="52" height="40" rx="6"/><rect class="stroke-ink" x="374" y="258" width="52" height="40" rx="6"/><text class="mono" x="400" y="284" text-anchor="middle">5</text></g>
+  <g><rect class="bg" x="554" y="258" width="52" height="40" rx="6"/><rect class="stroke-ink" x="554" y="258" width="52" height="40" rx="6"/><text class="mono" x="580" y="284" text-anchor="middle">1</text></g>
+  <text class="h" x="220" y="350" text-anchor="middle">9</text>
+  <text class="h" x="400" y="350" text-anchor="middle">15</text>
+  <text class="h" x="580" y="350" text-anchor="middle">6</text>
+  <text class="b" x="400" y="395" text-anchor="middle" fill="#D9531E">★ Winner: B</text>
+</svg>

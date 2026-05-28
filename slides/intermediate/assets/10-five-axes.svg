@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" role="img" aria-labelledby="t d">
+  <title id="t">Production readiness across five axes</title>
+  <desc id="d">A pentagon radar chart with five axes — Security, Reliability, Performance, Observability, Operability — overlaid with a sample score polygon showing strengths and gaps.</desc>
+  <defs>
+    <style>
+      .ink { fill: #1B1B1F; }
+      .muted { fill: #5A5A66; }
+      .accent { fill: #D9531E; }
+      .soft { fill: #FCE6DA; }
+      .bg { fill: #FAF7F2; }
+      .success { fill: #1F7A4D; }
+      .stroke-ink { fill: none; stroke: #1B1B1F; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+      .stroke-accent { fill: none; stroke: #D9531E; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+      .stroke-muted { fill: none; stroke: #5A5A66; stroke-width: 1.5; stroke-dasharray: 4 4; }
+      text { font-family: 'Inter Variable', Inter, Helvetica, Arial, sans-serif; }
+      .h { font-weight: 700; font-size: 22px; fill: #1B1B1F; }
+      .b { font-weight: 500; font-size: 16px; fill: #1B1B1F; }
+      .s { font-weight: 600; font-size: 12px; fill: #5A5A66; letter-spacing: 0.1em; text-transform: uppercase; }
+      .mono { font-family: 'JetBrains Mono Variable', ui-monospace, monospace; font-weight: 600; font-size: 14px; fill: #1B1B1F; }
+    </style>
+    <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#1B1B1F"/>
+    </marker>
+  </defs>
+
+  <text class="s" x="400" y="40" text-anchor="middle">Production readiness · score across five axes</text>
+  <polygon points="400.0,190.5 447.1,224.7 429.1,280.0 370.9,280.0 352.9,224.7" class="stroke-muted" fill="none"/>
+  <polygon points="400.0,141.0 494.2,209.4 458.2,320.1 341.8,320.1 305.8,209.4" class="stroke-muted" fill="none"/>
+  <polygon points="400.0,90.0 542.7,193.6 488.2,361.4 311.8,361.4 257.3,193.6" class="stroke-muted" fill="none"/>
+  <line class="stroke-muted" x1="400" y1="240" x2="400.0" y2="90.0"/>
+  <line class="stroke-muted" x1="400" y1="240" x2="542.7" y2="193.6"/>
+  <line class="stroke-muted" x1="400" y1="240" x2="488.2" y2="361.4"/>
+  <line class="stroke-muted" x1="400" y1="240" x2="311.8" y2="361.4"/>
+  <line class="stroke-muted" x1="400" y1="240" x2="257.3" y2="193.6"/>
+  <polygon points="400.0,112.5 485.6,212.2 461.7,324.9 355.9,300.7 285.9,202.9" fill="#D9531E" opacity="0.18"/>
+  <polygon points="400.0,112.5 485.6,212.2 461.7,324.9 355.9,300.7 285.9,202.9" class="stroke-accent"/>
+  <text class="b" x="400.0" y="68.0" text-anchor="middle">Security</text><text class="b" x="573.1" y="186.8" text-anchor="start">Reliability</text><text class="b" x="507.0" y="379.2" text-anchor="start">Performance</text><text class="b" x="293.0" y="379.2" text-anchor="end">Observability</text><text class="b" x="226.9" y="186.8" text-anchor="end">Operability</text>
+
+</svg>

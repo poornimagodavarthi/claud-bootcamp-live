@@ -1,6 +1,7 @@
 ---
 marp: true
-theme: default
+theme: wow-beginner
+header: 'Claude Code Bootcamp · Day 1 · Module 07'
 paginate: true
 size: 16:9
 title: "Module 7 — Multimodal: Screenshot to UI"
@@ -8,12 +9,21 @@ description: "Hand Claude a wireframe image and produce a working single-page Da
 ---
 
 <!-- duration: 30 min -->
+<!-- _class: tpl-cover -->
+<!-- _paginate: false -->
+<!-- _header: "" -->
 
-## Module 7 — Multimodal: Screenshot to UI
+<span class="module-chip">Module 07 · 30 min</span>
+
+# Multimodal: Screenshot to UI
 
 Claude Code Bootcamp · Day 1 · Block 7 of 10
 
+<img class="hero-icon" src="themes/icons/eye.svg" alt="" />
+
 ---
+
+<!-- _class: tpl-objectives -->
 
 ## Promise
 
@@ -40,7 +50,11 @@ In 30 minutes you will:
 - **Visual diff loop**: render → screenshot → ask Claude to diff → patch.
 - **Scope discipline**: ship the layout. Theming and animations are stretch.
 
+![h:280](intermediate/assets/07-screenshot-to-ui.svg)
+
 ---
+
+<!-- _class: tpl-show -->
 
 ## Live demo flow
 
@@ -51,6 +65,8 @@ In 30 minutes you will:
 5. Applies one round of fixes. Demo ends with a side-by-side comparison projected.
 
 ---
+
+<!-- _class: tpl-show -->
 
 ## Mini project
 
@@ -64,6 +80,8 @@ In 30 minutes you will:
 
 ---
 
+<!-- _class: tpl-try -->
+
 ## Step-by-step lab
 
 1. Open `exercises/part-07/`. Read `README.md` end to end.
@@ -75,6 +93,8 @@ In 30 minutes you will:
 7. Re-screenshot as `module-07/render-final.png`.
 
 ---
+
+<!-- _class: tpl-show -->
 
 ## Suggested Claude Code prompts
 
@@ -104,6 +124,8 @@ Stop after 5 items.
 
 ---
 
+<!-- _class: tpl-done -->
+
 ## Deliverable checklist
 
 - [ ] `module-07/` contains a runnable app.
@@ -113,11 +135,15 @@ Stop after 5 items.
 
 ---
 
+<!-- _class: tpl-done -->
+
 ## Definition of done
 
 ✅ App runs with one command · ✅ Render is unmistakably the wireframe · ✅ One visual-diff iteration applied.
 
 ---
+
+<!-- _class: tpl-try -->
 
 ## Review checkpoint
 
@@ -146,7 +172,13 @@ Pair (60 s each):
 
 ---
 
+<!-- _class: tpl-next -->
+
 ## Transition to next module
 
 We have a UI. Real codebases also have *legacy* — modules nobody wants to touch. Next we refactor a messy module under hard constraints and document the result.
 **Next: Module 8 — Refactoring & Documentation at Scale.**
+
+<!-- polish-log
+(intermediate-content-polish feature 004) — populated during US2 polish pass.
+-->

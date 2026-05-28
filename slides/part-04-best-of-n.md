@@ -1,6 +1,7 @@
 ---
 marp: true
-theme: default
+theme: wow-beginner
+header: 'Claude Code Bootcamp · Day 1 · Module 04'
 paginate: true
 size: 16:9
 title: "Module 4 — Build Faster with Best-of-N"
@@ -8,12 +9,21 @@ description: "Generate N candidates for the same task and select the winner usin
 ---
 
 <!-- duration: 30 min -->
+<!-- _class: tpl-cover -->
+<!-- _paginate: false -->
+<!-- _header: "" -->
 
-## Module 4 — Build Faster with Best-of-N
+<span class="module-chip">Module 04 · 30 min</span>
+
+# Build Faster with Best-of-N
 
 Claude Code Bootcamp · Day 1 · Block 4 of 10
 
+<img class="hero-icon" src="themes/icons/play.svg" alt="" />
+
 ---
+
+<!-- _class: tpl-objectives -->
 
 ## Promise
 
@@ -42,7 +52,11 @@ In 30 minutes you will:
   - *Fit*: does it match `CLAUDE.md` conventions and the existing repo style?
 - **Independent candidates**: each candidate gets its own prompt context. No "now improve it"; that is iteration, not BoN.
 
+![h:280](intermediate/assets/04-bon-scoring.svg)
+
 ---
+
+<!-- _class: tpl-show -->
 
 ## Live demo flow
 
@@ -53,6 +67,8 @@ In 30 minutes you will:
 5. Side-by-side scoring on the rubric. Winner committed; losers shown to class to highlight the lift.
 
 ---
+
+<!-- _class: tpl-show -->
 
 ## Mini project
 
@@ -67,6 +83,8 @@ In 30 minutes you will:
 
 ---
 
+<!-- _class: tpl-try -->
+
 ## Step-by-step lab
 
 1. Pick your track: **Python** (FastAPI + Pydantic v2 + sqlite3) or **Node** (Hono + Zod + better-sqlite3).
@@ -77,6 +95,8 @@ In 30 minutes you will:
 6. Copy the winner's files into `module-04/winner/` and commit.
 
 ---
+
+<!-- _class: tpl-show -->
 
 ## Suggested Claude Code prompts
 
@@ -112,6 +132,8 @@ Notes:
 
 ---
 
+<!-- _class: tpl-done -->
+
 ## Deliverable checklist
 
 - [ ] All three candidates exist in `module-04/candidate-{a,b,c}/`.
@@ -121,11 +143,15 @@ Notes:
 
 ---
 
+<!-- _class: tpl-done -->
+
 ## Definition of done
 
 ✅ Three candidates generated independently · ✅ Rubric applied honestly · ✅ Winner runs end-to-end · ✅ Losers archived, not deleted.
 
 ---
+
+<!-- _class: tpl-try -->
 
 ## Review checkpoint
 
@@ -155,7 +181,13 @@ Pair (60 s each):
 
 ---
 
+<!-- _class: tpl-next -->
+
 ## Transition to next module
 
 We have a winner. But "looks right" is not "is right". Next we write tests, plant a bug, and make Claude debug its own code.
 **Next: Module 5 — Testing, Debugging & Self-Review.**
+
+<!-- polish-log
+(intermediate-content-polish feature 004) — populated during US2 polish pass.
+-->

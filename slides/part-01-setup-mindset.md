@@ -1,6 +1,7 @@
 ---
 marp: true
-theme: default
+theme: wow-beginner
+header: 'Claude Code Bootcamp · Day 1 · Module 01'
 paginate: true
 size: 16:9
 title: "Module 1 — Welcome, Setup & AI-First Mindset"
@@ -8,13 +9,49 @@ description: "Set the room up for 4 hours of high-velocity AI-paired delivery. I
 ---
 
 <!-- duration: 20 min -->
+<!-- _class: tpl-cover -->
+<!-- _paginate: false -->
+<!-- _header: "" -->
 
-## Module 1 — Welcome, Setup & AI-First Mindset
+<span class="module-chip">Module 01 · 20 min</span>
+
+# Setup & AI-First Mindset
 
 Claude Code Bootcamp · Day 1 · Block 1 of 10
+
 Instructor: **Luca Berton** · Endorsed by **Packt Certification**
 
+<img class="hero-icon" src="themes/icons/terminal.svg" alt="" />
+
 ---
+
+## Your instructor — Luca Berton
+
+- **Automation engineer & educator.** 15+ years shipping infrastructure-as-code, Ansible, and developer-tooling for global enterprises.
+- **Author & speaker.** Books on Ansible and DevOps; regular conference speaker; runs a YouTube channel on automation.
+- **AI-paired delivery practitioner.** Uses Claude Code daily to plan, refactor, document, and review production code.
+- **Today's mission:** get you shipping with Claude Code the same way — safely, repeatably, with a loop you can take home.
+
+🔗 [lucaberton.com](https://lucaberton.com/)
+
+---
+
+<!-- _class: tpl-show -->
+
+## Claude Code is everywhere (May 2026)
+
+Claude Code is no longer just a CLI — it ships on **four surfaces** with one shared context:
+
+- **Terminal** — hands-on repo work, scripts, `claude -p` piping.
+- **VS Code / JetBrains** — inline diffs, editor-native review, gutter actions.
+- **Desktop app** — side-by-side sessions, visual diff review, screenshots.
+- **Web** — remote/cloud tasks, parallel work, share a session with a teammate.
+
+Today we work mostly in **terminal + IDE**. The patterns transfer to the other surfaces unchanged.
+
+---
+
+<!-- _class: tpl-objectives -->
 
 ## Promise
 
@@ -42,7 +79,11 @@ By the end of this 20-minute block you will:
 - **Definition of Done**: a hard checklist per module; if it isn't checked, the module isn't shipped.
 - **Submission as proof of work**: every module produces a folder in your final zip.
 
+![h:280](intermediate/assets/01-tcc-loop.svg)
+
 ---
+
+<!-- _class: tpl-show -->
 
 ## Live demo flow
 
@@ -53,6 +94,8 @@ By the end of this 20-minute block you will:
 5. Instructor narrates the 5-step loop while Claude is responding.
 
 ---
+
+<!-- _class: tpl-show -->
 
 ## Mini project
 
@@ -65,6 +108,8 @@ Deliverable for module 1 in your submission zip: `module-01/` containing
 
 ---
 
+<!-- _class: tpl-try -->
+
 ## Step-by-step lab
 
 1. Open a terminal. Run the three `--version` commands; pipe to `module-01/environment.txt`.
@@ -74,6 +119,8 @@ Deliverable for module 1 in your submission zip: `module-01/` containing
 5. Tick the Definition of Done.
 
 ---
+
+<!-- _class: tpl-show -->
 
 ## Suggested Claude Code prompts
 
@@ -87,6 +134,8 @@ End with one sentence about why skipping the Review step is the most common fail
 
 ---
 
+<!-- _class: tpl-done -->
+
 ## Deliverable checklist
 
 - [ ] `module-01/environment.txt` contains three valid version strings.
@@ -96,11 +145,15 @@ End with one sentence about why skipping the Review step is the most common fail
 
 ---
 
+<!-- _class: tpl-done -->
+
 ## Definition of done
 
 ✅ Environment verified · ✅ Loop explained in your own words · ✅ Submission folder `module-01/` exists with both files.
 
 ---
+
+<!-- _class: tpl-try -->
 
 ## Review checkpoint
 
@@ -130,7 +183,13 @@ Pair with the person next to you. In 60 seconds each:
 
 ---
 
+<!-- _class: tpl-next -->
+
 ## Transition to next module
 
 Now that the loop is named, we apply step 1 — **Plan** — by writing prompts the way a Tech Lead writes specs.
 **Next: Module 2 — Prompting Like a Tech Lead.**
+
+<!-- polish-log
+(intermediate-content-polish feature 004) — populated during US2 polish pass.
+-->

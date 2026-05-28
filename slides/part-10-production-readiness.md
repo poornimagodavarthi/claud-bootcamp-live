@@ -1,6 +1,7 @@
 ---
 marp: true
-theme: default
+theme: wow-beginner
+header: 'Claude Code Bootcamp · Day 1 · Module 10'
 paginate: true
 size: 16:9
 title: "Module 10 — Production Readiness"
@@ -8,12 +9,21 @@ description: "Pick one project from today and write a Production Readiness Repor
 ---
 
 <!-- duration: 18 min -->
+<!-- _class: tpl-cover -->
+<!-- _paginate: false -->
+<!-- _header: "" -->
 
-## Module 10 — Production Readiness
+<span class="module-chip">Module 10 · 18 min</span>
+
+# Production Readiness
 
 Claude Code Bootcamp · Day 1 · Block 10 of 10
 
+<img class="hero-icon" src="themes/icons/award.svg" alt="" />
+
 ---
+
+<!-- _class: tpl-objectives -->
 
 ## Promise
 
@@ -40,7 +50,29 @@ In 18 minutes you will:
 - Go / no-go is a decision, not a vibe. State it.
 - Use `skills/production-readiness-review/SKILL.md` as the durable instrument.
 
+![h:280](intermediate/assets/10-five-axes.svg)
+
 ---
+
+<!-- _class: tpl-show -->
+
+## Overeager agents — the May 2026 lesson
+
+Research this year (arXiv 2605.18583) showed coding agents routinely take **out-of-scope actions on benign tasks**: editing files they weren't asked to, running shell commands the user never approved, expanding scope silently.
+
+**Your defences, in order:**
+
+- **Least-privilege tools** — only grant what this task needs.
+- **Permission modes** — `ask` for shell, `deny` for network, `read-only` for `do-not-touch/` zones.
+- **Shell approval** — every command requires a tap until trust is earned.
+- **Review before commit** — diff-first, always; never `--no-verify`.
+- **Disaster recovery** — clean branch, atomic commits, easy `git reset --hard`.
+
+Treat the agent like a junior with `sudo`. Polite, fast, occasionally dangerous.
+
+---
+
+<!-- _class: tpl-show -->
 
 ## Live demo flow
 
@@ -52,6 +84,8 @@ In 18 minutes you will:
 
 ---
 
+<!-- _class: tpl-show -->
+
 ## Mini project
 
 **Production Readiness Report** for one of your modules.
@@ -59,6 +93,8 @@ In 18 minutes you will:
 Deliverable: `module-10/production-readiness-report.md` — one page, structured by axis.
 
 ---
+
+<!-- _class: tpl-try -->
 
 ## Step-by-step lab
 
@@ -70,6 +106,8 @@ Deliverable: `module-10/production-readiness-report.md` — one page, structured
 6. Save to `module-10/production-readiness-report.md`.
 
 ---
+
+<!-- _class: tpl-show -->
 
 ## Suggested Claude Code prompts
 
@@ -123,6 +161,8 @@ Go / No-Go: <choice>. Rationale: <≤25 words>.
 
 ---
 
+<!-- _class: tpl-done -->
+
 ## Deliverable checklist
 
 - [ ] `module-10/production-readiness-report.md` covers all 5 axes.
@@ -132,11 +172,15 @@ Go / No-Go: <choice>. Rationale: <≤25 words>.
 
 ---
 
+<!-- _class: tpl-done -->
+
 ## Definition of done
 
 ✅ One project assessed across 5 axes · ✅ Honest go / no-go verdict · ✅ One concrete step you could take Monday.
 
 ---
+
+<!-- _class: tpl-try -->
 
 ## Review checkpoint
 
@@ -165,7 +209,13 @@ Pair (60 s each):
 
 ---
 
+<!-- _class: tpl-next is-finale -->
+
 ## Transition to next module
 
 There is no next module — this is the wrap. Submit your zip per the **Submission workflow** in `student-guide.md`. Take the assessment. Earn the certificate. Go ship.
 **Workshop complete. Welcome to AI-paired engineering.**
+
+<!-- polish-log
+(intermediate-content-polish feature 004) — populated during US2 polish pass.
+-->

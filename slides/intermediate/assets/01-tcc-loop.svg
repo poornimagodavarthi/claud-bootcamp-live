@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" role="img" aria-labelledby="t d">
+  <title id="t">The five-step Claude Code loop</title>
+  <desc id="d">A circular diagram of five labelled nodes — Plan, Implement, Test, Review, Commit — connected by arrows that cycle clockwise.</desc>
+  <defs>
+    <style>
+      .ink { fill: #1B1B1F; }
+      .muted { fill: #5A5A66; }
+      .accent { fill: #D9531E; }
+      .soft { fill: #FCE6DA; }
+      .bg { fill: #FAF7F2; }
+      .success { fill: #1F7A4D; }
+      .stroke-ink { fill: none; stroke: #1B1B1F; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+      .stroke-accent { fill: none; stroke: #D9531E; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+      .stroke-muted { fill: none; stroke: #5A5A66; stroke-width: 1.5; stroke-dasharray: 4 4; }
+      text { font-family: 'Inter Variable', Inter, Helvetica, Arial, sans-serif; }
+      .h { font-weight: 700; font-size: 22px; fill: #1B1B1F; }
+      .b { font-weight: 500; font-size: 16px; fill: #1B1B1F; }
+      .s { font-weight: 600; font-size: 12px; fill: #5A5A66; letter-spacing: 0.1em; text-transform: uppercase; }
+      .mono { font-family: 'JetBrains Mono Variable', ui-monospace, monospace; font-weight: 600; font-size: 14px; fill: #1B1B1F; }
+    </style>
+    <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#1B1B1F"/>
+    </marker>
+  </defs>
+<g><text class="s" x="400" y="40" text-anchor="middle">The Claude Code loop · 5 steps · every module</text></g>
+<path class="stroke-accent" d="M 438.8 108.2 Q 482.3 112.6 500.6 153.1" marker-end="url(#ah)"/>
+<path class="stroke-accent" d="M 527.8 229.3 Q 537.1 272.1 504.2 301.9" marker-end="url(#ah)"/>
+<path class="stroke-accent" d="M 440.2 351.4 Q 402.4 373.3 363.8 351.4" marker-end="url(#ah)"/>
+<path class="stroke-accent" d="M 297.0 305.7 Q 264.4 276.5 273.4 233.1" marker-end="url(#ah)"/>
+<path class="stroke-accent" d="M 296.2 155.4 Q 313.8 115.4 357.9 110.6" marker-end="url(#ah)"/>
+<g><circle class="soft" cx="400.0" cy="80.0" r="44"/><circle class="stroke-ink" cx="400.0" cy="80.0" r="44"/><text class="mono" x="400.0" y="74.0" text-anchor="middle">1</text><text class="b" x="400.0" y="98.0" text-anchor="middle">Plan</text></g>
+<g><circle class="soft" cx="542.7" cy="183.6" r="44"/><circle class="stroke-ink" cx="542.7" cy="183.6" r="44"/><text class="mono" x="542.7" y="177.6" text-anchor="middle">2</text><text class="b" x="542.7" y="201.6" text-anchor="middle">Implement</text></g>
+<g><circle class="soft" cx="488.2" cy="351.4" r="44"/><circle class="stroke-ink" cx="488.2" cy="351.4" r="44"/><text class="mono" x="488.2" y="345.4" text-anchor="middle">3</text><text class="b" x="488.2" y="369.4" text-anchor="middle">Test</text></g>
+<g><circle class="soft" cx="311.8" cy="351.4" r="44"/><circle class="stroke-ink" cx="311.8" cy="351.4" r="44"/><text class="mono" x="311.8" y="345.4" text-anchor="middle">4</text><text class="b" x="311.8" y="369.4" text-anchor="middle">Review</text></g>
+<g><circle class="soft" cx="257.3" cy="183.6" r="44"/><circle class="stroke-ink" cx="257.3" cy="183.6" r="44"/><text class="mono" x="257.3" y="177.6" text-anchor="middle">5</text><text class="b" x="257.3" y="201.6" text-anchor="middle">Commit</text></g>
+</svg>

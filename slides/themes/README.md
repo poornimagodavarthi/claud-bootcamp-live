@@ -1,14 +1,22 @@
-# `wow-beginner` — Slide Design System
+# `wow-beginner` + `wow-intermediate` — Slide Design System
 
-The single source of truth for the visual identity of the **Claude Code 101 beginner slide decks** (`slides/beginner/part-01..08-*.md`).
+The single source of truth for the visual identity of both deck families:
+
+- **Beginner decks** (`slides/beginner/part-01..08-*.md`) → `theme: wow-beginner`
+- **Intermediate decks** (`slides/part-01..10-*.md`) → `theme: wow-intermediate`
 
 Source files:
 
-- [`wow-beginner.css`](./wow-beginner.css) — the Marp custom theme.
+- [`wow-beginner.css`](./wow-beginner.css) — the base Marp custom theme.
+- [`wow-intermediate.css`](./wow-intermediate.css) — `@import`s the base and adds **one** new class: `tpl-demo` (for the intermediate Live-demo-flow slide).
 - [`fonts/`](./fonts) — bundled SIL OFL 1.1 fonts (Inter, JetBrains Mono).
 - [`icons/`](./icons) — bundled ISC-licensed Lucide icons (13 files).
+- Intermediate teaching SVGs live in [`slides/intermediate/assets/`](../intermediate/assets) (10 files, one per module).
 
-Feature spec: [`specs/003-slide-wow-polish/`](../../specs/003-slide-wow-polish/).
+Feature specs:
+
+- Beginner: [`specs/003-slide-wow-polish/`](../../specs/003-slide-wow-polish/).
+- Intermediate: [`specs/004-intermediate-content-polish/`](../../specs/004-intermediate-content-polish/).
 
 ---
 
@@ -49,6 +57,7 @@ Each recurring lesson section uses a CSS class applied via Marp's per-slide dire
 | `tpl-try` | "Try it yourself" — steps | numbered list + success-criterion blockquote |
 | `tpl-done` | "Definition of done" — checklist | unordered list + reflection blockquote |
 | `tpl-next` | Closing / next module | h2 title (final module: add `is-finale` class for ★) |
+| `tpl-demo` | **Intermediate only** — Live demo flow procedure | h2 + numbered steps (oversized mono numerals on accent-soft strip); optional `play` hero-icon |
 
 Detailed contracts per template: see [`specs/003-slide-wow-polish/contracts/slide-template-contracts.md`](../../specs/003-slide-wow-polish/contracts/slide-template-contracts.md).
 
