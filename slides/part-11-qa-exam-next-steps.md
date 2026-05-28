@@ -131,6 +131,30 @@ SPEAKER NOTES — slide 6 (exam, 3 min)
 
 ---
 
+<!-- _class: tpl-show -->
+
+## Future-proof · Keep an eye on (May 2026 → beyond)
+
+The tools change monthly; the **habits** don't. What to watch — and the trick that compounds:
+
+| Watch in 2026 | Trick that makes life better |
+|---|---|
+| **Shared skill libraries** across teams | Keep a `skills/` folder in every repo — borrow habits, don't reinvent |
+| **MCP servers** for more of your stack | Wire issue tracker · CI · observability in once; verify with `/mcp` |
+| **Multi-agent** orchestration maturing | Delegate parallel work, keep **one** human reviewer — you |
+| **Hooks** as default guardrails | Auto-format, secret-scan, test-gate on every action |
+| Bigger context + **memory files** | Pin model + conventions in `CLAUDE.md`; it still wins |
+
+> The rule that survives every release: **Plan → Implement → Test → Review → Commit.**
+
+<!--
+SPEAKER NOTES — slide 7 (future-proof, 2 min)
+- Theme: chase habits, not features. Every 2026 capability amplifies the loop, never replaces the reviewer.
+- Tell them to bookmark the repo's skills/ folder as their starting point Monday.
+-->
+
+---
+
 <!-- _class: tpl-try -->
 
 ## Your turn · The Monday sentence (3 min)
@@ -147,7 +171,7 @@ Then:
 **Success signal**: you can say your Monday sentence out loud without hesitating.
 
 <!--
-SPEAKER NOTES — slide 7 (3 min)
+SPEAKER NOTES — slide 8 (3 min)
 - If a student can't complete the sentence, send them to re-watch Module 9 before submitting.
 -->
 
@@ -167,7 +191,7 @@ SPEAKER NOTES — slide 7 (3 min)
 **Thank you.** You direct, you review, you merge — you're the engineer of record. Go ship.
 
 <!--
-SPEAKER NOTES — slide 8 (close, 1 min)
+SPEAKER NOTES — slide 9 (close, 1 min)
 - End on the through-line: the loop goes home with them. Open the floor for Q&A.
 -->
 
