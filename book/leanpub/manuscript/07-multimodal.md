@@ -192,6 +192,7 @@ Theme the dashboard (light + dark) using only plain CSS variables. Document the 
 | Render uses Tailwind | Re-prompt with the "plain CSS" constraint reinforced. |
 | Layout is "close" but not right | Run the visual-diff loop; cap at 3 iterations. |
 | Streamlit sidebar collapses oddly | Use `st.sidebar` explicitly; layout is constrained — that's expected. |
+| `pip install flask` fails (pyexpat / Python 3.14) | Use uv instead: `uv run --with flask python app.py` (or `uv run --with streamlit streamlit run app.py`) — no global install needed. |
 
 ## Solution — Module 07 {#solution--module-07}
 
