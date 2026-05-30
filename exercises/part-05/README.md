@@ -55,7 +55,13 @@ Draft a one-page code review rubric for AI-generated code.
 5–8 checks. Each check is a yes/no question that takes ≤ 30 seconds to answer.
 Optimize for catching the kinds of bugs Claude tends to miss
 (boundaries, error paths, hidden assumptions about types).
+Save it as code-review-rubric.md.
 ```
+
+> **Watch the filename.** Models love to invent their own — a real run wrote
+> `AI_CODE_REVIEW_RUBRIC.md`. The deliverable is `module-05/code-review-rubric.md`;
+> if Claude picks a different name, rename it (or add "Save it as
+> `code-review-rubric.md`" to the prompt) so your folder matches the expected layout.
 
 ## Manual validation steps
 
