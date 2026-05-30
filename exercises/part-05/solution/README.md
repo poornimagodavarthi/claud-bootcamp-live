@@ -31,7 +31,12 @@ reviewer must catch. Use these as the "common AI deviations" for this module:
    — fix a bug in `notes_api.py` and the suite stays green, which defeats the whole
    point. **Fix:** `import notes_api`, patch `notes_api.DB_PATH` to a temp file,
    `TestClient(notes_api.app)`. (The reference fixture in `python/test_notes_api.py`
-   shows the import-and-patch pattern.)
+   shows the import-and-patch pattern.) **The kicker:** in the same run, the `SELF-REVIEW`
+   prompt did *not* flag this — it described the copied app as "embedded for self-contained
+   testing" (a feature!) and its ranked bug list named only trivia (an unused import, a
+   theoretical timestamp race, a hard-coded `999`). The model will rationalise its own
+   biggest mistake. That is the whole case for human review: AI self-review is a useful
+   first pass, never the last word.
 2. **404 tests assert only the status code, never the body.** `test_get_note_not_found_404`
    checks `status_code == 404` but not the JSON — so the Module 4
    `{"detail":{"error":"not found"}}` vs spec `{"error":"not found"}` mismatch is
