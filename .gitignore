@@ -1,5 +1,9 @@
 # Build output
 slides/dist/
+# Editor backups from slide reformatting
+slides/*.classic.bak
+# Single-file ebook is a build artifact; Leanpub source lives in book/leanpub/manuscript
+book/dist/
 # Track the rendered slide decks so learners can download them directly.
 !slides/dist/
 !slides/dist/pptx/

@@ -1,0 +1,13 @@
+frontmatter.md
+01-setup--ai-first-mindset.md
+02-prompting.md
+03-claudemd-brain-files.md
+04-best-of-n.md
+05-testing--debugging.md
+06-git-workflows.md
+07-multimodal.md
+08-refactor--docs.md
+09-skills--workflows.md
+10-production-readiness.md
+11-qa--next-steps.md
+appendix-a-skills-library.md

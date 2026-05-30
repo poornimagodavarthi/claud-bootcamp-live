@@ -1,0 +1,96 @@
+{
+  "metadata": {
+    "title": "Claude Code Bootcamp",
+    "subtitle": "Build 10 Real-World Projects with Claude Code",
+    "instructor": "Luca Berton",
+    "edition": "May 2026",
+    "include_solutions": true,
+    "companion_repo": "https://github.com/lucab85/Claude-Code-Bootcamp",
+    "companion_branch": "main"
+  },
+  "front_matter": {
+    "source": "README.md"
+  },
+  "chapters": [
+    {
+      "number": "01",
+      "title": "Setup & AI-First Mindset",
+      "slide": "slides/part-01-setup-mindset.md",
+      "exercise": "exercises/part-01/README.md",
+      "solution": "exercises/part-01/solution/README.md"
+    },
+    {
+      "number": "02",
+      "title": "Prompting",
+      "slide": "slides/part-02-prompting.md",
+      "exercise": "exercises/part-02/README.md",
+      "solution": "exercises/part-02/solution/README.md"
+    },
+    {
+      "number": "03",
+      "title": "CLAUDE.md Brain Files",
+      "slide": "slides/part-03-claude-md.md",
+      "exercise": "exercises/part-03/README.md",
+      "solution": "exercises/part-03/solution/README.md"
+    },
+    {
+      "number": "04",
+      "title": "Best-of-N",
+      "slide": "slides/part-04-best-of-n.md",
+      "exercise": "exercises/part-04/README.md",
+      "solution": "exercises/part-04/solution/README.md"
+    },
+    {
+      "number": "05",
+      "title": "Testing & Debugging",
+      "slide": "slides/part-05-testing-debugging.md",
+      "exercise": "exercises/part-05/README.md",
+      "solution": "exercises/part-05/solution/README.md"
+    },
+    {
+      "number": "06",
+      "title": "Git Workflows",
+      "slide": "slides/part-06-git-workflows.md",
+      "exercise": "exercises/part-06/README.md",
+      "solution": "exercises/part-06/solution/README.md"
+    },
+    {
+      "number": "07",
+      "title": "Multimodal",
+      "slide": "slides/part-07-multimodal.md",
+      "exercise": "exercises/part-07/README.md",
+      "solution": "exercises/part-07/solution/README.md"
+    },
+    {
+      "number": "08",
+      "title": "Refactor & Docs",
+      "slide": "slides/part-08-refactor-docs.md",
+      "exercise": "exercises/part-08/README.md",
+      "solution": "exercises/part-08/solution/README.md"
+    },
+    {
+      "number": "09",
+      "title": "Skills & Workflows",
+      "slide": "slides/part-09-skills-workflows.md",
+      "exercise": "exercises/part-09/README.md",
+      "solution": "exercises/part-09/solution/README.md"
+    },
+    {
+      "number": "10",
+      "title": "Production Readiness",
+      "slide": "slides/part-10-production-readiness.md",
+      "exercise": "exercises/part-10/README.md",
+      "solution": "exercises/part-10/solution/README.md"
+    },
+    {
+      "number": "11",
+      "title": "Q&A & Next Steps",
+      "slide": "slides/part-11-qa-exam-next-steps.md",
+      "exercise": null,
+      "solution": null
+    }
+  ],
+  "back_matter": {
+    "skills": "skills/README.md"
+  }
+}
