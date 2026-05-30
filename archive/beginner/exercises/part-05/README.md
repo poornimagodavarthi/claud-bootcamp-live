@@ -47,10 +47,16 @@ Open hello.py. Add a one-line docstring to the greet() function explaining what 
 After step 7, all three of these must be true:
 
 ```sh
-git status                    # → nothing to commit, working tree clean
-diff hello.py exercises/beginner/part-05/starter/hello.py   # → no output
-git log --oneline             # → exactly 1 commit ("initial")
+git status
+diff hello.py exercises/beginner/part-05/starter/hello.py
+git log --oneline
 ```
+
+Expected:
+
+- `git status` → nothing to commit, working tree clean
+- `diff …` → no output (files identical)
+- `git log --oneline` → exactly 1 commit ("initial")
 
 If the diff is empty and the working tree is clean, you've completed a full propose → accept → undo cycle. The reference "after-accept" state is at [`solution/hello.py`](solution/hello.py).
 

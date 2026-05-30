@@ -26,12 +26,23 @@ End with one sentence about why skipping the Review step is the most common fail
 
 ## Manual validation steps
 
+Run each command and check it against the note beside it. Paste **one command at a time** — interactive zsh does not treat `#` as a comment, so don't paste the descriptions.
+
 ```bash
-python3 --version    # 3.11.x or higher
-node --version       # v20.x.x or higher
+python3 --version
+node --version
 git --version
-cat module-01/loop-notes.md   # non-empty, names all 5 steps in order, in your words
+cat module-01/loop-notes.md
 ```
+
+Expected:
+
+- `python3 --version` → 3.11.x or higher
+- `node --version` → v20.x.x or higher
+- `git --version` → any recent Git
+- `cat module-01/loop-notes.md` → non-empty; names all 5 steps in order, in your own words
+
+If `cat` reports `No such file or directory`, you have not saved Claude's answer yet: create `module-01/loop-notes.md` and paste your one-paragraph explanation into it first.
 
 ## Expected deliverable
 

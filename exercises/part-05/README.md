@@ -44,17 +44,18 @@ Optimize for catching the kinds of bugs Claude tends to miss
 
 ## Manual validation steps
 
-```bash
-# Track A
-pytest -q                  # all green on fixed code
-# Track B
-npm test                   # all green on fixed code
+Paste one command at a time (interactive zsh does not treat `#` as a comment):
 
-# After injecting two bugs from BUGS.md
-pytest -q                  # red — that's expected
-# After applying fixes
-pytest -q                  # green again
+```bash
+pytest -q
+npm test
 ```
+
+Expected sequence:
+
+- On the fixed code, `pytest -q` (track A) / `npm test` (track B) is all green.
+- After injecting the two bugs from `BUGS.md`, `pytest -q` goes red — that's expected.
+- After applying your fixes, `pytest -q` is green again.
 
 Confirm `code-review-rubric.md` is one page or less and is a checklist (not prose).
 

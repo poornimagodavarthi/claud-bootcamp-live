@@ -40,14 +40,21 @@ Keep the whole thing under 40 lines.
 
 ## Manual validation steps
 
+Paste one command at a time (interactive zsh does not treat `#` as a comment):
+
 ```bash
 git switch -c feat/<your-scope>
 git add -A
-git diff --staged | pbcopy           # macOS — paste into Claude
-# Apply Claude's commit groupings via `git reset` + selective `git add` + `git commit`
+git diff --staged | pbcopy
 git log --oneline
-git diff main..HEAD | pbcopy          # paste into Claude for the PR description
+git diff main..HEAD | pbcopy
 ```
+
+Notes:
+
+- `git diff --staged | pbcopy` copies the staged diff to the clipboard (macOS) — paste it into Claude. On Linux use `xclip -selection clipboard` or `wl-copy`.
+- Apply Claude's commit groupings via `git reset` + selective `git add` + `git commit`.
+- `git diff main..HEAD | pbcopy` copies the branch diff to paste into Claude for the PR description.
 
 ## Expected deliverable
 

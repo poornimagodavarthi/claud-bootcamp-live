@@ -15,10 +15,10 @@ npm run task -- add "Write the spec"
 npm run task -- list
 npm run task -- list --status open
 npm run task -- done 1
-npm run task -- delete 99      # exit 1
+npm run task -- delete 99
 ```
 
-State persists to `tasks.json` in CWD.
+`delete 99` exits 1 (unknown id); the other commands exit 0. State persists to `tasks.json` in CWD.
 
 ## Exit codes
 
