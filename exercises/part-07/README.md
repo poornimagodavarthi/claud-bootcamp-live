@@ -10,17 +10,21 @@ A designer hands you a wireframe at the standup. By lunch you have a runnable UI
 
 ## Starter instructions
 
-1. Choose your wireframe:
+1. Choose your wireframe (both PNGs are committed in this folder, ready to attach):
    - `wireframe.png` — canonical, generated from `wireframe.mmd` (Mermaid).
    - `wireframe-sketch.png` — rough hand sketch, generated from `wireframe-sketch.svg` (Excalidraw export).
 2. Choose framework: Flask + Jinja **or** Streamlit (Python only this module).
 3. Create `module-07/`.
 
-> **Note on the wireframe sources**: the `.mmd` and `.svg` files in this folder are the source of truth. The `.png` files are renders. To re-render:
+> **The `.png` files ship in this folder — just attach one to your prompt.** The
+> `.mmd` and `.svg` files are the editable sources of truth; the `.png` files are
+> their renders. You only need to re-render if you *edit* a source:
 >
 > ```bash
+> ./render-wireframes.sh
+> # or manually:
 > npx -y @mermaid-js/mermaid-cli -i wireframe.mmd -o wireframe.png -w 1280 -H 720
-> npx -y @resvg/resvg-js wireframe-sketch.svg wireframe-sketch.png
+> rsvg-convert -w 1280 -h 720 wireframe-sketch.svg -o wireframe-sketch.png
 > ```
 
 ## Claude Code prompt to use
@@ -38,11 +42,10 @@ Constraints:
 ```
 
 > **"Below is a wireframe image" means you must actually attach it.** The model
-> only sees what you hand it — having `wireframe.png` sitting in the folder is not
-> enough. A real run with the file merely present (and only the `.svg` downloaded)
-> got: *"I don't see a wireframe image attached."* **Drag the PNG into the prompt**
-> (or paste it). And attach the **`.png`, not the `.svg`/`.mmd`** — the vector
-> sources are text, not a raster image, so Claude can't view them as a picture.
+> only sees what you hand it. The `.png` files are already in this folder — **drag
+> `wireframe.png` (or `wireframe-sketch.png`) into the prompt** (or paste it).
+> Attach the **`.png`, not the `.svg`/`.mmd`** — the vector sources are text, not a
+> raster image, so Claude can't view them as a picture.
 
 ```text
 VISUAL DIFF
