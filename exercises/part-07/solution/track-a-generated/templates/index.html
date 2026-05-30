@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1280">
+  <title>Dashboard</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: sans-serif;
+      font-size: 14px;
+      background: #f5f5f5;
+      color: #222;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── Header ── */
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #fff;
+      border-bottom: 1px solid #d0d0d0;
+      padding: 0 32px;
+      height: 56px;
+      flex-shrink: 0;
+    }
+
+    header h1 {
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+    }
+
+    .btn-primary {
+      background: #c8c8e8;
+      border: 1px solid #9090b8;
+      border-radius: 4px;
+      padding: 8px 20px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      color: #222;
+    }
+
+    .btn-primary:hover { background: #b0b0d8; }
+
+    /* ── Body wrapper ── */
+    .body-wrapper {
+      flex: 1;
+      background: #faffd6;
+      border: 1px solid #d4d890;
+      margin: 16px;
+      border-radius: 4px;
+      display: flex;
+      flex-direction: column;
+      padding: 20px;
+      gap: 20px;
+    }
+
+    /* ── Main row: table + KPI panel ── */
+    .main-row {
+      display: flex;
+      gap: 20px;
+      flex: 1;
+      align-items: flex-start;
+    }
+
+    /* ── Table section ── */
+    .table-section {
+      flex: 1;
+      border: 1px solid #c8cc70;
+      border-radius: 4px;
+      background: #fdfff0;
+      padding: 16px;
+    }
+
+    .section-label {
+      font-size: 12px;
+      color: #888;
+      text-align: center;
+      margin-bottom: 14px;
+      letter-spacing: 0.5px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    thead th {
+      background: #c8c8e8;
+      border: 1px solid #9090b8;
+      border-radius: 3px;
+      padding: 8px 12px;
+      text-align: left;
+      font-weight: 600;
+      font-size: 13px;
+    }
+
+    tbody td {
+      padding: 8px 12px;
+      border-bottom: 1px solid #e8e8e8;
+      font-size: 13px;
+    }
+
+    tbody tr:last-child td { border-bottom: none; }
+    tbody tr:hover { background: #f0f0ff; }
+
+    .status-done        { color: #2a7a2a; font-weight: 500; }
+    .status-in-progress { color: #7a5a00; font-weight: 500; }
+    .status-todo        { color: #666;    font-weight: 500; }
+
+    /* ── KPI panel ── */
+    .kpi-panel {
+      width: 220px;
+      flex-shrink: 0;
+      border: 1px solid #c8cc70;
+      border-radius: 4px;
+      background: #fdfff0;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .kpi-card {
+      background: #c8c8e8;
+      border: 1px solid #9090b8;
+      border-radius: 4px;
+      padding: 14px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .kpi-label {
+      font-size: 12px;
+      color: #444;
+      font-weight: 500;
+    }
+
+    .kpi-value {
+      font-size: 28px;
+      font-weight: 700;
+      color: #222;
+      line-height: 1;
+    }
+
+    /* ── Sidebar nav (horizontal) ── */
+    .sidebar-nav {
+      border: 1px solid #c8cc70;
+      border-radius: 4px;
+      background: #fdfff0;
+      padding: 16px 20px;
+    }
+
+    .sidebar-nav .section-label { margin-bottom: 12px; }
+
+    .nav-tabs {
+      display: flex;
+      gap: 12px;
+    }
+
+    .nav-tab {
+      background: #c8c8e8;
+      border: 1px solid #9090b8;
+      border-radius: 4px;
+      padding: 8px 20px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      color: #222;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .nav-tab:hover      { background: #b0b0d8; }
+    .nav-tab.active     { background: #9898c8; color: #fff; border-color: #6060a0; }
+
+    /* ── Footer ── */
+    footer {
+      text-align: center;
+      padding: 14px;
+      font-size: 13px;
+      color: #666;
+      background: #fff;
+      border-top: 1px solid #d0d0d0;
+      flex-shrink: 0;
+    }
+
+    .footer-inner {
+      display: inline-block;
+      background: #c8c8e8;
+      border: 1px solid #9090b8;
+      border-radius: 4px;
+      padding: 6px 20px;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Dashboard</h1>
+    <button class="btn-primary">Primary Action</button>
+  </header>
+
+  <div class="body-wrapper">
+
+    <div class="main-row">
+      <div class="table-section">
+        <p class="section-label">Table</p>
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Title</th>
+              <th>Status</th>
+              <th>Assignee</th>
+              <th>Due</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for task in tasks %}
+            <tr>
+              <td>{{ task.id }}</td>
+              <td>{{ task.title }}</td>
+              <td class="status-{{ task.status | lower | replace(' ', '-') }}">{{ task.status }}</td>
+              <td>{{ task.assignee }}</td>
+              <td>{{ task.due }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+
+      <div class="kpi-panel">
+        {% for kpi in kpis %}
+        <div class="kpi-card">
+          <span class="kpi-label">{{ kpi.label }}</span>
+          <span class="kpi-value">{{ kpi.value }}</span>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="sidebar-nav">
+      <p class="section-label">Sidebar</p>
+      <div class="nav-tabs">
+        {% for item in nav_items %}
+        <a href="#" class="nav-tab {% if loop.first %}active{% endif %}">{{ item }}</a>
+        {% endfor %}
+      </div>
+    </div>
+
+  </div>
+
+  <footer>
+    <span class="footer-inner">Footer &middot; v1.0.0</span>
+  </footer>
+
+</body>
+</html>
