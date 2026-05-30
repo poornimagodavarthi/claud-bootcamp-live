@@ -160,13 +160,18 @@ Confirm `code-review-rubric.md` is one page or less and is a checklist (not pros
 
 ### Expected deliverable
 
+Do **all** your work inside one folder, `module-05/`:
+
 ```text
-exercises/part-05/code-review-rubric.md   # YOUR rubric (committed here)
 module-05/
-├── tests/                                # full test suite
-├── bug-fix-notes.md                      # 2 bugs end-to-end
-└── code-review-rubric.md                 # copy of above for the submission zip
+├── tests/                 # the generated + fixed test suite
+├── bug-fix-notes.md       # the 2 seeded bugs, end-to-end
+└── code-review-rubric.md  # YOUR rubric (write your own — see note below)
 ```
+
+> `exercises/part-05/code-review-rubric.md` (already in this repo) is a **worked
+> sample** to read for ideas. It is *not* a deliverable — write your own
+> `module-05/code-review-rubric.md` that reflects *your* blind spots.
 
 ### Definition of done
 
