@@ -132,11 +132,13 @@ Constraints:
 - Render at 1280x720 should look unmistakably like the wireframe.
 ```
 
-> **"Below is a wireframe image" means you must actually attach it.** The model
-> only sees what you hand it. The `.png` files are already in this folder — **drag
-> `wireframe.png` (or `wireframe-sketch.png`) into the prompt** (or paste it).
-> Attach the **`.png`, not the `.svg`/`.mmd`** — the vector sources are text, not a
-> raster image, so Claude can't view them as a picture.
+> **Give Claude a `.png` it can actually see.** Claude Code can read a `.png` from
+> the working folder on its own (you'll see it run `Read wireframe.png`), or you can
+> drag the image straight into the prompt — either works. What does **not** work is
+> pointing it at the **`.svg`/`.mmd`** sources: those are text, not a raster image,
+> so Claude can't view them as a picture and you'll get *"I don't see a wireframe
+> image attached."* Both `.png` files are committed in this folder for exactly this
+> reason.
 
 ```text
 VISUAL DIFF
@@ -185,8 +187,8 @@ Theme the dashboard (light + dark) using only plain CSS variables. Document the 
 
 | Symptom | Fix |
 |---|---|
-| Claude can't see the image | Attach the PNG to the message itself (drag it in) — a file merely present in the folder is not seen. |
-| "I don't see a wireframe image attached" | You referenced the wireframe but didn't attach it, or attached the `.svg`/`.mmd`. Attach `wireframe.png` (or `wireframe-sketch.png`). |
+| Claude can't see the image | Make sure a `.png` is in the folder (or drag it into the prompt). Claude Code reads `.png` from disk; it cannot view `.svg`/`.mmd`. |
+| "I don't see a wireframe image attached" | You only have the `.svg`/`.mmd` source, not a viewable image. Use `wireframe.png` (or `wireframe-sketch.png`) — both are committed here. |
 | Render uses Tailwind | Re-prompt with the "plain CSS" constraint reinforced. |
 | Layout is "close" but not right | Run the visual-diff loop; cap at 3 iterations. |
 | Streamlit sidebar collapses oddly | Use `st.sidebar` explicitly; layout is constrained — that's expected. |
