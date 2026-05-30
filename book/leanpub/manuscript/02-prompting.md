@@ -154,11 +154,13 @@ EXAMPLES
 **Python (track A):**
 
 ```bash
-python3 task.py add "Write the spec"      # exit 0
-python3 task.py list                      # shows the task
-python3 task.py done 1                    # exit 0
-python3 task.py delete 99                 # exit 1
+python3 task.py add "Write the spec"
+python3 task.py list
+python3 task.py done 1
+python3 task.py delete 99
 ```
+
+Expected: `add` exits 0; `list` shows the task; `done 1` exits 0; `delete 99` exits 1.
 
 **Node (track B):**
 
@@ -166,8 +168,10 @@ python3 task.py delete 99                 # exit 1
 npx tsx src/index.ts add "Write the spec"
 npx tsx src/index.ts list
 npx tsx src/index.ts done 1
-npx tsx src/index.ts delete 99            # exit 1
+npx tsx src/index.ts delete 99
 ```
+
+Expected: `delete 99` exits 1; the other commands exit 0.
 
 Confirm `tasks.json` round-trips state across runs.
 

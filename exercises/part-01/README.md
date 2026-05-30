@@ -24,6 +24,27 @@ Use the metaphor of directing a junior engineer.
 End with one sentence about why skipping the Review step is the most common failure mode.
 ```
 
+## Build the deliverables
+
+This module has **two** files to produce. Neither is created automatically — you write both by hand.
+
+**1. `environment.txt`** — capture the three version checks. Paste one command at a time:
+
+```bash
+mkdir -p module-01
+python3 --version  > module-01/environment.txt
+node --version    >> module-01/environment.txt
+git --version     >> module-01/environment.txt
+```
+
+**2. `loop-notes.md`** — Claude's answer is your *raw material*, not the deliverable. Read what Claude wrote, then **rewrite the loop in your own words** and save it. Open the file in your editor and paste your reworded paragraph, or from the terminal:
+
+```bash
+cat > module-01/loop-notes.md
+```
+
+Type or paste your paragraph, then press **Enter** and **Ctrl-D** to save. Do not paste Claude's text verbatim — the goal is that *you* can explain the loop. (Reusing Claude's exact wording fails the Definition of done below.)
+
 ## Manual validation steps
 
 Run each command and check it against the note beside it. Paste **one command at a time** — interactive zsh does not treat `#` as a comment, so don't paste the descriptions.
