@@ -1,0 +1,5 @@
+ Think of AI-paired coding like directing a sharp but green junior engineer: you set the destination, they sprint toward it, and your job is to keep them aimed at the right thing. In Plan, you
+  brief them — goal, constraints, files to touch — so they don't invent their own assignment. In Implement, they write the code while you stay close enough to redirect, but far enough to let them
+  move. In Test, you make them prove it works, not just that it compiles, because juniors confuse "no errors" with "correct." In Review, you actually read what they wrote — line by line — because
+  that's where you catch the plausible-looking-but-wrong code that tests won't flag. Commit locks it in only after review passes. Skipping Review is the most common failure mode because the code
+  looks right, the tests are green, and trust feels earned — until weeks later when a subtle bug surfaces that a 60-second read would have caught.
