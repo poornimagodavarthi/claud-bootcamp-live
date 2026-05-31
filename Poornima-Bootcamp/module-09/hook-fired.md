@@ -2,20 +2,23 @@
 
 ## What was wired
 
-`module-09/.claude/hooks.json` defines a `pre-commit` hook that delegates to
-`module-09/.claude/smoke.sh`. The script boots the Notes API on port 18765
-with `uv`, runs six curl assertions, and exits 1 if any FAIL is detected.
-The git hook at `.git/hooks/pre-commit` calls this script before every commit.
+`module-09/.claude/hooks.json` defines a single `pre-commit` hook
+(`notes-api-smoke`) whose command boots `notes_api.py` on port 18765 with `uv`,
+runs the skill's six curl assertions, and exits `1` if any FAIL is detected. A
+thin `.git/hooks/pre-commit` shim invokes that command before every commit, so a
+non-zero exit aborts the commit.
 
 ## Bug introduced
 
-One line added to `app.py` line 98 to force GET /notes → 500:
+One line added to `notes_api.py` inside `list_notes` (the `GET /notes` handler)
+to force a 500:
 
 ```python
-raise HTTPException(status_code=500, detail="simulated bug")  # BUG
+def list_notes(q: str | None = Query(default=None)) -> list[Note]:
+    raise RuntimeError("simulated bug")  # BUG
 ```
 
-## Blocked commit output
+## Blocked commit output (real run)
 
 ```
 ── notes-api-smoke (pre-commit) ──────────────────────
@@ -31,10 +34,10 @@ BLOCKED — fix the failing endpoints before committing.
 exit code: 1
 ```
 
-The commit was rejected. `git log --oneline -1` still shows the previous
-commit — no new commit was created.
+The non-zero exit rejected the commit — `git log --oneline -1` still showed the
+previous commit, and no new commit was created.
 
 ## Bug reverted
 
-The `raise HTTPException` line was removed and the hook was re-run to
-confirm ALL PASS before the fix was committed.
+The `raise RuntimeError` line was removed and the hook re-run to confirm
+`ALL PASS` (6/6, exit 0 — see `invocation.md`) before committing for real.

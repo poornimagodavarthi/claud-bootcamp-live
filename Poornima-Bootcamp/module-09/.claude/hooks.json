@@ -1,0 +1,12 @@
+{
+  "hooks": {
+    "pre-commit": [
+      {
+        "name": "notes-api-smoke",
+        "description": "Runs the notes-api-smoke skill: boots notes_api.py and asserts all 5 CRUD endpoints (+404 guard) return the correct HTTP status codes. Blocks the commit (exit 1) on any FAIL.",
+        "type": "command",
+        "command": "set -uo pipefail\nDIR=\"$(git rev-parse --show-toplevel)/Poornima-Bootcamp/module-09\"\nPORT=18765\nBASE=\"http://127.0.0.1:$PORT\"\nPASS=0; FAIL=0\necho \"── notes-api-smoke (pre-commit) ──────────────────────\"\nlsof -ti :\"$PORT\" 2>/dev/null | xargs kill -9 2>/dev/null || true\n( cd \"$DIR\" && uv run --with fastapi --with uvicorn uvicorn notes_api:app --port \"$PORT\" --log-level warning ) &\nPID=$!; sleep 3\ncheck() { local l=\"$1\" e=\"$2\"; shift 2; local a\n  a=$(curl -s -o /dev/null -w \"%{http_code}\" \"$@\")\n  if [ \"$a\" = \"$e\" ]; then echo \"PASS  $l\"; PASS=$((PASS+1))\n  else echo \"FAIL  $l  (expected $e, got $a)\"; FAIL=$((FAIL+1)); fi; }\nID=$(curl -s -X POST \"$BASE/notes\" -H \"Content-Type: application/json\" -d '{\"title\":\"smoke\",\"body\":\"test\"}' | python3 -c \"import sys,json;print(json.load(sys.stdin)['id'])\" 2>/dev/null || echo 0)\ncheck \"POST /notes → 201\"             201 -X POST \"$BASE/notes\" -H \"Content-Type: application/json\" -d '{\"title\":\"t\",\"body\":\"b\"}'\ncheck \"GET  /notes → 200\"             200 \"$BASE/notes\"\ncheck \"GET  /notes/$ID → 200\"         200 \"$BASE/notes/$ID\"\ncheck \"PATCH /notes/$ID → 200\"        200 -X PATCH \"$BASE/notes/$ID\" -H \"Content-Type: application/json\" -d '{\"title\":\"updated\"}'\ncheck \"GET  /notes/999 → 404\"         404 \"$BASE/notes/999\"\ncheck \"DELETE /notes/$ID → 204\"       204 -X DELETE \"$BASE/notes/$ID\"\nkill \"$PID\" 2>/dev/null; rm -f \"$DIR/notes.db\"\necho \"──────────────────────────────────────────────────────\"\necho \"Results: $PASS/6 passed\"\n[ \"$FAIL\" -gt 0 ] && { echo \"BLOCKED — fix the failing endpoints before committing.\"; exit 1; } || { echo \"ALL PASS — commit allowed.\"; exit 0; }"
+      }
+    ]
+  }
+}

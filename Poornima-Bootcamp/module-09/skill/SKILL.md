@@ -60,11 +60,11 @@ Steps:
 
 ## Worked example
 
-**Scenario:** Smoke-test the notes API in `module-09/app.py` on port 8000.
+**Scenario:** Smoke-test the notes API in `module-09/notes_api.py` on port 8000.
 
 **Invocation:**
 ```
-/notes-api-smoke APP_PATH=module-09/app.py PORT=8000
+/notes-api-smoke APP_PATH=module-09/notes_api.py PORT=8000
 ```
 
 **Runnable bash block:**
@@ -73,7 +73,7 @@ Steps:
 #!/usr/bin/env bash
 set -euo pipefail
 
-APP_PATH="module-09/app.py"
+APP_PATH="module-09/notes_api.py"
 PORT=8000
 APP_DIR="$(dirname "$APP_PATH")"
 MODULE="$(basename "$APP_PATH" .py)"

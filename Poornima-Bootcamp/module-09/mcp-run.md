@@ -39,7 +39,7 @@ HTTP 404 due to the MCP server token lacking write scope on this repo.
     "owner": "poornimagodavarthi",
     "repo": "claud-bootcamp-live",
     "title": "notes-api-smoke: PASS on 2026-05-30",
-    "body": "## Smoke test results — module-09/app.py — 2026-05-30\n\n..."
+    "body": "## Smoke test results — module-09/notes_api.py — 2026-05-30\n\n..."
   }
 }
 ```
