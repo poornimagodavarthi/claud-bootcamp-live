@@ -16,7 +16,7 @@ chmod +x task.py
 ln -s "$(pwd)/task.py" /usr/local/bin/task
 ```
 
-Or just run it directly with `python3 task.py <command>`.
+Or run it directly with `python3 task.py <command>`.
 
 ## Commands
 
@@ -27,7 +27,7 @@ Or just run it directly with `python3 task.py <command>`.
 | `task done <id>` | Mark a task as done |
 | `task delete <id>` | Delete a task |
 
-### Examples
+## Examples
 
 ```sh
 $ task add "Write the spec"
@@ -46,6 +46,8 @@ No task with id 99      # exit code 1
 
 ## Exit codes
 
-- `0` — success
-- `1` — user error (e.g. unknown id, empty task text)
-- `2` — internal error (e.g. corrupted/unreadable `tasks.json`)
+| Code | Meaning |
+| --- | --- |
+| `0` | Success |
+| `1` | User error (e.g. unknown id, empty task text) |
+| `2` | Internal error (e.g. corrupted/unreadable `tasks.json`) |
