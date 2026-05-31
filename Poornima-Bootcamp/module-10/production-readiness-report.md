@@ -1,5 +1,6 @@
 # Production Readiness Report — Notes API
-**Target**: `Claude-Code-Bootcamp-live/module-09/app.py`
+
+**Target**: `Poornima-Bootcamp/module-09/notes_api.py` (FastAPI + SQLite, single file)
 **Date**: 2026-05-30
 **Reviewer**: Claude Code (production-readiness-review skill)
 
@@ -7,97 +8,46 @@
 
 ## 1. Security
 
-**Status**: Would NOT hold up in production this week — every endpoint is open to any caller with network access.
+**This week?** No — every route is unauthenticated, so any network-reachable client can read, write, and delete all notes.
 
-| Check | Result |
-|---|---|
-| Input validated at boundary | PASS — Pydantic `min_length=1`, parameterised SQL queries |
-| No secrets hard-coded or logged | PASS — no credentials in source |
-| Dependencies pinned, no known CVEs | N/A — runtime deps injected via uvicorn; not pinned in a lockfile |
-| Auth/authz on every route | FAIL — zero authentication on any endpoint |
+**Biggest risk**: Zero auth/authz on every endpoint — total data exposure and tampering.
 
-**Biggest risk**: No authentication — any network-reachable client can read, create, edit, and delete all notes.
-
-**Smallest next step**: Add a FastAPI dependency that checks a bearer token from `Authorization` header against `os.getenv("API_KEY")`; inject it into every router.
-
----
+**Smallest next step**: Add one FastAPI dependency that checks a bearer token against `os.getenv("API_KEY")` and apply it to all routes.
 
 ## 2. Observability
 
-**Status**: Would NOT hold up — when the service misbehaves, operators are completely blind.
+**This week?** No — there is no logging, no `/health` route, and no metrics, so operators are blind when it misbehaves.
 
-| Check | Result |
-|---|---|
-| Structured logging at INFO for key operations | FAIL — no `import logging`, zero log statements |
-| ERROR-level logging for caught exceptions | FAIL — HTTP errors are re-raised, never logged |
-| Health-check endpoint (`/health`) | FAIL — no such route exists |
-| Key metrics emitted | FAIL — no metrics instrumentation |
+**Biggest risk**: A DB failure or 500-storm emits no signal — you learn about outages from users.
 
-**Biggest risk**: A DB failure or silent 500-storm produces no signal — the only way to notice is a user complaint.
-
-**Smallest next step**: Add `@app.get("/health") def health(): return {"status": "ok"}` and a single `logging.basicConfig(level=logging.INFO)` call at module top; log note ID on each write operation.
-
----
+**Smallest next step**: Add `@app.get("/health")` returning `{"status":"ok"}` (enables liveness probes) and a top-level `logging.basicConfig(level=INFO)`.
 
 ## 3. Deployment
 
-**Status**: Would NOT hold up — the database path is CWD-relative and there is no container or env-var config.
+**This week?** No — it only starts via a dev command, the DB path is hard-coded to CWD, and there is no container or env config.
 
-| Check | Result |
-|---|---|
-| Starts cleanly from a single command | PASS — `uvicorn app:app` works |
-| Graceful shutdown on SIGTERM | PASS — uvicorn handles SIGTERM by default |
-| Config via environment variables | FAIL — `DB_PATH = "notes.db"` is hard-coded |
-| Container / deployment manifest exists | FAIL — no Dockerfile, no Compose file |
+**Biggest risk**: The CWD-relative `notes.db` is ephemeral and single-node — restarts/scaling silently fork or lose data.
 
-**Biggest risk**: Two deployments launched from different working directories silently create separate databases, making data routing invisible.
-
-**Smallest next step**: Replace `DB_PATH = "notes.db"` with `DB_PATH = os.getenv("NOTES_DB_PATH", "notes.db")` — one line, zero behaviour change locally, fully configurable in any deployment environment.
-
----
+**Smallest next step**: `DB_PATH = os.getenv("NOTES_DB_PATH", "notes.db")` — one line, configurable in any environment.
 
 ## 4. Runbooks
 
-**Status**: Would NOT hold up — there is no operator documentation at all beyond a one-line docstring.
+**This week?** No — there is no operator documentation for deploying, configuring, or recovering the service.
 
-| Check | Result |
-|---|---|
-| README describes how to start the service | FAIL — module docstring has one uvicorn command; no README |
-| Troubleshooting steps documented | FAIL — absent |
-| Env-var reference documented | FAIL — absent (and there are no env vars yet) |
-| Backup / restore procedure documented | FAIL — SQLite file is undocumented |
+**Biggest risk**: On-call has no guidance to start, back up, or diagnose it — slow, error-prone incident response.
 
-**Biggest risk**: A new on-call engineer has no guidance — they cannot start, configure, back up, or diagnose the service without reading source.
-
-**Smallest next step**: Create `module-09/README.md` with four sections: Start, Stop, Environment variables, Backup (`cp notes.db notes.db.bak`).
-
----
+**Smallest next step**: Add `module-09/README.md` with four sections: Start, Environment variables, Health check, Backup/Restore.
 
 ## 5. Rollback
 
-**Status**: Would NOT hold up — there is no migration system and no documented rollback procedure.
+**This week?** Partial — code rollback via git is trivial, but there is no DB backup or migration/versioning safety net.
 
-| Check | Result |
-|---|---|
-| Schema changes are versioned / migratable | FAIL — `CREATE TABLE IF NOT EXISTS` with no version tracking |
-| Rollback to previous release is documented | FAIL — no procedure |
-| Data backup before deploys is documented | FAIL — no procedure |
-| Previous artefact is retained for re-deploy | N/A — no artefact store in scope |
+**Biggest risk**: A bad data or schema change can't be cleanly reverted — no backup, no migration history.
 
-**Biggest risk**: A schema change on the next feature requires manual SQL or a file-replace, with no safety net if it breaks.
-
-**Smallest next step**: Document in the runbook: "Before any deploy, run `cp notes.db notes.db.$(date +%Y%m%d%H%M%S).bak`." That buys a rollback path at zero code cost.
+**Smallest next step**: Make pre-deploy a backup step: `cp notes.db notes.db.$(date +%Y%m%d%H%M%S).bak`.
 
 ---
 
-## Summary
+**Verdict — No-Go.** Every endpoint is unauthenticated, there's no logging or health check, and the DB path is hard-coded — a working prototype, not a production service.
 
-| Axis | Score |
-|---|---|
-| Security | FAIL |
-| Observability | FAIL |
-| Deployment | FAIL |
-| Runbooks | FAIL |
-| Rollback | FAIL |
-
-**Verdict: No-Go.** Unauthenticated endpoints, zero logging, no health check, and no deployment config make this a dev prototype, not a shippable service.
+> Note: `notes_api.py` has been aligned to the Module-4 winner (lifespan startup, PATCH-only partial update, strip-based validation). The findings above hold for the winner unchanged, and the module-09 smoke hook still passes 6/6.
