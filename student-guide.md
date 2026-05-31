@@ -68,8 +68,8 @@ Follow the table above. Verify the three `--version` outputs.
 ### 2. Repository cloned (5 min)
 
 ```bash
-git clone https://github.com/lberton/Training-Claude-Code-Extended.git
-cd Training-Claude-Code-Extended
+git clone https://github.com/lucab85/Claude-Code-Bootcamp.git
+cd Claude-Code-Extended
 ```
 
 Confirm the layout matches [`README.md`](README.md#repository-layout).
