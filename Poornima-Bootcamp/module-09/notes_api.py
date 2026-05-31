@@ -1,156 +1,164 @@
-"""Notes API — FastAPI + Pydantic v2 + sqlite3 (stdlib), persisting to SQLite.
+"""Notes API — FastAPI + Pydantic v2 + sqlite3 (stdlib).
 
-Single process, schema initialised at startup. Run with:
-    uvicorn app:app --reload
+Single-process, single-file. Schema is initialised at startup; no migration
+framework. Persists to notes.db in the current working directory.
 """
 
 from __future__ import annotations
 
 import sqlite3
-from contextlib import contextmanager
+from contextlib import asynccontextmanager
 from datetime import datetime, timezone
-from typing import Iterator
 
-from fastapi import FastAPI, HTTPException, Query
+from fastapi import FastAPI, Query
 from fastapi.responses import JSONResponse
-from pydantic import BaseModel, Field
-from starlette.exceptions import HTTPException as StarletteHTTPException
+from pydantic import BaseModel, field_validator
 
 DB_PATH = "notes.db"
 
-SCHEMA = """
-CREATE TABLE IF NOT EXISTS notes (
-    id         INTEGER PRIMARY KEY AUTOINCREMENT,
-    title      TEXT NOT NULL,
-    body       TEXT NOT NULL,
-    created_at TEXT NOT NULL,
-    updated_at TEXT NOT NULL
-);
-"""
-
 
 def now_iso() -> str:
+    """Current time as ISO 8601 in UTC, second precision."""
     return datetime.now(timezone.utc).isoformat(timespec="seconds")
 
 
-@contextmanager
-def get_conn() -> Iterator[sqlite3.Connection]:
+def connect() -> sqlite3.Connection:
     conn = sqlite3.connect(DB_PATH)
     conn.row_factory = sqlite3.Row
-    try:
-        yield conn
-        conn.commit()
-    finally:
-        conn.close()
+    return conn
 
 
-def init_db() -> None:
-    with get_conn() as conn:
-        conn.executescript(SCHEMA)
+def init_schema() -> None:
+    with connect() as conn:
+        conn.execute(
+            """
+            CREATE TABLE IF NOT EXISTS notes (
+                id         INTEGER PRIMARY KEY AUTOINCREMENT,
+                title      TEXT NOT NULL,
+                body       TEXT NOT NULL,
+                created_at TEXT NOT NULL,
+                updated_at TEXT NOT NULL
+            )
+            """
+        )
 
 
-class NoteIn(BaseModel):
-    title: str = Field(min_length=1)
-    body: str = Field(min_length=1)
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    init_schema()
+    yield
 
 
-class NotePatch(BaseModel):
-    title: str | None = Field(default=None, min_length=1)
-    body: str | None = Field(default=None, min_length=1)
+app = FastAPI(title="Notes API", lifespan=lifespan)
 
 
-class Note(NoteIn):
+class NoteCreate(BaseModel):
+    title: str
+    body: str
+
+    @field_validator("title", "body")
+    @classmethod
+    def not_blank(cls, v: str) -> str:
+        if not v.strip():
+            raise ValueError("must not be blank")
+        return v
+
+
+class NoteUpdate(BaseModel):
+    title: str | None = None
+    body: str | None = None
+
+    @field_validator("title", "body")
+    @classmethod
+    def not_blank(cls, v: str | None) -> str | None:
+        if v is not None and not v.strip():
+            raise ValueError("must not be blank")
+        return v
+
+
+class Note(BaseModel):
     id: int
+    title: str
+    body: str
     created_at: str
     updated_at: str
 
 
-app = FastAPI(title="Notes API")
-
-
-@app.on_event("startup")
-def _startup() -> None:
-    init_db()
-
-
-@app.exception_handler(StarletteHTTPException)
-async def http_exception_handler(_, exc: StarletteHTTPException) -> JSONResponse:
-    return JSONResponse(status_code=exc.status_code, content={"error": exc.detail})
-
-
-def _row_to_note(row: sqlite3.Row) -> Note:
+def row_to_note(row: sqlite3.Row) -> Note:
     return Note(**dict(row))
 
 
-@app.post("/notes", response_model=Note, status_code=201)
-def create_note(note: NoteIn) -> Note:
+def not_found() -> JSONResponse:
+    return JSONResponse(status_code=404, content={"error": "not found"})
+
+
+@app.post("/notes", status_code=201)
+def create_note(note: NoteCreate) -> Note:
     ts = now_iso()
-    with get_conn() as conn:
+    with connect() as conn:
         cur = conn.execute(
-            "INSERT INTO notes (title, body, created_at, updated_at) VALUES (?, ?, ?, ?)",
+            "INSERT INTO notes (title, body, created_at, updated_at) "
+            "VALUES (?, ?, ?, ?)",
             (note.title, note.body, ts, ts),
         )
-        row = conn.execute("SELECT * FROM notes WHERE id = ?", (cur.lastrowid,)).fetchone()
-    return _row_to_note(row)
+        row = conn.execute(
+            "SELECT * FROM notes WHERE id = ?", (cur.lastrowid,)
+        ).fetchone()
+    return row_to_note(row)
 
 
-@app.get("/notes", response_model=list[Note])
+@app.get("/notes")
 def list_notes(q: str | None = Query(default=None)) -> list[Note]:
-    with get_conn() as conn:
+    with connect() as conn:
         if q:
             like = f"%{q}%"
             rows = conn.execute(
-                "SELECT * FROM notes WHERE title LIKE ? OR body LIKE ? ORDER BY id",
+                "SELECT * FROM notes WHERE title LIKE ? OR body LIKE ? "
+                "ORDER BY id",
                 (like, like),
             ).fetchall()
         else:
             rows = conn.execute("SELECT * FROM notes ORDER BY id").fetchall()
-    return [_row_to_note(r) for r in rows]
+    return [row_to_note(r) for r in rows]
 
 
-@app.get("/notes/{note_id}", response_model=Note)
-def get_note(note_id: int) -> Note:
-    with get_conn() as conn:
-        row = conn.execute("SELECT * FROM notes WHERE id = ?", (note_id,)).fetchone()
+@app.get("/notes/{note_id}")
+def get_note(note_id: int):
+    with connect() as conn:
+        row = conn.execute(
+            "SELECT * FROM notes WHERE id = ?", (note_id,)
+        ).fetchone()
     if row is None:
-        raise HTTPException(status_code=404, detail="not found")
-    return _row_to_note(row)
+        return not_found()
+    return row_to_note(row)
 
 
-@app.put("/notes/{note_id}", response_model=Note)
-def update_note(note_id: int, note: NoteIn) -> Note:
-    ts = now_iso()
-    with get_conn() as conn:
-        cur = conn.execute(
-            "UPDATE notes SET title = ?, body = ?, updated_at = ? WHERE id = ?",
-            (note.title, note.body, ts, note_id),
-        )
-        if cur.rowcount == 0:
-            raise HTTPException(status_code=404, detail="not found")
-        row = conn.execute("SELECT * FROM notes WHERE id = ?", (note_id,)).fetchone()
-    return _row_to_note(row)
-
-
-@app.patch("/notes/{note_id}", response_model=Note)
-def patch_note(note_id: int, note: NotePatch) -> Note:
-    ts = now_iso()
-    with get_conn() as conn:
-        row = conn.execute("SELECT * FROM notes WHERE id = ?", (note_id,)).fetchone()
+@app.patch("/notes/{note_id}")
+def update_note(note_id: int, note: NoteUpdate):
+    with connect() as conn:
+        row = conn.execute(
+            "SELECT * FROM notes WHERE id = ?", (note_id,)
+        ).fetchone()
         if row is None:
-            raise HTTPException(status_code=404, detail="not found")
-        title = note.title if note.title is not None else row["title"]
-        body = note.body if note.body is not None else row["body"]
+            return not_found()
+        current = dict(row)
+        title = note.title if note.title is not None else current["title"]
+        body = note.body if note.body is not None else current["body"]
+        ts = now_iso()
         conn.execute(
             "UPDATE notes SET title = ?, body = ?, updated_at = ? WHERE id = ?",
             (title, body, ts, note_id),
         )
-        row = conn.execute("SELECT * FROM notes WHERE id = ?", (note_id,)).fetchone()
-    return _row_to_note(row)
+        row = conn.execute(
+            "SELECT * FROM notes WHERE id = ?", (note_id,)
+        ).fetchone()
+    return row_to_note(row)
 
 
 @app.delete("/notes/{note_id}", status_code=204)
-def delete_note(note_id: int) -> None:
-    with get_conn() as conn:
+def delete_note(note_id: int):
+    with connect() as conn:
         cur = conn.execute("DELETE FROM notes WHERE id = ?", (note_id,))
         if cur.rowcount == 0:
-            raise HTTPException(status_code=404, detail="not found")
+            return not_found()
+    return None
