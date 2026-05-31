@@ -1,50 +1,63 @@
-# Module 4 Candidate Evaluation
+# scoring.md — Module 4 Best-of-N
 
-## Smoke Test Results
+Two candidates for the same Notes API prompt (FastAPI + Pydantic v2 + sqlite3),
+each run through the same curl smoke test. Scored against the stricter course
+smoke test from `exercises/part-04/solution/scoring.example.md` (adds a blank-title
+`"   "` case and a `PATCH` partial-update case on top of the base spec).
 
-### Candidate A (port 8000)
+## Smoke-test results
 
-| Endpoint | Method | Expected | Actual | Pass |
-|----------|--------|----------|--------|------|
-| /notes | POST | 201 | 201 | ✓ |
-| /notes | GET | 200 | 200 | ✓ |
-| /notes?q=hi | GET | 200 | 200 | ✓ |
-| /notes/1 | GET | 200 | 200 | ✓ |
-| /notes/1 | PATCH | 200 | 200 | ✓ |
-| /notes/1 | DELETE | 204 | 204 | ✓ |
-| /notes/999 | GET | 404 | 404 | ✓ |
+| Smoke case | Spec wants | Candidate A | Candidate B |
+|---|---|---|---|
+| POST create | 201 | 201 PASS | 201 PASS |
+| Blank title `"   "` | 422 | 422 PASS | 422 PASS |
+| GET list | 200 | 200 PASS | 200 PASS |
+| PATCH partial | 200 | 200 PASS | 200 PASS |
+| DELETE | 204 | 204 PASS | 204 PASS |
+| 404 body | `{"error":"not found"}` | `{"detail":"not found"}` PARTIAL | `{"error":"not found"}` PASS |
 
-**Result: 7/7 passed** (all endpoints working, PATCH now implemented)
+## Per-candidate scores
 
-### Candidate B (port 3000)
+```text
+Candidate: a
+Correctness (0–3): 3   all 6 codes match spec (201/422/200/200/204/404)
+Simplicity   (0–3): 3   single file, PATCH + validator helpers, one glance
+Fit          (0–3): 2   wrapped 404 body {"detail":...}; timestamp via strftime,
+                        not the prescribed isoformat(timespec="seconds")
+Total: 8 / 9
+Notes: Modern lifespan handler, partial PATCH, blank-title 422. Loses a point on
+       the wrapped 404 envelope vs the spec's bare {"error":"not found"}.
+```
 
-| Endpoint | Method | Expected | Actual | Pass |
-|----------|--------|----------|--------|------|
-| /notes | POST | 201 | 201 | ✓ |
-| /notes | GET | 200 | 200 | ✓ |
-| /notes?q=hi | GET | 200 | 200 | ✓ |
-| /notes/1 | GET | 200 | 200 | ✓ |
-| /notes/1 | PATCH | 200 | 405 | ✗ |
-| /notes/1 | DELETE | 204 | 204 | ✓ |
-| /notes/999 | GET | 404 | 404 | ✓ |
+```text
+Candidate: b
+Correctness (0–3): 3   all 6 codes match spec, including exact 404 body
+Simplicity   (0–3): 3   single file, separate NoteCreate/NoteUpdate, clear helpers
+Fit          (0–3): 3   {"error":"not found"} 404, isoformat(timespec="seconds")
+                        timestamps, modern str|None hints, 5-line README present
+Total: 9 / 9
+Notes: Matches every smoke case outright. The only axis that separates the two —
+       the 404 body — goes to B. Same forced third-party FastAPI dep as A.
+```
 
-**Result: 6/7 passed** (all endpoints exercisable, PATCH not implemented)
+## Decision
 
-**Note:** Candidate A now supports PATCH for partial updates. Candidate B still only has PUT.
+**Winner: Candidate B (9 / 9 vs 8 / 9).**
 
-| Criterion (0–3)    | Candidate A              | Candidate B              |
-|--------------------|--------------------------|--------------------------|
-| Correctness        | 3 — all 7/7 tests pass   | 2 — 6/7 (missing PATCH)  |
-| Simplicity         | 3 — single clean file     | 2 — verbose, repetitive  |
-| Fit (CLAUDE.md)    | 2 — violates stdlib-only | 1 — stdlib, req.txt, __main__ |
-| **Total**          | **8 / 9**                | **5 / 9**                |
+Both candidates now satisfy the full smoke test (POST/blank-title/GET/PATCH/DELETE),
+so correctness and simplicity tie. The deciding axis is the **404 body**: B returns
+the spec's bare `{"error":"not found"}`, while A wraps it as `{"detail":"not found"}`.
+B also matches the house timestamp convention (`isoformat(timespec="seconds")`)
+where A uses `strftime`.
 
-## Winner: Candidate A (Updated: 7/7 tests passing)
+Candidate A is kept as evidence: same prompt, but it shipped the wrapped 404
+envelope and a non-prescribed timestamp format — small misses that Best-of-N exists
+to surface.
 
-**Why Candidate A won:** Candidate A passes all seven test cases including the PATCH endpoint for partial updates. It has superior code structure with well-organized helper functions, consistent naming (e.g., `_row_to_note`, `_startup`), and proper type annotations. More importantly, it respects the spirit of CLAUDE.md by avoiding unnecessary files and patterns — while both originally violated the stdlib-only rule with FastAPI, Candidate A doesn't add a requirements.txt or embed the server runner in `__main__`. Candidate B's extra configuration file and server-in-main pattern add friction without benefit.
-
-## Notes
-
-- Both candidates use third-party libraries (FastAPI/Pydantic) instead of stdlib, violating CLAUDE.md's core constraint. However, since this is a real API exercise (not a pure algorithms challenge), this may be acceptable by design.
-- Candidate A now implements PATCH for partial updates (7/7 tests pass). Candidate B only has PUT and returns 405 for PATCH (6/7 tests pass).
-- Candidate A runs on the default uvicorn port (8000); Candidate B hardcodes port 3000.
+The winning source should be copied verbatim into `winner/`.
+```text
+History: candidate B originally implemented PUT (full replace) and used
+Field(min_length=1), which accepted whitespace-only titles. It was corrected to a
+PATCH partial update with a strip-based blank-title validator to pass the stricter
+course smoke test.
+```

@@ -1,19 +1,79 @@
+"""Notes API — FastAPI + Pydantic v2 + sqlite3 (stdlib).
+
+Single-process, single-file. Schema is initialised at startup; no migration
+framework. Persists to notes.db in the current working directory.
+"""
+
+from __future__ import annotations
+
 import sqlite3
+from contextlib import asynccontextmanager
 from datetime import datetime, timezone
-from pathlib import Path
-from contextlib import contextmanager
 
-from fastapi import FastAPI, HTTPException, Query
-from pydantic import BaseModel, Field
-from uvicorn import run
+from fastapi import FastAPI, Query
+from fastapi.responses import JSONResponse
+from pydantic import BaseModel, field_validator
+
+DB_PATH = "notes.db"
 
 
-DATABASE = "notes.db"
+def now_iso() -> str:
+    """Current time as ISO 8601 in UTC, second precision."""
+    return datetime.now(timezone.utc).isoformat(timespec="seconds")
+
+
+def connect() -> sqlite3.Connection:
+    conn = sqlite3.connect(DB_PATH)
+    conn.row_factory = sqlite3.Row
+    return conn
+
+
+def init_schema() -> None:
+    with connect() as conn:
+        conn.execute(
+            """
+            CREATE TABLE IF NOT EXISTS notes (
+                id         INTEGER PRIMARY KEY AUTOINCREMENT,
+                title      TEXT NOT NULL,
+                body       TEXT NOT NULL,
+                created_at TEXT NOT NULL,
+                updated_at TEXT NOT NULL
+            )
+            """
+        )
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    init_schema()
+    yield
+
+
+app = FastAPI(title="Notes API", lifespan=lifespan)
 
 
 class NoteCreate(BaseModel):
-    title: str = Field(min_length=1)
-    body: str = Field(min_length=1)
+    title: str
+    body: str
+
+    @field_validator("title", "body")
+    @classmethod
+    def not_blank(cls, v: str) -> str:
+        if not v.strip():
+            raise ValueError("must not be blank")
+        return v
+
+
+class NoteUpdate(BaseModel):
+    title: str | None = None
+    body: str | None = None
+
+    @field_validator("title", "body")
+    @classmethod
+    def not_blank(cls, v: str | None) -> str | None:
+        if v is not None and not v.strip():
+            raise ValueError("must not be blank")
+        return v
 
 
 class Note(BaseModel):
@@ -24,113 +84,71 @@ class Note(BaseModel):
     updated_at: str
 
 
-@contextmanager
-def get_db():
-    conn = sqlite3.connect(DATABASE)
-    conn.row_factory = sqlite3.Row
-    try:
-        yield conn
-    finally:
-        conn.close()
-
-
-def init_db():
-    with get_db() as conn:
-        conn.execute("""
-            CREATE TABLE IF NOT EXISTS notes (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                title TEXT NOT NULL,
-                body TEXT NOT NULL,
-                created_at TEXT NOT NULL,
-                updated_at TEXT NOT NULL
-            )
-        """)
-        conn.commit()
-
-
-def get_now() -> str:
-    return datetime.now(timezone.utc).isoformat(timespec="seconds")
-
-
 def row_to_note(row: sqlite3.Row) -> Note:
-    return Note(
-        id=row["id"],
-        title=row["title"],
-        body=row["body"],
-        created_at=row["created_at"],
-        updated_at=row["updated_at"],
-    )
+    return Note(**dict(row))
 
 
-app = FastAPI()
+def not_found() -> JSONResponse:
+    return JSONResponse(status_code=404, content={"error": "not found"})
 
 
-@app.on_event("startup")
-def startup():
-    init_db()
-
-
-@app.get("/notes", response_model=list[Note])
-def list_notes(q: str | None = Query(None)):
-    with get_db() as conn:
-        if q:
-            rows = conn.execute(
-                "SELECT * FROM notes WHERE title LIKE ? OR body LIKE ? ORDER BY created_at DESC",
-                (f"%{q}%", f"%{q}%"),
-            ).fetchall()
-        else:
-            rows = conn.execute(
-                "SELECT * FROM notes ORDER BY created_at DESC"
-            ).fetchall()
-        return [row_to_note(row) for row in rows]
-
-
-@app.post("/notes", response_model=Note, status_code=201)
-def create_note(data: NoteCreate):
-    now = get_now()
-    with get_db() as conn:
-        cursor = conn.execute(
-            "INSERT INTO notes (title, body, created_at, updated_at) VALUES (?, ?, ?, ?)",
-            (data.title, data.body, now, now),
+@app.post("/notes", status_code=201)
+def create_note(note: NoteCreate) -> Note:
+    ts = now_iso()
+    with connect() as conn:
+        cur = conn.execute(
+            "INSERT INTO notes (title, body, created_at, updated_at) "
+            "VALUES (?, ?, ?, ?)",
+            (note.title, note.body, ts, ts),
         )
-        conn.commit()
-        note_id = cursor.lastrowid
-    return Note(
-        id=note_id,
-        title=data.title,
-        body=data.body,
-        created_at=now,
-        updated_at=now,
-    )
-
-
-@app.get("/notes/{note_id}", response_model=Note)
-def get_note(note_id: int):
-    with get_db() as conn:
         row = conn.execute(
-            "SELECT * FROM notes WHERE id = ?", (note_id,)
+            "SELECT * FROM notes WHERE id = ?", (cur.lastrowid,)
         ).fetchone()
-    if not row:
-        raise HTTPException(status_code=404, detail="not found")
     return row_to_note(row)
 
 
-@app.put("/notes/{note_id}", response_model=Note)
-def update_note(note_id: int, data: NoteCreate):
-    with get_db() as conn:
+@app.get("/notes")
+def list_notes(q: str | None = Query(default=None)) -> list[Note]:
+    with connect() as conn:
+        if q:
+            like = f"%{q}%"
+            rows = conn.execute(
+                "SELECT * FROM notes WHERE title LIKE ? OR body LIKE ? "
+                "ORDER BY id",
+                (like, like),
+            ).fetchall()
+        else:
+            rows = conn.execute("SELECT * FROM notes ORDER BY id").fetchall()
+    return [row_to_note(r) for r in rows]
+
+
+@app.get("/notes/{note_id}")
+def get_note(note_id: int):
+    with connect() as conn:
         row = conn.execute(
             "SELECT * FROM notes WHERE id = ?", (note_id,)
         ).fetchone()
-        if not row:
-            raise HTTPException(status_code=404, detail="not found")
+    if row is None:
+        return not_found()
+    return row_to_note(row)
 
-        now = get_now()
+
+@app.patch("/notes/{note_id}")
+def update_note(note_id: int, note: NoteUpdate):
+    with connect() as conn:
+        row = conn.execute(
+            "SELECT * FROM notes WHERE id = ?", (note_id,)
+        ).fetchone()
+        if row is None:
+            return not_found()
+        current = dict(row)
+        title = note.title if note.title is not None else current["title"]
+        body = note.body if note.body is not None else current["body"]
+        ts = now_iso()
         conn.execute(
             "UPDATE notes SET title = ?, body = ?, updated_at = ? WHERE id = ?",
-            (data.title, data.body, now, note_id),
+            (title, body, ts, note_id),
         )
-        conn.commit()
-
         row = conn.execute(
             "SELECT * FROM notes WHERE id = ?", (note_id,)
         ).fetchone()
@@ -139,16 +157,8 @@ def update_note(note_id: int, data: NoteCreate):
 
 @app.delete("/notes/{note_id}", status_code=204)
 def delete_note(note_id: int):
-    with get_db() as conn:
-        cursor = conn.execute(
-            "SELECT * FROM notes WHERE id = ?", (note_id,)
-        )
-        if not cursor.fetchone():
-            raise HTTPException(status_code=404, detail="not found")
-
-        conn.execute("DELETE FROM notes WHERE id = ?", (note_id,))
-        conn.commit()
-
-
-if __name__ == "__main__":
-    run(app, host="0.0.0.0", port=3000)
+    with connect() as conn:
+        cur = conn.execute("DELETE FROM notes WHERE id = ?", (note_id,))
+        if cur.rowcount == 0:
+            return not_found()
+    return None

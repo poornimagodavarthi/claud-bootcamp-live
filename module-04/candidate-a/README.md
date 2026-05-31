@@ -1,6 +1,20 @@
-# Notes API (Track A)
+# Notes API — Candidate A (Python + FastAPI)
 
-FastAPI + Pydantic v2 + sqlite3, persisting to `notes.db` (schema initialised at startup).
+## Run
 
-    pip install "fastapi>=0.110" "uvicorn>=0.29" "pydantic>=2"
-    uvicorn app:app --reload   # http://127.0.0.1:8000  (docs at /docs)
+```sh
+pip install fastapi uvicorn pydantic
+uvicorn app:app --reload
+```
+
+API is available at `http://localhost:8000`. Docs at `http://localhost:8000/docs`.
+
+## Endpoints
+
+| Method | Path | Description |
+| --- | --- | --- |
+| `POST` | `/notes` | Create a note (`{"title":"...","body":"..."}`) → 201 |
+| `GET` | `/notes?q=<term>` | List all notes, optionally filtered by search term → 200 |
+| `GET` | `/notes/{id}` | Fetch a single note → 200 / 404 |
+| `PATCH` | `/notes/{id}` | Update title and/or body → 200 / 404 |
+| `DELETE` | `/notes/{id}` | Delete a note → 204 / 404 |

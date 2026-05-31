@@ -1,6 +1,10 @@
-# Notes API (Track A)
+# Notes API — Candidate B (Python + FastAPI)
 
-FastAPI + Pydantic v2 + sqlite3, persisting to `notes.db` (schema initialised at startup).
+Single-file Notes API on FastAPI + Pydantic v2, persisting to `notes.db` (sqlite3, stdlib). Schema is created at startup.
 
-    pip install "fastapi>=0.110" "uvicorn>=0.29" "pydantic>=2"
-    uvicorn app:app --reload   # http://127.0.0.1:8000  (docs at /docs)
+## Run
+
+```sh
+pip install fastapi "uvicorn[standard]"
+uvicorn app:app --reload   # http://localhost:8000
+```

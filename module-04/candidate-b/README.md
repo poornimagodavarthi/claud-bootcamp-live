@@ -1,20 +1,10 @@
-# Notes API
+# Notes API — Candidate B (Python + FastAPI)
 
-A simple REST API for managing notes, built with FastAPI, Pydantic v2, and SQLite.
+Single-file Notes API on FastAPI + Pydantic v2, persisting to `notes.db` (sqlite3, stdlib). Schema is created at startup.
 
-## Setup & Run
+## Run
 
-```bash
-pip install -r requirements.txt
-python3 app.py
+```sh
+pip install fastapi "uvicorn[standard]"
+uvicorn app:app --reload   # http://localhost:8000
 ```
-
-The API runs on `http://localhost:3000`. Persist to SQLite is automatic (`notes.db`).
-
-## Endpoints
-
-- `POST /notes` — Create note (201)
-- `GET /notes?q=<search>` — List notes (200)
-- `GET /notes/:id` — Get note (200 or 404)
-- `PUT /notes/:id` — Update note (200 or 404)
-- `DELETE /notes/:id` — Delete note (204 or 404)

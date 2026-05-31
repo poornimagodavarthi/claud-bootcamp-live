@@ -84,7 +84,7 @@ def cmd_add(args: argparse.Namespace) -> int:
 def cmd_list(_: argparse.Namespace) -> int:
     tasks = load_tasks()
     if not tasks:
-        print("No tasks yet. Add one with: task add \"...\"")
+        print('No tasks yet. Add one with: task add "..."')
         return EXIT_OK
 
     headers = ("ID", "STATUS", "CREATED_AT", "TEXT")
