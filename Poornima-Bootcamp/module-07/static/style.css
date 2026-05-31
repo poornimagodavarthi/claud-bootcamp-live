@@ -69,17 +69,20 @@ main {
   flex: 1;
   padding: 24px;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;   /* content left, KPI rail right (matches wireframe) */
   gap: 18px;
 }
 
-/* ── KPI row ────────────────────────────────── */
+/* ── KPI rail (right-hand vertical column) ──── */
 .kpi-row {
   display: flex;
+  flex-direction: column;
+  flex: 0 0 200px;
+  order: 2;
   gap: 18px;
 }
 .kpi-card {
-  flex: 1;
+  flex: 0 0 auto;
   border: 2px solid #111;
   border-radius: 8px;
   padding: 18px 22px;
@@ -90,6 +93,7 @@ main {
 /* ── Recent items ───────────────────────────── */
 .recent-panel {
   flex: 1;
+  order: 1;   /* fills the main column to the left of the KPI rail */
   border: 2px solid #111;
   border-radius: 8px;
   padding: 18px 22px;
